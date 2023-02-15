@@ -2,11 +2,9 @@ bool init_all()
 {
      if(SDL_Init(SDL_INIT_EVERYTHING)==-1)
      return false;
-//SDL is composed of eight subsystems - Audio, CDROM, Event Handling, File I/O, Joystick Handling, Threading, Timers and Video. Before you can use any of these subsystems they must be initialized by calling SDL_Init (or SDL_InitSubSystem). SDL_Init must be called before any other SDL function. It automatically initializes the Event Handling, File I/O and Threading subsystems and it takes a parameter specifying which other subsystems to initialize. So, to initialize the default subsystems and the Video subsystems you would call:
 
      screen=SDL_SetVideoMode( WIDTH,HEIGHT,BPP,SDL_SWSURFACE );
-//
-//SDL_SWSURFACE	Create the video surface in system memory
+
     if(screen==NULL)
     {
         return false;
@@ -18,7 +16,7 @@ bool init_all()
     }
 
 
-    SDL_WM_SetCaption("RISING SUN BIKE RACING GAME",NULL);
+    SDL_WM_SetCaption("BIKE RACE",NULL);
     return true;
 }
 
@@ -31,23 +29,15 @@ SDL_Surface* load_image(std::string filename,int col1=0xFF,int col2=0xFF , int c
     loaded_image=IMG_Load(filename.c_str());
     if(loaded_image!=NULL)
     {
-        optimized_image=SDL_DisplayFormat(loaded_image);        //Create an optimized image
+        optimized_image=SDL_DisplayFormat(loaded_image);
+        SDL_FreeSurface(loaded_image);
 
-        SDL_FreeSurface(loaded_image);//        //Free the old image
-
-//Frees the resources used by a previously created SDL_Surface. If the surface was created using SDL_CreateRGBSurfaceFrom then the pixel data is not freed.
-
-//http://lazyfoo.net/SDL_tutorials/lesson05/index.php
         if(optimized_image!=NULL)
         {
             SDL_SetColorKey(optimized_image,SDL_SRCCOLORKEY,SDL_MapRGB(optimized_image->format,col1,col2,col3));
         }
     }
-//Then we check if the image was optimized.
-/*
-If the image was optimized, we have to map the color we want to set as the color key. 
-We call SDL_MapRGB() to take the red, green, and blue values and give us the pixel value
- back in the same format as the surface. You can learn more about pixels in article 3.*/
+
     return optimized_image;     //Return the address of the loaded image...
 }
 

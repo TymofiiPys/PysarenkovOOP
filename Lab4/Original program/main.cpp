@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 #include <sstream>
-#include <SDL/SDL.h>
-#include "SDL/SDL_image.h
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
 #include "constants.h"
 #include "string"

@@ -4,9 +4,9 @@ int start_menu()
      int x,y;
 
      bike_process bk;
-//https://www.willusher.io/sdl2%20tutorials/2013/08/20/lesson-4-handling-events
+
      while(running)
-     while(SDL_PollEvent( &event ) )
+     while( SDL_PollEvent( &event ) )
      {
           if(event.type == SDL_MOUSEMOTION)
           {

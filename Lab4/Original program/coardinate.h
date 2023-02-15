@@ -17,6 +17,7 @@ class cord          //Holds the coardinates of the images
      {
           return cord_rect.x;
      }
+
      int get_cord_y()              //Returns the current y coardinate of the object...
      {
           return cord_rect.y;
@@ -50,8 +51,7 @@ class background:public cord
           if(cord_rect.x < -WIDTH)
           cord_rect.x+=(2*WIDTH);
      }
-}
-;
+};
 class wall:public cord
 {
      private:

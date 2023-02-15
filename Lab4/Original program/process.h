@@ -46,7 +46,7 @@ bool bike_process::process()
      if(keystate[SDLK_SPACE] or keystate[SDLK_UP])                //If space is pressed...
      {
           if(jump_state==0)
-          jump_state=36;                       //set the jump or SPACE state in 20*2 steps...
+          jump_state=36;                     //set the jump or SPACE state in 20*2 steps...
 
      }
      if( (bike_y <(bike_stand-bike->h)) or jump_state>=16  )    //Condition true untill the MARIO goes upward and downward to surface below it..
@@ -61,7 +61,7 @@ bool bike_process::process()
      else
      {
           bike_y=bike_stand-bike->h;
-          jump_state=0; 
+          jump_state=0;
      }
 
      if(keystate[SDLK_RIGHT])
