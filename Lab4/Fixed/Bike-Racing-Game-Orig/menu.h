@@ -15,6 +15,7 @@ int start_menu()
                cerr<<"inside"<<endl;
                x = event.motion.x;
                y = event.motion.y;
+               SDL_RenderClear(renderer);
                if((x>594) && (x<756) && (y>340) && (y<357))
                {
                     apply_surface(0,0,play_menu,renderer);
@@ -32,15 +33,19 @@ int start_menu()
                /*SDL_Flip(screen);*/
                SDL_RenderPresent(renderer);
 
-        }
-        else
-          apply_surface(0,0,menu_pic, renderer);
-          //SDL_Flip(screen);
-          SDL_RenderPresent(renderer);
+          }
+          else
+          {
+              SDL_RenderClear(renderer);
+              apply_surface(0, 0, menu_pic, renderer);
+              //SDL_Flip(screen);
+              SDL_RenderPresent(renderer);
+          }
         if(event.type == SDL_MOUSEBUTTONDOWN)
           {
                x = event.motion.x;
                y = event.motion.y;
+
                if((x>594) && (x<756) && (y>340) && (y<357))
                {
                    game_on = 1;

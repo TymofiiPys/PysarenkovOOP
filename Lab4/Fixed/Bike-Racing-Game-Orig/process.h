@@ -79,7 +79,7 @@ bool bike_process::process()
      else
      change_coardinate(-speed/2);
      change_coardinate(0);
-
+     SDL_RenderClear(renderer);
      load_layer();
      if(( w2[BMAX_WALL-1].get_cord_x())+w2[BMAX_WALL-1].get_cord_w() < 0)
      {
