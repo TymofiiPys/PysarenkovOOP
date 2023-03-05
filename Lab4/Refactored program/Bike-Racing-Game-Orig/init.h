@@ -1,8 +1,68 @@
+int reset_test() {
+	bike_process b;
+	b.bpreset();
+	b.set_speed(20);
+	b.set_bike_x();
+	b.bpreset();
+	if (b.get_bike_x() != START_BIKE_X || b.get_speed() != 0)
+		return 1;
+
+	return 0;
+}
+
+int change_coord_test() {
+	wall test = wall(1000, 0, 0, 0);
+	wall test1 = wall(1100, 0, 0, 0);
+	test.add_wall_x(100);
+	if (test.get_cord_x() != test1.get_cord_x())
+		return 1;
+	background b = background(1000, 0, 0, 0);
+	background b1 = background(1200, 0, 0, 0);
+	b.add_background_x(201);
+	if (b.get_cord_x() != b1.get_cord_x())
+		return 1;
+	return 0;
+}
+
+int collide_test() {
+	int w, h;
+	SDL_QueryTexture(obs_wall[0], NULL, NULL, &w, &h);
+	int* testx = new int, *testy = new int, *stand = new int;
+	*testx = WIDTH + 150;
+	*testy = LAYER_Y - h + 100;
+	w1[0].set_state(true);
+	if (!is_collision(testx, testy, stand))
+	{
+		w1[0].set_state(false);
+		return 1;
+	}
+	w1[0].set_state(false);
+	SDL_QueryTexture(obs_wall[1], NULL, NULL, &w, &h);
+	*testx = WIDTH + 4450;
+	*testy = LAYER_Y - h + 100;
+	w2[1].set_state(true);
+	if (!is_collision(testx, testy, stand))
+	{w2[1].set_state(false); return 1; }
+	w2[1].set_state(false);
+	return 0;
+}
+
 bool init_all()
 {
 	 if(SDL_Init(SDL_INIT_EVERYTHING)==-1)
 		return false;
 
+	 if (reset_test())
+	 {
+		 cout << "reset test failed" << endl; return false;
+	 }
+	 else
+		 cout << "reset test passed" << endl;
+	 if (change_coord_test()) {
+		 cout << "change coord test failed" << endl; return false;
+	 }
+	 else
+		 cout << "change coord test passed" << endl;
 	 //Creation of what everything will be drawn on
 	 screen=SDL_CreateWindow("RISING SUN BIKE RACING GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH,HEIGHT,SDL_SWSURFACE);
 	 renderer = SDL_CreateRenderer(screen, -1, 0);
@@ -16,6 +76,7 @@ bool init_all()
 
 	return true;
 }
+
 
 //Load a image file on screen and returns the address..
 SDL_Surface* load_image(std::string filename, int col1=0xFF, int col2=0xFF, int col3=0xFF )
@@ -90,7 +151,12 @@ bool load_files()
 	w2[2] = wall(WIDTH + 6050, LAYER_Y - h, w, h);
 	w2[3] = wall(WIDTH + 7800, LAYER_Y - h, w, h);
 
-
+	if(collide_test())
+	{
+		cout << "collide test failed" << endl; return false;
+	}
+	else
+		cout << "collide coord test passed" << endl;
 	font=TTF_OpenFont("times.ttf",20);      //Font file is loaded....
 
 	time_limit = SDL_CreateTextureFromSurface(renderer, TTF_RenderText_Solid(font, "Time limit is 1:30 minutes", textColor));

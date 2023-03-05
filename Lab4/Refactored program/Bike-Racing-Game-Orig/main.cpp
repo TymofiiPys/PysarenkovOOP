@@ -8,11 +8,11 @@ using namespace std;
 #include "string"
 #include "coordinate.h"
 #include "variable.h"
-#include "init.h"
 #include "function.h"
 #include "collision.h"
 #include "process.h"
 #include "menu.h"
+#include "init.h"
 
 #undef main
 

@@ -46,8 +46,11 @@ int start_menu()
 					SDL_RenderPresent(renderer);
 				}
 			}
-			else if((x>572) && (x<778) && (y>414) && (y<431))
-				apply_surface(0,0,instruction_menu, renderer);
+			else if ((x > 572) && (x < 778) && (y > 414) && (y < 431))
+			{
+				apply_surface(0, 0, instruction_menu, renderer);
+				system("instr.txt");
+			}
 			else if((x>641) && (x<708) && (y>490) && (y<506))
 				return 0;
 		}

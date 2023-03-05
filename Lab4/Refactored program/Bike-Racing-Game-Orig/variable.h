@@ -41,21 +41,6 @@
 //Variable for background...
      background bg[2];
 
-//variable for time..
-
-     //int end_time;
-
-     //int speed;
-
-     //int jump_state=0;
-     //int max_limit=200;
-
-
-
-//variable for bike..
-    /* int bike_stand=LAYER_Y;
-     int bike_x=START_BIKE_X;
-     int bike_y;*/
 //Variable for wall...
      wall w1[SMAX_WALL];
      wall w2[BMAX_WALL];

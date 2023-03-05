@@ -4,25 +4,25 @@
 class bike_process
 {
     private:
-         int speed;
-         int jump_state;     
-         int start_time;
-         int time_gap;
-         int bike_stand;
+        int speed;
+        int jump_state;     
+        int start_time;
+        int time_gap;
+        int bike_stand;
         int bike_x;
         int bike_y;
     public:
 
-         bike_process() 
-         {
-             speed = 0;
-             jump_state = 0;
-             bike_stand = LAYER_Y;
-             bike_x = START_BIKE_X;
-             int h;
-             SDL_QueryTexture(bike, NULL, NULL, NULL, &h);
-             bike_y = LAYER_Y - h;
-         }
+         //bike_process() 
+         //{
+         //    speed = 0;
+         //    jump_state = 0;
+         //    bike_stand = LAYER_Y;
+         //    bike_x = START_BIKE_X;
+         //    int h;
+         //    SDL_QueryTexture(bike, NULL, NULL, NULL, &h);
+         //    bike_y = LAYER_Y - h;
+         //}
          void bpreset() {
              speed = 0;
              jump_state = 0;
@@ -51,6 +51,19 @@ class bike_process
          }
          void set_start_time() {
              start_time = SDL_GetTicks();
+         }
+         void set_speed(int k) {
+             speed += k;
+         }
+         int get_speed()
+         {
+             return speed;
+         }
+         void set_bike_x() {
+             bike_x += speed;
+         }
+         int get_bike_x() {
+             return bike_x;
          }
     void load_layer()
     {
@@ -176,22 +189,22 @@ bool bike_process::process()
     change_coordinate(0);//background moves regardless of speed
     SDL_RenderClear(renderer);
     load_layer();
-     if(finished())
-     {
-         finish();
-         return false;
-     }
+    if(finished())
+    {
+        finish();
+        return false;
+    }
 
-     std::stringstream time;
-     //Convert the timer's time to a string
-     time_gap =(SDL_GetTicks() - start_time)/1000;
-     int mm=time_gap/60;
-     int ss=time_gap%60;
-     if(ss < 10)
-        time << "Timer: " << mm <<":0"<<ss;
-     else
-         time << "Timer: " << mm << ":" << ss;
-     times=SDL_CreateTextureFromSurface(renderer, TTF_RenderText_Solid(font,time.str().c_str(),textColor));
+    std::stringstream time;
+    //Convert the timer's time to a string
+    time_gap =(SDL_GetTicks() - start_time)/1000;
+    int mm=time_gap/60;
+    int ss=time_gap%60;
+    if(ss < 10)
+        time << "Timer: " << mm << ":0" << ss;
+    else
+        time << "Timer: " << mm << ":" << ss;
+     times = SDL_CreateTextureFromSurface(renderer, TTF_RenderText_Solid(font,time.str().c_str(),textColor));
      apply_surface(600, 50, times, renderer);
      apply_surface(500, 55+times_h, time_limit, renderer);
      SDL_Delay(40);
