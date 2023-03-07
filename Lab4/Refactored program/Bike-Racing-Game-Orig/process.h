@@ -1,15 +1,26 @@
 
 
-
+//! Class for bike events
+/*!
+    This class represents the bike and events which happen to it during game walkthrough.
+*/
 class bike_process
 {
     private:
+        //!Distance which the bike travels during a tick (~40 ms).
         int speed;
+        //!Variable which represents vertical motion of the bike. Different values show whether the bike is going upwards vertically, downwards or not
+        //! being in vertical motion at all.
         int jump_state;     
+        //! Time in ms from game's launch at which the bike started a level.
         int start_time;
+        //! Time in s from start_time.
         int time_gap;
+        //!Used for is_collision().
         int bike_stand;
+        //!Bike's x coordinate.
         int bike_x;
+        //!Bike's y coordinate.
         int bike_y;
     public:
 
@@ -23,6 +34,7 @@ class bike_process
          //    SDL_QueryTexture(bike, NULL, NULL, NULL, &h);
          //    bike_y = LAYER_Y - h;
          //}
+        //! resets all parameters before an attempt of walkthrough.
          void bpreset() {
              speed = 0;
              jump_state = 0;
@@ -49,22 +61,28 @@ class bike_process
              SDL_QueryTexture(back[1], NULL, NULL, &w, &h);
              bg[1] = background(WIDTH, 0, w, h);
          }
+         //!Sets start_time variable.
          void set_start_time() {
              start_time = SDL_GetTicks();
          }
+         //!Adds k pixels per tick to bike's speed (used for unit test only).
          void set_speed(int k) {
              speed += k;
          }
+         //!Gets bike's speed (used for unit test only).
          int get_speed()
          {
              return speed;
          }
+         //!Update bike_x by adding speed after a tick (used for unit test only).
          void set_bike_x() {
              bike_x += speed;
          }
+         //!Get bike_x (used for unit test only).
          int get_bike_x() {
              return bike_x;
          }
+         //! Loads textures onto the window.
     void load_layer()
     {
 
@@ -83,7 +101,7 @@ class bike_process
         apply_surface(bike_x,bike_y,bike, renderer);         //bike is blitted..
 
     }
-
+    //!Check whether the level has been finished SUCCESSFULLY (by reaching the finish line which is represented by a certain x coordinate).
     bool finished() {
         if ((w2[BMAX_WALL - 1].get_cord_x()) + w2[BMAX_WALL - 1].get_cord_w() < 0)
         {
@@ -91,15 +109,17 @@ class bike_process
         }
         return false;
     }
-
+    //!Show message that level has been finished successfully.
     void finish() {
         apply_surface(100, 300, win, renderer);
         SDL_RenderPresent(renderer);
         SDL_Delay(2000);
     }
 
-    void change_coordinate(int );       //Set the coordinate of the labels..
+    //!Set x coordinates of walls and backgrounds.
+    void change_coordinate(int );
 
+    //!Game logic: processing key events, changing the bike's parameters, counting time from level start, etc.
     bool process();
 
 };
