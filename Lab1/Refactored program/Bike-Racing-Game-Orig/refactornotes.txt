@@ -1,0 +1,10 @@
+refactoring:
+migration to sdl 2.0
+made less global variables - they are class attributes now
+time is shown correctly
+fixed wrong spelling ("Coardinate" instead of correct "coordinate")
+minor: 
+	"for cycle" at the beginning of load_files() now has 2 iterations instead of 3 - the third is useless
+	added "YOU WIN" message instead of "GAME OVER" on successful walkthrough of the game
+	load_layer now uses no arguments because no were actually used
+	misleading comments
