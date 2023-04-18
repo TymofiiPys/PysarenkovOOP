@@ -134,7 +134,7 @@ Complex** multiply_m(Complex** a, Complex** b, int N) {
 				copy(b[i + Nh][j + Nh], b11[i][j]);
 			}
 
-		m1 = multiply_m(add_matrix(a00, a11, Nh), add_matrix(b00, b11, Nh), Nh), m1;
+		m1 = multiply_m(add_matrix(a00, a11, Nh), add_matrix(b00, b11, Nh), Nh);
 		m2 = multiply_m(add_matrix(a10, a11, Nh), b00, Nh);
 		m3 = multiply_m(a00, subtr_matrix(b01, b11, Nh), Nh);
 		m4 = multiply_m(a11, subtr_matrix(b10, b00, Nh), Nh);
