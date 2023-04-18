@@ -69,19 +69,6 @@ public:
 	}
 };
 
-//void copy(Complex &a, Complex &b) {
-//	b.p = a.p;
-//	b.q = a.q;
-//}
-
-//void init_matrix(int N, Complex*** matr) {
-//	*matr = new Complex * [N];
-//	int i;
-//	for (i = 0; i < N; i++) {
-//		(*matr)[i] = new Complex[N];
-//	}
-//}
-
 Complex** init_matrix(int N) {
 	Complex** c = new Complex * [N];
 	int i;
@@ -99,44 +86,6 @@ Complex** init_rect_matrix(int M, int N) {
 	}
 	return c;
 }
-
-//void add_matrix(Complex** a, Complex** b, int N, Complex*** c) {
-//	init_matrix(N, c);
-//	Complex sum;
-//	for (int i = 0; i < N; i++)
-//		for (int j = 0; j < N; j++) {
-//			sum = a[i][j] + b[i][j];
-//			copy(&sum, &(*c)[i][j]);
-//		}
-//}
-
-//Complex** add_matrix(Complex** a, Complex** b, int N) {
-//	Complex** c = init_matrix(N);
-//	for (int i = 0; i < N; i++)
-//		for (int j = 0; j < N; j++) {
-//			c[i][j] = a[i][j] + b[i][j];
-//		}
-//	return c;
-//}
-
-//void subtr_matrix(Complex** a, Complex** b, int N, Complex*** c) {
-//	init_matrix(N, c);
-//	Complex sum;
-//	for (int i = 0; i < N; i++)
-//		for (int j = 0; j < N; j++) {
-//			sum = a[i][j] - b[i][j];
-//			copy(&sum, &*c[i][j]);
-//		}
-//}
-
-//Complex** subtr_matrix(Complex** a, Complex** b, int N) {
-//	Complex** c = init_matrix(N);
-//	for (int i = 0; i < N; i++)
-//		for (int j = 0; j < N; j++) {
-//			c[i][j] = a[i][j] - b[i][j];
-//		}
-//	return c;
-//}
 
 ComMatrix add_matrix(ComMatrix a, ComMatrix b) {
 	ComMatrix c(a.N);
@@ -156,13 +105,11 @@ ComMatrix subtr_matrix(ComMatrix a, ComMatrix b) {
 	return c;
 }
 
-/*void multiply_m(Complex** a, Complex** b, int N, Complex*** res)*/
 void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 	int N = a.N;
 	res->init_matrix(N);
 	if (N == 1)
 		res->matr[0][0] = a.matr[0][0] * b.matr[0][0];
-		/*(*res)[0][0] = a[0][0] * b[0][0];*/
 	else {
 		int Nh = N / 2;
 		ComMatrix result_00(Nh);
@@ -186,27 +133,6 @@ void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 		ComMatrix m5(Nh);
 		ComMatrix m6(Nh);
 		ComMatrix m7(Nh);
-		//Complex** result_00 = init_matrix(Nh);
-		//Complex** result_01 = init_matrix(Nh);
-		//Complex** result_10 = init_matrix(Nh);
-		//Complex** result_11 = init_matrix(Nh);
-
-		//Complex** a00 = init_matrix(Nh);
-		//Complex** a01 = init_matrix(Nh);
-		//Complex** a10 = init_matrix(Nh);
-		//Complex** a11 = init_matrix(Nh);
-		//Complex** b00 = init_matrix(Nh);
-		//Complex** b01 = init_matrix(Nh);
-		//Complex** b10 = init_matrix(Nh);
-		//Complex** b11 = init_matrix(Nh);
-
-		//Complex** m1 = init_matrix(Nh);
-		//Complex** m2 = init_matrix(Nh);
-		//Complex** m3 = init_matrix(Nh);
-		//Complex** m4 = init_matrix(Nh);
-		//Complex** m5 = init_matrix(Nh);
-		//Complex** m6 = init_matrix(Nh);
-		//Complex** m7 = init_matrix(Nh);
 		int i, j;
 		for (i = 0; i < Nh; i++)
 			for (j = 0; j < Nh; j++) {
@@ -218,14 +144,6 @@ void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 				b01.copyto(i, j, b, i, j + Nh);
 				b10.copyto(i, j, b, i + Nh, j);
 				b11.copyto(i, j, b, i + Nh, j + Nh);
-				//a00[i][j] = a[i][j];
-				//a01[i][j] = a[i][j + Nh];
-				//a10[i][j] = a[i + Nh][j];
-				//a11[i][j] = a[i + Nh][j + Nh];
-				//b00[i][j] = b[i][j];
-				//b01[i][j] = b[i][j + Nh];
-				//b10[i][j] = b[i + Nh][j];
-				//b11[i][j] = b[i + Nh][j + Nh];
 			}
 		std::thread tm1(multiply_m, add_matrix(a00, a11), add_matrix(b00, b11), &m1);
 		std::thread tm2(multiply_m, add_matrix(a10, a11), b00, &m2);
@@ -234,13 +152,7 @@ void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 		std::thread tm5(multiply_m, add_matrix(a00, a01), b11, &m5);
 		std::thread tm6(multiply_m, subtr_matrix(a10, a00), add_matrix(b00, b01), &m6);
 		std::thread tm7(multiply_m, subtr_matrix(a01, a11), add_matrix(b10, b11), &m7);
-		//std::thread tm1(multiply_m, add_matrix(a00, a11, Nh), add_matrix(b00, b11, Nh), Nh, &m1);
-		//std::thread tm2(multiply_m, add_matrix(a10, a11, Nh), b00, Nh, &m2);
-		//std::thread tm3(multiply_m, a00, subtr_matrix(b01, b11, Nh), Nh, &m3);
-		//std::thread tm4(multiply_m, a11, subtr_matrix(b10, b00, Nh), Nh, &m4);
-		//std::thread tm5(multiply_m, add_matrix(a00, a01, Nh), b11, Nh, &m5);
-		//std::thread tm6(multiply_m, subtr_matrix(a10, a00, Nh), add_matrix(b00, b01, Nh), Nh, &m6);
-		//std::thread tm7(multiply_m, subtr_matrix(a01, a11, Nh), add_matrix(b10, b11, Nh), Nh, &m7);
+		
 		tm1.join();
 		tm2.join();
 		tm3.join();
@@ -253,10 +165,6 @@ void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 		result_01 = add_matrix(m3, m5);
 		result_10 = add_matrix(m2, m4);
 		result_11 = add_matrix(add_matrix(subtr_matrix(m1, m2), m3), m6);
-		//result_00 = add_matrix(subtr_matrix(add_matrix(m1, m4, Nh), m5, Nh), m7, Nh);
-		//result_01 = add_matrix(m3, m5, Nh);
-		//result_10 = add_matrix(m2, m4, Nh);
-		//result_11 = add_matrix(add_matrix(subtr_matrix(m1, m2, Nh), m3, Nh), m6, Nh);
 
 		for (i = 0; i < Nh; i++)
 			for (j = 0; j < Nh; j++) {
@@ -264,13 +172,7 @@ void multiply_m(ComMatrix a, ComMatrix b, ComMatrix *res){
 				res->copyto(i, j + Nh, result_01, i, j);
 				res->copyto(i + Nh, j, result_10, i, j);
 				res->copyto(i + Nh, j + Nh, result_11, i, j);
-				/*(*res)[i][j] = result_00[i][j];
-				(*res)[i][j + Nh] = result_01[i][j];
-				(*res)[i + Nh][j] = result_10[i][j];
-				(*res)[i + Nh][j + Nh] = result_11[i][j];*/
 			}
-		//delete result_00, result_01, result_10, result_11,
-		//	a00, a01, a10, a11, b00, b01, b10, b11;
 	}
 }
 
@@ -297,9 +199,6 @@ int main(int argc, char** argv)
 		a = init_matrix(1);
 		b = init_matrix(1);
 		c = init_matrix(1);
-		//init_matrix(1, &a);
-		//init_matrix(1, &b);
-		//init_matrix(1, &c);
 		std::cin >> op;
 		switch (op) {
 		case 0:
@@ -399,8 +298,6 @@ int main(int argc, char** argv)
 			std::getline(fm, Ns);
 			N = std::stoi(Ns);
 			a = init_rect_matrix(M, N);
-			//init_matrix(N, &a);
-			//init_matrix(N, &b);
 			i = 0, j = 0;
 			while (!fm.eof()) {
 				std::string r, ps, qs;
@@ -478,9 +375,6 @@ int main(int argc, char** argv)
 			a = init_matrix(4);
 			b = init_matrix(4);
 			c = init_matrix(4);
-			//init_matrix(4, &a);
-			//init_matrix(4, &b);
-			//init_matrix(4, &c);
 			M = 4;
 			N = 4;
 			K = 4;
@@ -516,9 +410,7 @@ int main(int argc, char** argv)
 			a = init_matrix(2);
 			b = init_matrix(2);
 			c = init_matrix(2);
-			//init_matrix(2, &a);
-			//init_matrix(2, &b);
-			//init_matrix(2, &c);
+
 			M = 2;
 			N = 2;
 			K = 2;
@@ -679,9 +571,6 @@ TEST_CASE("testing multiplication") {
 	b = init_matrix(2);
 	c = init_matrix(2);
 	prod = init_matrix(2);
-	//init_matrix(2, &a);
-	//init_matrix(2, &b);
-	//init_matrix(2, &c);
 	int ap[2][2] = { {14,15},
 	{15,6} };
 	int aq[2][2] = { {5,-5},
@@ -707,7 +596,7 @@ TEST_CASE("testing multiplication") {
 	ComMatrix cmb(b, 2);
 	ComMatrix cmc(prod, 2);
 	multiply_m(cma, cmb, &cmc);
-	//multiply_m(a, b, 2, &prod);
+
 	CHECK(is_equal(cmc.matr, c, 2));
 	a = nullptr;
 	b = nullptr;
@@ -717,9 +606,7 @@ TEST_CASE("testing multiplication") {
 	b = init_matrix(4);
 	c = init_matrix(4);
 	prod = init_matrix(4);
-	//init_matrix(4, &a);
-	//init_matrix(4, &b);
-	//init_matrix(4, &c);
+
 	int ap1[4][4] = { {14,15,-3,-5},
 			{15,6,10,5},
 			{7,13,18,12},
@@ -754,16 +641,8 @@ TEST_CASE("testing multiplication") {
 			c[i][j].q = cq1[i][j];
 		}
 	cma = ComMatrix(a, 4);
-	//for (int i = 0; i < 4; i++) {
-	//	std::cout << "{";
-	//	for (int j = 0; j < 4; j++) {
-	//		std::cout << cma.matr[i][j].p << " + " << cma.matr[i][j].q << "*i, ";
-	//	}
-	//	std::cout << "},\n";
-	//}
 	cmb = ComMatrix(b, 4);
 	cmc = ComMatrix(prod, 4);
 	multiply_m(cma, cmb, &cmc);
-	//multiply_m(a, b, 4, &prod);
 	CHECK(is_equal(cmc.matr, c, 4));
 }

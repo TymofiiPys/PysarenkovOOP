@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab3Pysarenkov.cpp">
+    <ClCompile Include="parallel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sequential.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
