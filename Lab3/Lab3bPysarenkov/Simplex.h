@@ -186,6 +186,6 @@ void Solver::solve(){
     if(start_lf->opt)//якщо opt = max
         start_lf->Standartify();
     start_con->Standartify();
-    start_con->
+    start_con->Canonify();
 }
 #endif // SIMPLEX_H
