@@ -2,6 +2,10 @@
 #define SIMPLEX_H
 #include <vector>
 
+enum Opt{
+    MIN, MAX
+};
+
 //лінійна функція
 class LinFunc{
     //L = c[0]x[0] + c[1]x[1] + ... + c[n]x[n] -> opt
@@ -37,10 +41,22 @@ public:
         this->m = m;
         this->n = n;
     }
+    Constr(double** a, int* sign, double* b, int m, int n){
+        this->a = a;
+        this->sign = sign;
+        this->b = b;
+        this->m = m;
+        this->n = n;
+    }
     void Standartify();//Переведення л.о. у такі, що відповідають СЗЛП, тобто є рівностями із
     //введеними за необхідності балансними змінними
     void Canonify();//Переведення л.о у такі, що відповідають СЗЛП, тобто в матриці a має існувати одинична підматриця,
     //а всі елементи b мають бути невід'ємними
+    bool operator==(const Constr* c){
+        if(m != c->m || n != c->n)
+            return false;
+        return true;
+    }
     friend class Sol_Step;
     friend class Solver;
 };
@@ -73,7 +89,7 @@ void LinFunc::Standartify(){
     for(int i = 0; i < n; i++){
         c[i] = c[i] * -1;
     }
-    opt = 0;
+    opt = MIN;
 }
 
 void Constr::Standartify(){
@@ -116,6 +132,7 @@ void Constr::Standartify(){
                             a[i][j] = 0;
                     }
                 }
+                sign[i] = 0;
                 k++;
             }
         }
@@ -183,7 +200,7 @@ void Constr::Canonify(){
 
 void Solver::solve(){
     //Переведення задачі у СЗЛП
-    if(start_lf->opt)//якщо opt = max
+    if(start_lf->opt)//якщо opt = MAX
         start_lf->Standartify();
     start_con->Standartify();
     start_con->Canonify();
