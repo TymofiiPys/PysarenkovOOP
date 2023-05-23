@@ -1,7 +1,7 @@
 #ifndef SIMPLEX_H
 #define SIMPLEX_H
 #include <vector>
-
+#include <iostream>
 enum Opt{
     MIN, MAX
 };
@@ -9,12 +9,16 @@ enum Opt{
 //лінійна функція
 class LinFunc{
     //L = c[0]x[0] + c[1]x[1] + ... + c[n]x[n] -> opt
-    double* c;
-    int n;
-    bool opt; //true - max, false - opt
+    std::vector<double> c;
+    int n;      //кількість змінних
+    bool opt;   //true - max, false - opt
 public:
+    LinFunc(std::vector<double> c, int n, bool opt){
+        this->c = c;
+        this->n = n;
+        this->opt = opt;
+    }
     LinFunc(int n, bool opt){
-        this->c = new double[n];
         this->n = n;
         this->opt = opt;
     }
@@ -26,22 +30,17 @@ public:
 //Лінійні обмеження (непрямі)
 class Constr{
     //a[i][0]x[0] + a[i][1]x[1] + ... + a[i][n]x[n] <= (=, >=) b[i], i = [1, m]
-    double** a;
-    int* sign; //<= -> -1, = ->0, >= -> 1
-    double* b;
-    int m;
-    int n;
+    std::vector<std::vector<double>> a;
+    std::vector<int> sign; //<= -> -1, = -> 0, >= -> 1
+    std::vector<double> b;
+    int m;  //кількість лінійних обмежень
+    int n;  //кількість змінних
 public:
     Constr(int m, int n){
-        this->a = new double*[m];
-        for(int i = 0; i < m; i++)
-            a[i] = new double[n];
-        this->sign = new int[m];
-        this->b = new double[m];
         this->m = m;
         this->n = n;
     }
-    Constr(double** a, int* sign, double* b, int m, int n){
+    Constr(std::vector<std::vector<double>> a, std::vector<int> sign, std::vector<double> b, int m, int n){
         this->a = a;
         this->sign = sign;
         this->b = b;
@@ -52,8 +51,8 @@ public:
     //введеними за необхідності балансними змінними
     void Canonify();//Переведення л.о у такі, що відповідають СЗЛП, тобто в матриці a має існувати одинична підматриця,
     //а всі елементи b мають бути невід'ємними
-    bool operator==(const Constr* c){
-        if(m != c->m || n != c->n)
+    bool operator==(const Constr& r){
+        if(m != r.m || n != r.n || a != r.a || b != r.b || sign != r.sign)
             return false;
         return true;
     }
@@ -65,9 +64,9 @@ public:
 class Sol_Step{
     LinFunc* lf;
     Constr* con;
-    int* basis;
-    double* delta;
-    double* theta;
+    std::vector<int> basis;
+    std::vector<double> delta;
+    std::vector<double> theta;
 };
 
 //Клас-розв'язувач задачі лінійного програмування
@@ -94,49 +93,36 @@ void LinFunc::Standartify(){
 
 void Constr::Standartify(){
     int nequal = 0; //Кількість нерівностей
+    
     for(int i = 0; i < m; i++){
         if(sign[i])
             nequal++;
     }
     if(nequal) //Якщо усі m лін. обмежень є рівностями, то ми вже й так маємо СЗЛП
     {
-        double** olda = new double*[m]; //Масив зі старими коефіцієнтами a, без балансних змінних
-        for(int i = 0; i < m; i++)
-            olda[i] = new double[n];
-        for(int i = 0; i < m; i++)
-            for(int j = 0; j < n; j++){
-                olda[i][j] = a[i][j];
-            }
-        delete a;
-        n = n + nequal;
-        //Переініціалізація: у масив a вводитимуться коефіцієнти для нових, балансних змінних
-        a = new double*[m];
-        for(int i = 0; i < m; i++)
-            a[i] = new double[n];
+//        std::vector<std::vector<double>> olda;  //Масив зі старими коефіцієнтами a, без балансних змінних
+//        olda = a;
+        n = n + nequal; //додаємо nequal балансних змінних
+
+        for(int i = 0; i < m; ++i){
+            a[i].resize(n);
+        }
         int k = 0; //індекс нерівності
         for(int i = 0; i < m; i++){
             if(sign[i])//якщо i-те л. о. є нерівністю
             {
-                for(int j = 0; j < n; j++){
-                    if(j < n - nequal)
-                    {
-                        a[i][j] = olda[i][j]; //переносимо старий масив у новий
-                    }
+                for(int j = n - nequal; j < n; j++){
+                    //коефіцієнти для балансних змінних
+                    if(j == n - nequal + k)
+                        a[i][j] = sign[i] * (-1); //л. о. є нерівністю виду <= - маємо ДОДАТИ балансну змінну з коеф. 1,
+                    //а якщо >= - ВІДНЯТИ із тим же коеф.
                     else
-                    {
-                        //коефіцієнти для балансних змінних
-                        if(j == n - nequal + k)
-                            a[i][j] = sign[i] * (-1); //л. о. є нерівністю виду <= - маємо ДОДАТИ балансну змінну з коеф. 1,
-                        //якщо >= - ВІДНЯТИ із тим же коеф.
-                        else
-                            a[i][j] = 0;
-                    }
+                        a[i][j] = 0;
                 }
                 sign[i] = 0;
                 k++;
             }
         }
-        delete[] olda;
     }
 }
 
