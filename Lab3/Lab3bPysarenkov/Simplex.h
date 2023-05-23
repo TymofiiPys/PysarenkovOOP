@@ -22,7 +22,15 @@ public:
         this->n = n;
         this->opt = opt;
     }
+    void set_n(int n){
+        this->n = n;
+    }
     void Standartify();//Переведення лін. функції у таку, що відповідає СЗЛП, тобто має прямувати в мінімум
+    bool operator==(const LinFunc& r){
+        if(c != r.c || n != r.n || opt != r.opt)
+            return false;
+        return true;
+    }
     friend class Sol_Step;
     friend class Solver;
 };
@@ -51,6 +59,9 @@ public:
     //введеними за необхідності балансними змінними
     void Canonify();//Переведення л.о у такі, що відповідають СЗЛП, тобто в матриці a має існувати одинична підматриця,
     //а всі елементи b мають бути невід'ємними
+    int get_n(){
+        return this->n;
+    }
     bool operator==(const Constr& r){
         if(m != r.m || n != r.n || a != r.a || b != r.b || sign != r.sign)
             return false;
@@ -85,10 +96,14 @@ public:
 };
 
 void LinFunc::Standartify(){
-    for(int i = 0; i < n; i++){
-        c[i] = c[i] * -1;
+    c.resize(n);
+    if(this->opt)//якщо opt = MAX
+    {
+        for(int i = 0; i < n; i++){
+            c[i] = c[i] * -1;
+        }
+        opt = MIN;
     }
-    opt = MIN;
 }
 
 void Constr::Standartify(){
@@ -100,8 +115,6 @@ void Constr::Standartify(){
     }
     if(nequal) //Якщо усі m лін. обмежень є рівностями, то ми вже й так маємо СЗЛП
     {
-//        std::vector<std::vector<double>> olda;  //Масив зі старими коефіцієнтами a, без балансних змінних
-//        olda = a;
         n = n + nequal; //додаємо nequal балансних змінних
 
         for(int i = 0; i < m; ++i){
@@ -116,14 +129,24 @@ void Constr::Standartify(){
                     if(j == n - nequal + k)
                         a[i][j] = sign[i] * (-1); //л. о. є нерівністю виду <= - маємо ДОДАТИ балансну змінну з коеф. 1,
                     //а якщо >= - ВІДНЯТИ із тим же коеф.
-                    else
-                        a[i][j] = 0;
                 }
                 sign[i] = 0;
                 k++;
             }
         }
     }
+}
+
+//Повертає вектор, в якому записано, у яких із m рядків потрібно ввести штучну змінну,
+//тобто, якщо не вдалось виділити у масиві a перший стовпець одиничної матриці,
+//то у векторі буде 0, якщо третій стовпець - у векторі буде 2 і т.д.
+std::vector<int> noid(std::vector<int> ident){
+    std::vector<int> r;
+    for(size_t i = 0; i < ident.size(); ++i){
+        if(ident[i] == -1)
+            r.push_back(i);
+    }
+    return r;
 }
 
 void Constr::Canonify(){
@@ -133,14 +156,11 @@ void Constr::Canonify(){
             for(int j = 0; j < n; j++){
                 a[i][j] *= -1;
             }
-            sign[i] *= -1;
+//            sign[i] *= -1; //й так із СЗЛП переводимо, там же рівності
             b[i] *= -1;
         }
     }
-    int *ident = new int[m];//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
-    for(int i = 0; i < m; i++){
-        ident[i] = -1;
-    }
+    std::vector<int> ident(m, -1);//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
     int c = 0; //скільки стовпців одиничної матриці виявлено
     for(int j = 0; j < n; j++)
     {
@@ -168,17 +188,28 @@ void Constr::Canonify(){
         }
         if(isidentcol)
         {
-            ident[k] = j;
-            c++;
+            if(ident[k] == -1)
+            {
+                ident[k] = j;
+                c++;
+            }
         }
     }
     if(c != m){
         //Якщо не вдалось знайти одиничну підматрицю, вводимо штучні змінні.
         n = n + m - c;
-        for(int j = 0; j < n + m - c; j++)
-        {
+        std::vector<int> noident = noid(ident);
+        for(int i = 0; i < m; ++i){
+            a[i].resize(n);
+        }
+        int k = 0;
+        for(int j = n + c - m; j < n; j++){
             for(int i = 0; i < m; i++){
-                
+                if(i == noident[k])//Якщо потрібно ввести у i-й рядок штучну змінну, вводимо її
+                {
+                    a[i][j] = 1;
+                    break;
+                }
             }
         }
     }
@@ -186,8 +217,7 @@ void Constr::Canonify(){
 
 void Solver::solve(){
     //Переведення задачі у СЗЛП
-    if(start_lf->opt)//якщо opt = MAX
-        start_lf->Standartify();
+    start_lf->Standartify();
     start_con->Standartify();
     start_con->Canonify();
 }
