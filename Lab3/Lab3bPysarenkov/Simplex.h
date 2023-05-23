@@ -2,6 +2,8 @@
 #define SIMPLEX_H
 #include <vector>
 #include <iostream>
+
+#define M 200000
 enum Opt{
     MIN, MAX
 };
@@ -25,7 +27,9 @@ public:
     void set_n(int n){
         this->n = n;
     }
-    void Standartify();//Переведення лін. функції у таку, що відповідає СЗЛП, тобто має прямувати в мінімум
+    void Standartify(int nNew);//Переведення лін. функції у таку, що відповідає СЗЛП, тобто має прямувати в мінімум
+    void Canonify(int nNew);//Переведення лін. функції у таку, що відповідає КЗЛП, тобто містить в доданках M(y1+...+yk),
+    //де yi - введені штучні змінні
     bool operator==(const LinFunc& r){
         if(c != r.c || n != r.n || opt != r.opt)
             return false;
@@ -73,11 +77,26 @@ public:
 
 //Крок симплекс-методу
 class Sol_Step{
-    LinFunc* lf;
-    Constr* con;
-    std::vector<int> basis;
-    std::vector<double> delta;
+    LinFunc* lf; //Лінійна функція
+    Constr* con; //Лінійні обмеження
+    std::vector<int> basis; //Базисні змінні
+    std::vector<double> delta;//симплекс-різниці
     std::vector<double> theta;
+    int min_delta;//індекс стовпця, для якого отримано мінімальну симплекс-різницю, або
+    //змінної, яку ми занесемо до базису
+    int min_theta;//індекс рядка, для якого отримано мінімальне тета, або
+    //змінної, яку ми витягнемо із базису
+public:
+    Sol_Step(LinFunc* lf, Constr* con){
+        this->lf = lf;
+        this->con = con;
+        this->basis = compute_basis();
+        this->delta = compute_delta();
+    }
+    std::vector<int> compute_basis();
+    std::vector<double> compute_delta();
+    std::vector<double> compute_theta();
+    Constr* get_next_step_con();
 };
 
 //Клас-розв'язувач задачі лінійного програмування
@@ -86,24 +105,35 @@ class Solver{
     LinFunc* start_lf;
     Constr* start_con;
     //Кроки симплекс-методу (можна зробити list)
+    bool solved;
     std::vector<Sol_Step> steps;
 public:
     Solver(LinFunc* lf, Constr* con){
         this->start_lf = lf;
         this->start_con = con;
+        this->solved = false;
     }
     void solve();
 };
 
-void LinFunc::Standartify(){
-    c.resize(n);
+void LinFunc::Standartify(int nNew){
+    c.resize(nNew);
     if(this->opt)//якщо opt = MAX
     {
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < nNew; i++){
             c[i] = c[i] * -1;
         }
         opt = MIN;
     }
+    n = nNew;
+}
+
+void LinFunc::Canonify(int nNew){
+    c.resize(nNew);
+    for(int i = n; i < nNew; i++){
+        c[i] = M;
+    }
+    n = nNew;
 }
 
 void Constr::Standartify(){
@@ -149,19 +179,11 @@ std::vector<int> noid(std::vector<int> ident){
     return r;
 }
 
-void Constr::Canonify(){
-    //всі елементи b мають бути невід'ємними!
-    for(int i = 0; i < m; i++){
-        if(b[i] < 0){
-            for(int j = 0; j < n; j++){
-                a[i][j] *= -1;
-            }
-//            sign[i] *= -1; //й так із СЗЛП переводимо, там же рівності
-            b[i] *= -1;
-        }
-    }
+std::vector<int> findident(std::vector<std::vector<double>> a){
+    int m = a.size();
+    int n = a[0].size();
     std::vector<int> ident(m, -1);//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
-    int c = 0; //скільки стовпців одиничної матриці виявлено
+//    int c = 0; //скільки стовпців одиничної матриці виявлено
     for(int j = 0; j < n; j++)
     {
         bool isidentcol = false; //чи є стовпець a стовпцем од. матриці
@@ -191,9 +213,64 @@ void Constr::Canonify(){
             if(ident[k] == -1)
             {
                 ident[k] = j;
-                c++;
+//                c++;
             }
         }
+    }
+    return ident;
+}
+
+void Constr::Canonify(){
+    //всі елементи b мають бути невід'ємними!
+    for(int i = 0; i < m; i++){
+        if(b[i] < 0){
+            for(int j = 0; j < n; j++){
+                a[i][j] *= -1;
+            }
+//            sign[i] *= -1; //й так із СЗЛП переводимо, там же рівності
+            b[i] *= -1;
+        }
+    }
+//    std::vector<int> ident(m, -1);//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
+//    int c = 0; //скільки стовпців одиничної матриці виявлено
+//    for(int j = 0; j < n; j++)
+//    {
+//        bool isidentcol = false; //чи є стовпець a стовпцем од. матриці
+//        int k = 0;//на якій позиції у стовпці стоїть 1
+//        for(int i = 0; i < m; i++){
+//            if(a[i][j] == 1)
+//            {
+//                if(!isidentcol)
+//                {
+//                    isidentcol = true;
+//                    k = i;
+//                }
+//                else//більше, ніж одна одиниця у стовпчику
+//                {
+//                    isidentcol = false;
+//                    break;
+//                }
+//            }
+//            else if(a[i][j] != 0)//не 1 і не 0
+//            {
+//                isidentcol = false;
+//                break;
+//            }
+//        }
+//        if(isidentcol)
+//        {
+//            if(ident[k] == -1)
+//            {
+//                ident[k] = j;
+//                c++;
+//            }
+//        }
+//    }
+    std::vector<int> ident = findident(a);
+    int c = 0;
+    for(auto i : ident){
+        if(i != - 1)
+            c++;
     }
     if(c != m){
         //Якщо не вдалось знайти одиничну підматрицю, вводимо штучні змінні.
@@ -215,10 +292,91 @@ void Constr::Canonify(){
     }
 }
 
+std::vector<int> Sol_Step::compute_basis(){
+    std::vector<int> ident = findident(con->a);
+    return ident;
+}
+
+std::vector<double> Sol_Step::compute_delta(){
+    std::vector<double> deltas;
+    for(int j = 0; j < con->n; j++){
+        double delta = lf->c[j];
+        for(int i = 0; i < con->m; i++){
+            delta -= con->a[i][j]*lf->c[basis[i]];
+        }
+        deltas.push_back(delta);
+    }
+    double min = INT_MAX;
+    int k = -1;
+    for(int i = 0; i < con->n; i++){
+        if(deltas[i] < min && deltas[i] < 0)
+        {
+            k = i;
+            min = deltas[i];
+        }
+    }
+    min_delta = k;
+    return deltas;
+}
+
+std::vector<double> Sol_Step::compute_theta(){
+    std::vector<double> aj;
+    for(int i = 0; i < con->m; i++){
+        aj.push_back(con->a[i][min_delta]);
+    }
+    std::vector<double> thetas(con->m, -1);
+    
+    for(int i = 0; i < con->m; i++){
+        if(con->b[i]/aj[i] > 0){
+            thetas[i] = con->b[i]/aj[i];
+        }
+    }
+    double min = INT_MAX;
+    int k = -1;
+    for(int i = 0; i < con->m; i++){
+        if(thetas[i] < min && thetas[i] > 0)
+        {
+            k = i;
+            min = thetas[i];
+        }
+    }
+    min_theta = k;
+    return thetas;
+}
+
+Constr* Sol_Step::get_next_step_con(){
+    Constr* retcon = new Constr(con->a, con->sign, con->b, con->m, con->n);
+    int i = min_theta;
+    int divby = retcon->a[min_delta][min_theta];
+    for(int j = 0; j < retcon->n; j++){
+        retcon->a[i][j] /= divby;
+    }
+    retcon->b[i] /= divby;
+    for(i = 0; i < retcon->m; i++){
+        if(i == min_theta)
+            continue;
+        int mult_by = retcon->a[i][min_delta];
+        for(int j = 0; j < retcon->n; j++){
+            retcon->a[i][j] -= retcon->a[min_theta][j]*mult_by;
+        }
+        retcon->b[i] -= retcon->b[min_theta]*mult_by;
+    }
+    return retcon;
+}
+
 void Solver::solve(){
     //Переведення задачі у СЗЛП
-    start_lf->Standartify();
     start_con->Standartify();
+    start_lf->Standartify(start_con->get_n());
+    //Переведення СЗЛП у КЗЛП
     start_con->Canonify();
+    while(!solved){
+        Sol_Step* step = new Sol_Step(start_lf, start_con);
+        Constr* step_con = step->get_con();
+        std::vector<std::vector<double>> a = step_con->a;
+        std::vector<double> b = step_con->b;
+        
+        steps.push_back(*step);
+    }
 }
 #endif // SIMPLEX_H

@@ -34,8 +34,7 @@ TEST_CASE("Standartify test"){
     LinFunc* lfres = new LinFunc(cr, nr, MIN);
     
     cc->Standartify();
-    lf->set_n(cc->get_n());
-    lf->Standartify();
+    lf->Standartify(cc->get_n());
     
     CHECK(*cc == *cres);
     CHECK(*lf == *lfres);
@@ -57,8 +56,7 @@ TEST_CASE("Standartify test"){
     lfres = new LinFunc(cr, nr, MIN);
     
     cc->Standartify();
-    lf->set_n(cc->get_n());
-    lf->Standartify();
+    lf->Standartify(cc->get_n());
     
     CHECK(*cc == *cres);
     CHECK(*lf == *lfres);
@@ -72,34 +70,84 @@ TEST_CASE("Standartify test"){
 TEST_CASE("Canonify test"){
     std::vector<std::vector<double>> a = {{2,3,-1,0,0},{-2,3,0,1,0},{2,-1,0,0,1}};
     std::vector<double> b = {1,5,4};
+    std::vector<double> c = {-1,-2,0,0,0};
     std::vector<int> s = {0, 0, 0};
     int m = 3, n = 5;
     Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MIN);
     
     std::vector<std::vector<double>> ar = {{2,3,-1,0,0,1},{-2,3,0,1,0,0},{2,-1,0,0,1,0}};
     std::vector<double> br = {1,5,4};
+    std::vector<double> cr = {-1,-2,0,0,0,M};
     std::vector<int> sr = {0, 0, 0};
     int mr = 3, nr = 6;
     Constr* cres = new Constr(ar, sr, br, mr, nr);
-
+    LinFunc* lfres = new LinFunc(cr, nr, MIN);
+    
     cc->Canonify();
+    lf->Canonify(cc->get_n());
     CHECK(*cc == *cres);
+    CHECK(*lf == *lfres);
     
     a = {{8,-5, 1,0,0},{2,7,0,1,0},{2,2,0,0,-1}};
-    b = {17,5,1};
+    b = {17,15,1};
+    c = {-3,-1,0,0,0};
     s = {0, 0, 0};
     m = 3, n = 5;
     cc = new Constr(a, s, b, m, n);
+    lf = new LinFunc(c, n, MIN);
     
     ar = {{8,-5, 1,0,0,0},{2,7,0,1,0,0},{2,2,0,0,-1,1}};
-    br = {17,5,1};
+    br = {17,15,1};
+    cr = {-3,-1,0,0,0,M};
     sr = {0, 0, 0};
     mr = 3, nr = 6;
     cres = new Constr(ar, sr, br, mr, nr);
+    lfres = new LinFunc(cr, nr, MIN);
     
     cc->Canonify();
+    lf->Canonify(cc->get_n());
     CHECK(*cc == *cres);
+    CHECK(*lf == *lfres);
     
     delete cc;
     delete cres;
+    delete lf;
+    delete lfres;
+}
+
+TEST_CASE("Delta computation test"){
+    std::vector<std::vector<double>> a = {{8,-5, 1,0,0,0},{2,7,0,1,0,0},{2,2,0,0,-1,1}};
+    std::vector<double> b = {17,15,1};
+    std::vector<double> c = {-3,-1,0,0,0,M};
+    std::vector<int> s = {0, 0, 0};
+    int m = 3, n = 6;
+    Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MIN);
+    
+    Sol_Step *step = new Sol_Step(lf, cc);
+    std::vector<double> dr = {-3-2*M, -1-2*M, 0, 0, M, 0};
+    std::vector<double> d = step->compute_delta();
+    CHECK(dr == d);
+    delete cc;
+    delete lf;
+    delete step;
+}
+
+TEST_CASE("Theta computation test"){
+    std::vector<std::vector<double>> a = {{8,-5, 1,0,0,0},{2,7,0,1,0,0},{2,2,0,0,-1,1}};
+    std::vector<double> b = {17,15,1};
+    std::vector<double> c = {-3,-1,0,0,0,M};
+    std::vector<int> s = {0, 0, 0};
+    int m = 3, n = 6;
+    Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MIN);
+    
+    Sol_Step *step = new Sol_Step(lf, cc);
+    std::vector<double> tr = {(double)17/8, (double)15/2, (double)1/2};
+    std::vector<double> t = step->compute_theta();
+    CHECK(tr == t);
+    delete cc;
+    delete lf;
+    delete step;
 }
