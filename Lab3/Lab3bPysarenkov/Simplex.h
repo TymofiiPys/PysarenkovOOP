@@ -8,6 +8,15 @@ enum Opt{
     MIN, MAX
 };
 
+enum SolutionStepTypes{
+    NOT_A_FINAL_STEP, FOUND_OPT, LIN_FUNC_UNLIMITED
+};
+
+struct Solution{
+    int type;
+    std::vector<double> sol;
+};
+
 //лінійна функція
 class LinFunc{
     //L = c[0]x[0] + c[1]x[1] + ... + c[n]x[n] -> opt
@@ -86,17 +95,23 @@ class Sol_Step{
     //змінної, яку ми занесемо до базису
     int min_theta;//індекс рядка, для якого отримано мінімальне тета, або
     //змінної, яку ми витягнемо із базису
+    int steptype;//чи розв'язок закінчується на цьому кроці і висновок з розв'язку
 public:
     Sol_Step(LinFunc* lf, Constr* con){
         this->lf = lf;
         this->con = con;
         this->basis = compute_basis();
         this->delta = compute_delta();
+        this->steptype = NOT_A_FINAL_STEP;
     }
     std::vector<int> compute_basis();
     std::vector<double> compute_delta();
     std::vector<double> compute_theta();
     Constr* get_next_step_con();
+    int get_steptype(){
+        return steptype;
+    }
+    std::vector<double> get_opt();
 };
 
 //Клас-розв'язувач задачі лінійного програмування
@@ -113,7 +128,7 @@ public:
         this->start_con = con;
         this->solved = false;
     }
-    void solve();
+    Solution solve();
 };
 
 void LinFunc::Standartify(int nNew){
@@ -316,6 +331,8 @@ std::vector<double> Sol_Step::compute_delta(){
         }
     }
     min_delta = k;
+    if(min_delta == -1)
+        steptype = FOUND_OPT;
     return deltas;
 }
 
@@ -341,6 +358,8 @@ std::vector<double> Sol_Step::compute_theta(){
         }
     }
     min_theta = k;
+    if(min_theta == -1)
+        steptype = LIN_FUNC_UNLIMITED;
     return thetas;
 }
 
@@ -364,19 +383,39 @@ Constr* Sol_Step::get_next_step_con(){
     return retcon;
 }
 
-void Solver::solve(){
+std::vector<double> Sol_Step::get_opt()
+{
+    std::vector<double> opt(con->n);
+    for(int i = 0; i < con->m; i++){
+        opt[basis[i]] = con->b[i];
+    }
+    return opt;
+}
+
+Solution Solver::solve(){
     //Переведення задачі у СЗЛП
     start_con->Standartify();
     start_lf->Standartify(start_con->get_n());
     //Переведення СЗЛП у КЗЛП
     start_con->Canonify();
+    Sol_Step* step = new Sol_Step(start_lf, start_con);
+    steps.push_back(*step);
+    if(step->get_steptype() != NOT_A_FINAL_STEP)
+        solved = true;
     while(!solved){
-        Sol_Step* step = new Sol_Step(start_lf, start_con);
-        Constr* step_con = step->get_con();
-        std::vector<std::vector<double>> a = step_con->a;
-        std::vector<double> b = step_con->b;
-        
+        Constr* step_con = step->get_next_step_con();
+        step = new Sol_Step(start_lf, step_con);
         steps.push_back(*step);
+        if(step->get_steptype() != NOT_A_FINAL_STEP)
+            solved = true;
     }
+    std::vector<double> sol;
+    int type = step->get_steptype();
+    if(type == LIN_FUNC_UNLIMITED)
+        sol = std::vector<double>(start_con->n, -1);
+    else
+        sol = {0};
+    delete step;
+    return {type, sol};
 }
 #endif // SIMPLEX_H
