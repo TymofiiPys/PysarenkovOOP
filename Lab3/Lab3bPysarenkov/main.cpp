@@ -151,3 +151,59 @@ TEST_CASE("Theta computation test"){
     delete lf;
     delete step;
 }
+
+TEST_CASE("Gauss-Jordan elimination test"){
+    std::vector<std::vector<double>> a = {{8,-5, 1,0,0,0},{2,7,0,1,0,0},{2,2,0,0,-1,1}};
+    std::vector<double> b = {17,15,1};
+    std::vector<double> c = {-3,-1,0,0,0,M};
+    std::vector<int> s = {0, 0, 0};
+    int m = 3, n = 6;
+    Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MIN);
+    
+    Sol_Step *step = new Sol_Step(lf, cc);
+    Constr* next = step->get_next_step_con();
+    std::vector<std::vector<double>> res_a = {{0, -13, 1, 0, 4, -4}, {0,5,0,1,1,-1},{1,1,0,0,-0.5,0.5}};
+    CHECK(next->get_a() == res_a);
+    delete next;
+    delete cc;
+    delete lf;
+    delete step;
+}
+
+TEST_CASE("Solution test"){
+    std::vector<std::vector<double>> a = {{8,-5},{2,7},{2,2}};
+    std::vector<double> b = {17,15,1};
+    std::vector<double> c = {3,1};
+    std::vector<int>s = {-1, -1, 1};
+    int m = 3, n = 2;
+
+    Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MAX);
+    Solver* sol = new Solver(lf, cc);
+    Solution opt = sol->solve();
+    std::vector<double> optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132, 0};
+    
+    CHECK(opt.type == FOUND_OPT);
+    CHECK(opt.sol == optres);
+    
+    a = {{2,3},{-2,3},{2,-1}};
+    b = {1,5,4};
+    c = {1,2};
+    s = {1, -1, -1};
+    m = 3;
+    n = 2;
+    
+    cc = new Constr(a, s, b, m, n);
+    lf = new LinFunc(c, n, MAX);
+    sol = new Solver(lf, cc);
+    opt = sol->solve();
+    optres = {4.25, 4.5, 21, 0, 0, 0};
+    
+    CHECK(opt.type == FOUND_OPT);
+    CHECK(opt.sol == optres);
+    
+    delete sol;
+    delete lf;
+    delete cc;
+}

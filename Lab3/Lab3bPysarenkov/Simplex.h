@@ -80,6 +80,9 @@ public:
             return false;
         return true;
     }
+    std::vector<std::vector<double>> get_a(){
+        return a;
+    }
     friend class Sol_Step;
     friend class Solver;
 };
@@ -100,9 +103,10 @@ public:
     Sol_Step(LinFunc* lf, Constr* con){
         this->lf = lf;
         this->con = con;
+        this->steptype = NOT_A_FINAL_STEP;
         this->basis = compute_basis();
         this->delta = compute_delta();
-        this->steptype = NOT_A_FINAL_STEP;
+        this->theta = compute_theta(); 
     }
     std::vector<int> compute_basis();
     std::vector<double> compute_delta();
@@ -246,41 +250,6 @@ void Constr::Canonify(){
             b[i] *= -1;
         }
     }
-//    std::vector<int> ident(m, -1);//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
-//    int c = 0; //скільки стовпців одиничної матриці виявлено
-//    for(int j = 0; j < n; j++)
-//    {
-//        bool isidentcol = false; //чи є стовпець a стовпцем од. матриці
-//        int k = 0;//на якій позиції у стовпці стоїть 1
-//        for(int i = 0; i < m; i++){
-//            if(a[i][j] == 1)
-//            {
-//                if(!isidentcol)
-//                {
-//                    isidentcol = true;
-//                    k = i;
-//                }
-//                else//більше, ніж одна одиниця у стовпчику
-//                {
-//                    isidentcol = false;
-//                    break;
-//                }
-//            }
-//            else if(a[i][j] != 0)//не 1 і не 0
-//            {
-//                isidentcol = false;
-//                break;
-//            }
-//        }
-//        if(isidentcol)
-//        {
-//            if(ident[k] == -1)
-//            {
-//                ident[k] = j;
-//                c++;
-//            }
-//        }
-//    }
     std::vector<int> ident = findident(a);
     int c = 0;
     for(auto i : ident){
@@ -337,6 +306,10 @@ std::vector<double> Sol_Step::compute_delta(){
 }
 
 std::vector<double> Sol_Step::compute_theta(){
+    if(steptype == FOUND_OPT){
+        min_theta = -2;
+        return std::vector<double> (con->m, -1);
+    }
     std::vector<double> aj;
     for(int i = 0; i < con->m; i++){
         aj.push_back(con->a[i][min_delta]);
@@ -366,7 +339,7 @@ std::vector<double> Sol_Step::compute_theta(){
 Constr* Sol_Step::get_next_step_con(){
     Constr* retcon = new Constr(con->a, con->sign, con->b, con->m, con->n);
     int i = min_theta;
-    int divby = retcon->a[min_delta][min_theta];
+    double divby = retcon->a[min_theta][min_delta];
     for(int j = 0; j < retcon->n; j++){
         retcon->a[i][j] /= divby;
     }
@@ -374,7 +347,7 @@ Constr* Sol_Step::get_next_step_con(){
     for(i = 0; i < retcon->m; i++){
         if(i == min_theta)
             continue;
-        int mult_by = retcon->a[i][min_delta];
+        double mult_by = retcon->a[i][min_delta];
         for(int j = 0; j < retcon->n; j++){
             retcon->a[i][j] -= retcon->a[min_theta][j]*mult_by;
         }
@@ -398,6 +371,7 @@ Solution Solver::solve(){
     start_lf->Standartify(start_con->get_n());
     //Переведення СЗЛП у КЗЛП
     start_con->Canonify();
+    start_lf->Canonify(start_con->get_n());
     Sol_Step* step = new Sol_Step(start_lf, start_con);
     steps.push_back(*step);
     if(step->get_steptype() != NOT_A_FINAL_STEP)
@@ -414,7 +388,7 @@ Solution Solver::solve(){
     if(type == LIN_FUNC_UNLIMITED)
         sol = std::vector<double>(start_con->n, -1);
     else
-        sol = {0};
+        sol = step->get_opt();
     delete step;
     return {type, sol};
 }
