@@ -1,9 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 #include "mainwindow.h"
-#include "Simplex.h"
+#include "includes.h"
+#include "SimplexMulti.h"
 #include <QApplication>
-
+#include <chrono>
 
 int main(int argc, char *argv[])
 {
@@ -207,3 +208,103 @@ TEST_CASE("Solution test"){
     delete lf;
     delete cc;
 }
+
+TEST_CASE("Basis test"){
+//    std::vector<std::vector<double>> a = {{8,-5, 1,0,0},{2,7,0,1,0,},{2,2,0,0,-1}};
+//    std::vector<double> b = {17,15,1};
+//    std::vector<int> basis = {1,3,4}
+    std::vector<std::vector<double>> a = {{2,3, -1,0,0},{-2,3,0,1,0,},{2,-1,0,0,1}};
+    std::vector<double> b = {1,5,4};
+    std::vector<int> basis = {0,3,4};
+    
+    Constr* cc = new Constr(a, std::vector<int>(3,0), b, 3, 5);
+    *cc = adapt_to_basis(*cc, basis);
+    
+    std::vector<std::vector<double>> ar = {{1,(double)3/2, (double)-1/2,0,0},{0,6,-1,1,0,},{0,-4,1,0,1}};
+    std::vector<double> br = {0.5,6,3};
+    
+    Constr* cres = new Constr(ar, std::vector<int>(3,0), br, 3, 5);
+    
+    CHECK(*cc == *cres);
+    
+    delete cc;
+    delete cres;
+}
+
+TEST_CASE("Multithreading test"){
+    std::vector<std::vector<double>> a = {{8,-5},{2,7},{2,2}};
+    std::vector<double> b = {17,15,1};
+    std::vector<double> c = {3,1};
+    std::vector<int>s = {-1, -1, 1};
+    int m = 3, n = 2;
+    
+    Constr* cc = new Constr(a, s, b, m, n);
+    LinFunc* lf = new LinFunc(c, n, MAX);
+    Solver* sol = new Solver(lf, cc);
+    
+    Solution opt = sol->multithreadedLPP(1);
+    std::vector<double> optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
+    
+    CHECK(opt.sol == optres);
+    
+    opt = sol->multithreadedLPP(2);
+    optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
+    
+    CHECK(opt.sol == optres);
+    
+    opt = sol->multithreadedLPP(4);
+    optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
+    
+    CHECK(opt.sol == optres);
+    
+    delete sol;
+    delete lf;
+    delete cc;
+}
+
+#ifndef QT_DEBUG
+TEST_CASE("EXECUTION TIMES"){
+    Constr* cc;
+    LinFunc* lf;
+    Solver* sol;
+    for(int i = 3, j = 2; i <= 9; i += 3, j += 2){
+        std::cout << "=======Size of the constraint matrix (A | B): (" << i << "+1)x" << j << ")=========" << std::endl;
+        std::vector<std::vector<double>> a;
+        std::vector<double> b;
+        std::vector<double> c;
+        for(int ii = 0; ii < i; ++ii){
+            b.push_back(rand() % 40 - 20);
+            std::vector<double> ai;
+            for(int jj = 0; jj < j; ++jj){
+                ai.push_back(rand() % 40 - 20);
+            }
+            a.push_back(ai);
+        }
+        for(int jj = 0; jj < j; ++jj){
+            c.push_back(rand() % 40 - 20);
+        }
+        cc = new Constr(a, std::vector(i, -1), b, i, j);
+        lf = new LinFunc(c, j, MIN);
+        for(int k = 1; k <= 16; k*=2){
+            sol = new Solver(lf, cc);
+            std::clock_t start = clock(), end;
+            Solution opt = sol->multithreadedLPP(k);
+            end = clock();
+            std::cout << "Threads: " << k << ", time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
+            delete sol;
+        }
+        delete cc;
+        delete lf;
+    }
+    //Якщо нема часу і НУ ДУУУУУУУЖЕ ЦІКАВО час виконання на цьому розмірі:
+    //=======Size of the constraint matrix (A | B): (12+1)x8)=========
+    //Threads: 1, time: 29294 ms
+    //Threads: 2, time: 26967 ms
+    //Threads: 4, time: 27944 ms
+    //Threads: 8, time: 30536 ms
+    //Threads: 16, time: 32536 ms
+//    delete sol;
+//    delete cc;
+//    delete lf;
+}
+#endif
