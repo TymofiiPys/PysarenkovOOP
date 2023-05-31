@@ -1,6 +1,6 @@
 #ifndef SIMPLEXMULTI_H
 #define SIMPLEXMULTI_H
-//#include "Simplex.h"
+#include "Simplex.h"
 #include <thread>
 #include <algorithm>
 #include <string>
@@ -119,7 +119,7 @@ void find_sol_with_basis(int num_threads, int thread_id, LinFunc lf, Constr con,
     *solthr = Solution{0, sol, minlfvalue};
 }
 
-Solution Solver::multithreadedLPP(int num_thr){
+Solution Solver::multithreadedLPP_basis(int num_thr){
     std::vector<std::thread> threads;
     std::vector<double> sol;
     

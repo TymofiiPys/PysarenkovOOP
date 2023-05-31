@@ -242,17 +242,17 @@ TEST_CASE("Multithreading test"){
     LinFunc* lf = new LinFunc(c, n, MAX);
     Solver* sol = new Solver(lf, cc);
     
-    Solution opt = sol->multithreadedLPP(1);
+    Solution opt = sol->multithreadedLPP_basis(1);
     std::vector<double> optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
     
     CHECK(opt.sol == optres);
     
-    opt = sol->multithreadedLPP(2);
+    opt = sol->multithreadedLPP_basis(2);
     optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
     
     CHECK(opt.sol == optres);
     
-    opt = sol->multithreadedLPP(4);
+    opt = sol->multithreadedLPP_basis(4);
     optres = {(double)776/264, (double)43/33, 0, 0, (double)988/132};
     
     CHECK(opt.sol == optres);
@@ -262,7 +262,7 @@ TEST_CASE("Multithreading test"){
     delete cc;
 }
 
-#ifndef QT_DEBUG
+#ifdef QT_DEBUG
 TEST_CASE("EXECUTION TIMES"){
     Constr* cc;
     LinFunc* lf;
@@ -285,10 +285,16 @@ TEST_CASE("EXECUTION TIMES"){
         }
         cc = new Constr(a, std::vector(i, -1), b, i, j);
         lf = new LinFunc(c, j, MIN);
+        sol = new Solver(lf, cc);
+        std::clock_t start = clock(), end;
+        Solution opt = sol->solve();
+        end = clock();
+        delete sol;
+        std::cout << "Single-thread, time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
         for(int k = 1; k <= 16; k*=2){
             sol = new Solver(lf, cc);
             std::clock_t start = clock(), end;
-            Solution opt = sol->multithreadedLPP(k);
+            Solution opt = sol->multithreadedLPP_basis(k);
             end = clock();
             std::cout << "Threads: " << k << ", time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
             delete sol;

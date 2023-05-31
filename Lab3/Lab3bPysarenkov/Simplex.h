@@ -56,6 +56,7 @@ public:
     }
     
     friend class Sol_Step;
+    friend class Sol_Step_Mult;    
     friend class Solver;
 };
 
@@ -110,6 +111,7 @@ public:
     }
     
     friend class Sol_Step;
+    friend class Sol_Step_Mult;
     friend class Solver;
 };
 
@@ -157,6 +159,51 @@ public:
     std::vector<double> get_opt();
 };
 
+class Sol_Step_Mult{
+    LinFunc* lf; //Лінійна функція
+    
+    Constr* con; //Лінійні обмеження
+    
+    std::vector<int> basis; //Базисні змінні
+    
+    std::vector<double> delta;//симплекс-різниці
+    
+    std::vector<double> theta;
+    
+    int min_delta;//індекс стовпця, для якого отримано мінімальну симплекс-різницю, або
+    //змінної, яку ми занесемо до базису
+    
+    int min_theta;//індекс рядка, для якого отримано мінімальне тета, або
+    //змінної, яку ми витягнемо із базису
+    
+    int steptype;//чи розв'язок закінчується на цьому кроці і висновок з розв'язку
+public:
+    Sol_Step_Mult(LinFunc* lf, Constr* con, int num_thr){
+        this->lf = lf;
+        this->con = con;
+        this->steptype = NOT_A_FINAL_STEP;
+        this->basis = compute_basis();
+        this->delta = compute_delta(num_thr);
+        this->theta = compute_theta(); 
+    }
+    
+    std::vector<int> compute_basis();
+    
+    std::vector<double> compute_delta(int num_thr);
+    
+    std::vector<double> compute_theta();
+    
+//    void subtract_row(int num_thr, int thread_id, Constr* retcon);
+    
+    Constr* get_next_step_con(int num_thr);
+    
+    int get_steptype(){
+        return steptype;
+    }
+    
+    std::vector<double> get_opt();
+};
+
 //Клас-розв'язувач задачі лінійного програмування
 class Solver{
     //Початкові умови:
@@ -173,7 +220,9 @@ public:
     }
     Solution solve();
 //    void find_sol_with_basis(int num_threads, int thread_id, LinFunc lf, Constr con, std::vector<std::vector<int>> arrbasis, Solution& solthr);
-    Solution multithreadedLPP(int num_thr);
+    Solution multithreadedLPP_basis(int num_thr);
+    
+    Solution multithreadedLPP_simplex(int num_thr);
 };
 
 

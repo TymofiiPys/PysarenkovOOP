@@ -1,4 +1,5 @@
 #include "Simplex.h"
+#include <thread>
 
 void LinFunc::Standartify(int nNew){
     c.resize(nNew);
@@ -271,4 +272,169 @@ Solution Solver::solve(){
     }
     delete step;
     return {type, sol, lfvalue};
+}
+
+
+
+
+std::vector<int> findident_mult(std::vector<std::vector<double>> a){
+    int m = a.size();
+    int n = a[0].size();
+    std::vector<int> ident(m, -1);//Масив, у якому записується, який стовпець матриці a містить i-й стовпець одиничної матриці
+    //    int c = 0; //скільки стовпців одиничної матриці виявлено
+    for(int j = 0; j < n; j++)
+    {
+        bool isidentcol = false; //чи є стовпець a стовпцем од. матриці
+        int k = 0;//на якій позиції у стовпці стоїть 1
+        for(int i = 0; i < m; i++){
+            if(a[i][j] == 1)
+            {
+                if(!isidentcol)
+                {
+                    isidentcol = true;
+                    k = i;
+                }
+                else//більше, ніж одна одиниця у стовпчику
+                {
+                    isidentcol = false;
+                    break;
+                }
+            }
+            else if(a[i][j] != 0)//не 1 і не 0
+            {
+                isidentcol = false;
+                break;
+            }
+        }
+        if(isidentcol)
+        {
+            if(ident[k] == -1)
+            {
+                ident[k] = j;
+                //                c++;
+            }
+        }
+    }
+    return ident;
+}
+
+std::vector<int> Sol_Step_Mult::compute_basis(){
+    std::vector<int> ident = findident_mult(con->a);
+    return ident;
+}
+
+void delta_i(){
+    
+}
+
+std::vector<double> Sol_Step_Mult::compute_delta(int num_thr){
+    std::vector<double> deltas;
+//    std::vector<std::thread> threads; 
+//    for(int i = 0; i < num_thr; i++){
+//        threads.push_back(std::thread(delta_i, num_thr, i, con->a, con->b, min_delta));
+//    }
+//    for(int i = 0; i < num_thr; i++){
+//        threads[i].join();
+//    }
+    for(int j = /*thread_id*/0; j < con->n; j+=num_thr){
+        double delta = lf->c[j];
+        for(int i = 0; i < con->m; i++){
+            delta -= con->a[i][j]*lf->c[basis[i]];
+        }
+        deltas.push_back(delta);
+    }
+    double min = INT_MAX;
+    int k = -1;
+    for(int i = 0; i < con->n; i++){
+        if(deltas[i] < min && deltas[i] < 0)
+        {
+            k = i;
+            min = deltas[i];
+        }
+    }
+    min_delta = k;
+    if(min_delta == -1)
+        steptype = FOUND_OPT;
+    return deltas;
+}
+
+std::vector<double> Sol_Step_Mult::compute_theta(){
+    if(steptype == FOUND_OPT){
+        min_theta = -2;
+        return std::vector<double> (con->m, -1);
+    }
+    std::vector<double> aj;
+    for(int i = 0; i < con->m; i++){
+        aj.push_back(con->a[i][min_delta]);
+    }
+    std::vector<double> thetas(con->m, -1);
+    
+    for(int i = 0; i < con->m; i++){
+        if(con->b[i]/aj[i] > 0){
+            thetas[i] = con->b[i]/aj[i];
+        }
+    }
+    double min = INT_MAX;
+    int k = -1;
+    for(int i = 0; i < con->m; i++){
+        if(thetas[i] < min && thetas[i] > 0)
+        {
+            k = i;
+            min = thetas[i];
+        }
+    }
+    min_theta = k;
+    if(min_theta == -1)
+        steptype = LIN_FUNC_UNLIMITED;
+    return thetas;
+}
+
+void subtract_row(int num_thr, int thread_id, std::vector<std::vector<double>> a, std::vector<double> b, int min_theta, int min_delta){
+    int m = b.size();
+    int n = a[0].size();
+    for(int i = thread_id; i < m; i+= num_thr){
+        if(i == min_theta)
+            continue;
+        double mult_by = a[i][min_delta];
+        for(int j = 0; j < n; j++){
+            a[i][j] -= a[min_theta][j]*mult_by;
+        }
+        b[i] -= b[min_theta]*mult_by;
+    }
+}
+
+Constr* Sol_Step_Mult::get_next_step_con(int num_thr){
+    Constr* retcon = new Constr(con->a, con->sign, con->b, con->m, con->n);
+    int i = min_theta;
+    double divby = retcon->a[min_theta][min_delta];
+    for(int j = 0; j < retcon->n; j++){
+        retcon->a[i][j] /= divby;
+    }
+    retcon->b[i] /= divby;
+    std::vector<std::thread> threads; 
+    for(int i = 0; i < num_thr; i++){
+        threads.push_back(std::thread(subtract_row, num_thr, i, retcon->a, retcon->b, min_theta, min_delta));
+    }
+    for(int i = 0; i < num_thr; i++){
+        threads[i].join();
+    }
+//    for(i = 0; i < retcon->m; i++){
+//        if(i == min_theta)
+//            continue;
+//        double mult_by = retcon->a[i][min_delta];
+//        for(int j = 0; j < retcon->n; j++){
+//            retcon->a[i][j] -= retcon->a[min_theta][j]*mult_by;
+//        }
+//        retcon->b[i] -= retcon->b[min_theta]*mult_by;
+//    }
+    return retcon;
+}
+
+std::vector<double> Sol_Step_Mult::get_opt()
+{
+    std::vector<double> opt(con->n);
+    for(int i = 0; i < con->m; i++){
+        opt[basis[i]] = con->b[i];
+    }
+    return opt;
 }

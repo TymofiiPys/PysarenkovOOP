@@ -10,6 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     Simplex.cpp \
+    SimplexMulti2.cpp \
+    SimplexMulti2.cpp \
     main.cpp \
     mainwindow.cpp
 
