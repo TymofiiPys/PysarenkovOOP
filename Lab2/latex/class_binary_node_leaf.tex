@@ -21,7 +21,16 @@ Inheritance diagram for Binary\+Node\+Leaf\texorpdfstring{$<$}{<} T \texorpdfstr
 \mbox{\Hypertarget{class_binary_node_leaf_a143d1b3292a02eb4f706bb1800f3a7b6}\label{class_binary_node_leaf_a143d1b3292a02eb4f706bb1800f3a7b6}} 
 {\bfseries Binary\+Node\+Leaf} (T key)
 \item 
+\mbox{\Hypertarget{class_binary_node_leaf_a998afdc06c32058b5a9ea5217909583d}\label{class_binary_node_leaf_a998afdc06c32058b5a9ea5217909583d}} 
+{\bfseries Binary\+Node\+Leaf} (\mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$ $\ast$comp)
+\item 
 void \mbox{\hyperlink{class_binary_node_leaf_a859342ff0bc5d7070d53d077334cfb73}{Add}} (T key) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Search}} (T key) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Remove}} (T key) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{get\+Min}} () override
 \end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
@@ -42,6 +51,58 @@ void \mbox{\hyperlink{class_binary_node_leaf}{Binary\+Node\+Leaf}}$<$ T $>$\+::\
 
 
 Implements \mbox{\hyperlink{class_node}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}\label{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}} 
+\index{BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}!getMin@{getMin}}
+\index{getMin@{getMin}!BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMin()}{getMin()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf}{Binary\+Node\+Leaf}}$<$ T $>$\+::get\+Min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get node with the least key
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} with the least key in a tree rooted by this node 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}\label{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}} 
+\index{BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}!Remove@{Remove}}
+\index{Remove@{Remove}!BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf}{Binary\+Node\+Leaf}}$<$ T $>$\+::\+Remove (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Removal of a node containing the key
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{\hyperlink{class_node}{Node}}, containing this key, will be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}\label{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}} 
+\index{BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}!Search@{Search}}
+\index{Search@{Search}!BinaryNodeLeaf$<$ T $>$@{BinaryNodeLeaf$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Search()}{Search()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_leaf}{Binary\+Node\+Leaf}}$<$ T $>$\+::\+Search (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Search for a key in the tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em Key} & which will be found in the tree \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Node$<$ T $>$}}.
 
 
 

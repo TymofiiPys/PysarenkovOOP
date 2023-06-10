@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['remove_0',['Remove',['../class_node.html#a023adaa4561ad9c2e6429a1e8f82ef4e',1,'Node::Remove()'],['../class_binary_node.html#a1da9f4ffdf82d36aefdac5df495d46dc',1,'BinaryNode::Remove()']]],
-  ['right_1',['right',['../class_node_compos.html#aa87da84c7f6d0c26093d97b80e7a1577',1,'NodeCompos']]]
+  ['remove_0',['Remove',['../class_node.html#a15cde0ccd1660efe88aa34e5f6c08de6',1,'Node::Remove()'],['../class_binary_node_compos.html#a6707d474172f0e94481d132c49259242',1,'BinaryNodeCompos::Remove()'],['../class_binary_node_leaf.html#ab58706fa12dfa6a4f117ab9aabfc7c24',1,'BinaryNodeLeaf::Remove()']]],
+  ['right_5f_1',['right_',['../class_node_compos.html#a3e1232ea830cf5e75a7e5f1eb4e9740b',1,'NodeCompos']]]
 ];

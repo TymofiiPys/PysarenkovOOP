@@ -26,8 +26,18 @@ Inheritance diagram for Binary\+Node\+Compos\texorpdfstring{$<$}{<} T \texorpdfs
 \item 
 void \mbox{\hyperlink{class_binary_node_compos_ade1acf08628b04a9240b59040adc47f4}{Add}} (T key) override
 \item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Search}} (T key) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Remove}} (T key) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{get\+Successor}} () override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{get\+Min}} () override
+\item 
 \mbox{\Hypertarget{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}\label{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}} 
 void {\bfseries set\+Child} ()
+\begin{DoxyCompactList}\small\item\em Set this node as a child of its parent. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_binary_node_compos_ab2491e5f46e8271ef677d39f77a787c8}{set\+Child}} (\mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$ $\ast$parent)
 \end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
@@ -49,6 +59,86 @@ void \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\
 
 Implements \mbox{\hyperlink{class_node}{Node$<$ T $>$}}.
 
+\mbox{\Hypertarget{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}\label{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}} 
+\index{BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}!getMin@{getMin}}
+\index{getMin@{getMin}!BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMin()}{getMin()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\+::get\+Min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get node with the least key
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} with the least key in a tree rooted by this node 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}\label{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}} 
+\index{BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}!getSuccessor@{getSuccessor}}
+\index{getSuccessor@{getSuccessor}!BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSuccessor()}{getSuccessor()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\+::get\+Successor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get successor of the node
+
+\begin{DoxyReturn}{Returns}
+Node-\/successor (node with next greater key) 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_node_a3329e51812286333e81c3804a623da9e}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_compos_a6707d474172f0e94481d132c49259242}\label{class_binary_node_compos_a6707d474172f0e94481d132c49259242}} 
+\index{BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}!Remove@{Remove}}
+\index{Remove@{Remove}!BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\+::\+Remove (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Removal of a node containing the key
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{\hyperlink{class_node}{Node}}, containing this key, will be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}\label{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}} 
+\index{BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}!Search@{Search}}
+\index{Search@{Search}!BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Search()}{Search()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\+::\+Search (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Search for a key in the tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em Key} & which will be found in the tree \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_binary_node_compos_ab2491e5f46e8271ef677d39f77a787c8}\label{class_binary_node_compos_ab2491e5f46e8271ef677d39f77a787c8}} 
+\index{BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}!setChild@{setChild}}
+\index{setChild@{setChild}!BinaryNodeCompos$<$ T $>$@{BinaryNodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setChild()}{setChild()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$\+::set\+Child (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_binary_node_compos}{Binary\+Node\+Compos}}$<$ T $>$ $\ast$}]{parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set this node as a child of passed parent 
+\begin{DoxyParams}{Parameters}
+{\em parent} & \mbox{\hyperlink{class_node}{Node}}, which will have this as a child \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

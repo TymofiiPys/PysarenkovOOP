@@ -35,13 +35,13 @@ public:
     //! 
     //! \param Key which will be found in the tree
     //! 
-    virtual void Search(T key){}
+    virtual Node* Search(T key) { return nullptr; }
     //!
     //! Removal of a node containing the key
     //! 
     //! \param key Node, containing this key, will be removed
     //! 
-    virtual void Remove(){}
+    virtual Node<T>* Remove(T key) { return this; }
     /** Set left child of the node
     *
     * \param n Node which is set as a left child of this node
@@ -52,6 +52,16 @@ public:
     * \param n Node which is set as a right child of this node
     */
     virtual void setRight(Node* n){}
+    /** Get left child of the node
+    *
+    * \return Node which is the left child of this node
+    */
+    virtual Node* getLeft() { return nullptr; }
+    /** Get right child of the node
+    *
+    * \return Node which is the right child of this node
+    */
+    virtual Node* getRight() { return nullptr; }
     //! Set parent node
     /*
     * \param p Node which is set as parent of this node
@@ -75,6 +85,18 @@ public:
     T getKey() {
         return this->key_;
     }
+    //!
+    //!  Get successor of the node 
+    //! 
+    //! \return Node-successor (node with next greater key)
+    //! 
+    virtual Node* getSuccessor() { return nullptr; }
+    //!
+    //! Get node with the least key
+    //! 
+    //! \return Node with the least key in a tree rooted by this node
+    //! 
+    virtual Node* getMin() { return nullptr; }
     //! 
     //! Check whether the node is leaf
     //! 
@@ -94,16 +116,23 @@ template<typename T>
 class NodeCompos : virtual public Node<T>{
 protected:
     //! Left child of the node
-    Node<T>* left;
+    Node<T>* left_;
     //! Right child of the node
-    Node<T>* right;
+    Node<T>* right_;
 public:
-    NodeCompos() : left(nullptr), right(nullptr){}
+    NodeCompos() : left_(nullptr), right_(nullptr){}
+    NodeCompos(Node<T>* left, Node<T>* right) : left_(left), right_(right){}
     void setLeft(Node<T>* n) override {
-        this->left = n;
+        this->left_ = n;
     }
     void setRight(Node<T>* n) override {
-        this->right = n;
+        this->right_ = n;
+    }
+    Node<T>* getLeft() override {
+        return this->left_;
+    }
+    Node<T>* getRight() override {
+        return this->right_;
     }
 };
 
@@ -127,7 +156,6 @@ public:
     BinaryNode(){
         
     }
-    void Remove() override{};
 };
 
 template<typename T>
@@ -143,29 +171,104 @@ public:
     void Add(T key) override{
         if(key < this->key_)
         {
-            if(this->left)
-                this->left->Add(key);
+            if(this->left_)
+                this->left_->Add(key);
             else //when there is right but there's no left child
             {
-                this->left = new BinaryNodeLeaf<T>(key);
-                this->left->setParent(this);
+                this->left_ = new BinaryNodeLeaf<T>(key);
+                this->left_->setParent(this);
             }
         }
         else{
-            if(this->right)
-                this->right->Add(key);
+            if(this->right_)
+                this->right_->Add(key);
             else
             {
-                this->right = new BinaryNodeLeaf<T>(key);
-                this->right->setParent(this);
+                this->right_ = new BinaryNodeLeaf<T>(key);
+                this->right_->setParent(this);
             }
         }
     }
+    Node<T>* Search(T key) override{
+        Node<T>* b = nullptr;
+        if (key < this->key_)
+        {
+            if (this->left_)
+                b = this->left_->Search(key);
+            else
+                return nullptr;
+        }
+        else if (key > this->key_) {
+            if (this->right_)
+                b = this->right_->Search(key);
+            else
+                return nullptr;
+        }
+        else
+            return this;
+        return b;
+    }
+    Node<T>* Remove(T key) override {
+        if (key < this->key_)
+        {
+            if (this->left_)
+                this->left_ = this->left_->Remove(key);
+            else
+                return this;
+        }
+        else if (key > this->key_) {
+            if (this->right_)
+                this->right_ = this->right_->Remove(key);
+            else
+                return this;
+        }
+        else {
+            if (!this->left_)
+            {
+                Node<T>* right = this->right_;
+                right->setParent(this->parent_);
+                delete this;
+                return right;
+            }
+            if (!this->right_) {
+                Node<T>* left = this->left_;
+                left->setParent(this->parent_);
+                delete this;
+                return left;
+            }
+            else {
+                Node<T>* succ = this->getSuccessor();
+                this->key_ = succ->getKey();
+                this->right_ = this->right_->Remove(this->key_);
+            }
+        }
+        return this;
+    };
+    Node<T>* getSuccessor() override {
+        return this->right_->getMin();
+    }
+    Node<T>* getMin() override {
+        Node<T>* min;
+        if (this->left_)
+            min = this->left_->getMin();
+        else
+            min = this;
+        return min;
+    }
+    //!Set this node as a child of its parent
     void setChild() {
         if (this->key_ < this->parent_->getKey())
             this->parent_->setLeft(this);
         else
             this->parent_->setRight(this);
+    }
+    //!Set this node as a child of passed parent
+    //! \param parent Node, which will have this as a child
+    void setChild(BinaryNodeCompos<T>* parent) {
+        if (this->key_ < parent->getKey())
+            parent->setLeft(this);
+        else
+            parent->setRight(this);
     }
 };
 
@@ -174,6 +277,7 @@ template<typename T>
 class BinaryNodeLeaf : public BinaryNode<T>, public NodeLeaf<T>{
 public:
     BinaryNodeLeaf(T key) : Node<T>(key), NodeLeaf<T>(){}
+    BinaryNodeLeaf(BinaryNodeCompos<T>* comp) : Node<T>(comp->getKey(), comp->getParent()), NodeLeaf<T>() {}
     void Add(T key) override{
         //Conversion of leaf to composite
         BinaryNodeCompos<T>* toCompos = new BinaryNodeCompos<T>(this);
@@ -181,6 +285,25 @@ public:
         //Addition of the key to a child node of the converted node
         toCompos->Add(key);
         delete this;
+    }
+    Node<T>* Search(T key) override {
+        if (this->key_ == key)
+            return this;
+        return nullptr;
+    }
+    Node<T>* Remove(T key) override {
+        if (this->key_ == key)
+        {
+            delete this;
+            return nullptr;
+        }
+        return this;
+    }
+    //Node<T>* getSuccessor() override {
+    //    return this->right_->getMin();
+    //}
+    Node<T>* getMin() override {
+        return this;
     }
 };
 

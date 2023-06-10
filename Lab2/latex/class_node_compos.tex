@@ -18,18 +18,25 @@ Inheritance diagram for Node\+Compos\texorpdfstring{$<$}{<} T \texorpdfstring{$>
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{class_node_compos_a406c73f156c37615716d7eaa1ab78cb2}\label{class_node_compos_a406c73f156c37615716d7eaa1ab78cb2}} 
+{\bfseries Node\+Compos} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$left, \mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$right)
+\item 
 void \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{set\+Left}} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$n) override
 \item 
 void \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{set\+Right}} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$n) override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{get\+Left}} () override
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{get\+Right}} () override
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_node_compos_add4bcb9e67314eb4e145a8adc290164b}\label{class_node_compos_add4bcb9e67314eb4e145a8adc290164b}} 
-\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries left}
+\mbox{\Hypertarget{class_node_compos_a928e9b4c76b4d3f1f3cf96a874fce97a}\label{class_node_compos_a928e9b4c76b4d3f1f3cf96a874fce97a}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries left\+\_\+}
 \begin{DoxyCompactList}\small\item\em Left child of the node. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_node_compos_aa87da84c7f6d0c26093d97b80e7a1577}\label{class_node_compos_aa87da84c7f6d0c26093d97b80e7a1577}} 
-\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries right}
+\mbox{\Hypertarget{class_node_compos_a3e1232ea830cf5e75a7e5f1eb4e9740b}\label{class_node_compos_a3e1232ea830cf5e75a7e5f1eb4e9740b}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries right\+\_\+}
 \begin{DoxyCompactList}\small\item\em Right child of the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -41,6 +48,38 @@ Class for composite nodes.
 Class which represents nodes with children 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_node_compos_a81e28df1c3657f285ae112875a501ad1}\label{class_node_compos_a81e28df1c3657f285ae112875a501ad1}} 
+\index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}!getLeft@{getLeft}}
+\index{getLeft@{getLeft}!NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getLeft()}{getLeft()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_compos}{Node\+Compos}}$<$ T $>$\+::get\+Left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get left child of the node
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} which is the left child of this node 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}\label{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}} 
+\index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}!getRight@{getRight}}
+\index{getRight@{getRight}!NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getRight()}{getRight()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_compos}{Node\+Compos}}$<$ T $>$\+::get\+Right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get right child of the node
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} which is the right child of this node 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{Node$<$ T $>$}}.
+
 \mbox{\Hypertarget{class_node_compos_aebffb32f483f75b32c38b01c92179d64}\label{class_node_compos_aebffb32f483f75b32c38b01c92179d64}} 
 \index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}!setLeft@{setLeft}}
 \index{setLeft@{setLeft}!NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
