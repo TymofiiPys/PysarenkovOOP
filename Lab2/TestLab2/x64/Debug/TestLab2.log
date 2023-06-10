@@ -1,0 +1,69 @@
+﻿  TestLab2.cpp
+E:\Univ\prog\Lab2\Tree.h(147,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'BinaryNode<T>::BinaryNode<T>::Remove' via dominance
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(101,10): message : see declaration of 'BinaryNode<T>::Remove'
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(16,60): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
+E:\Univ\prog\Lab2\Tree.h(147,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(58,10): message : see declaration of 'NodeCompos<T>::setLeft'
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(147,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(61,10): message : see declaration of 'NodeCompos<T>::setRight'
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(177,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'BinaryNode<T>::BinaryNode<T>::Remove' via dominance
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(101,10): message : see declaration of 'BinaryNode<T>::Remove'
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(127,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(120,1): message : while compiling class template member function 'void BinaryNodeCompos<int>::Add(T)'
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(17,14): message : see reference to function template instantiation 'void BinaryNodeCompos<int>::Add(T)' being compiled
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(16,60): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
+E:\Univ\prog\Lab2\Tree.h(177,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
+          with
+          [
+              T=int
+          ]
+E:\Univ\prog\Lab2\Tree.h(79,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
+          with
+          [
+              T=int
+          ]
+  TestLab2.vcxproj -> E:\Univ\prog\Lab2\TestLab2\x64\Debug\TestLab2.exe

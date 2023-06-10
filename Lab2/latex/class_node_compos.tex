@@ -1,0 +1,87 @@
+\hypertarget{class_node_compos}{}\doxysection{Node\+Compos\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_node_compos}\index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
+
+
+Class for composite nodes.  
+
+
+
+
+{\ttfamily \#include $<$Tree.\+h$>$}
+
+Inheritance diagram for Node\+Compos\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_node_compos}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_compos_ad59d2c0d9e74ca6e463b0888cd23cd23}\label{class_node_compos_ad59d2c0d9e74ca6e463b0888cd23cd23}} 
+{\bfseries Node\+Compos} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{set\+Left}} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$n) override
+\item 
+void \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{set\+Right}} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$n) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_compos_add4bcb9e67314eb4e145a8adc290164b}\label{class_node_compos_add4bcb9e67314eb4e145a8adc290164b}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries left}
+\begin{DoxyCompactList}\small\item\em Left child of the node. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_node_compos_aa87da84c7f6d0c26093d97b80e7a1577}\label{class_node_compos_aa87da84c7f6d0c26093d97b80e7a1577}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ {\bfseries right}
+\begin{DoxyCompactList}\small\item\em Right child of the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Node\+Compos$<$ T $>$}
+Class for composite nodes. 
+
+Class which represents nodes with children 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_node_compos_aebffb32f483f75b32c38b01c92179d64}\label{class_node_compos_aebffb32f483f75b32c38b01c92179d64}} 
+\index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}!setLeft@{setLeft}}
+\index{setLeft@{setLeft}!NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setLeft()}{setLeft()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_node_compos}{Node\+Compos}}$<$ T $>$\+::set\+Left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Set left child of the node
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \mbox{\hyperlink{class_node}{Node}} which is set as a left child of this node \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{Node$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}\label{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}} 
+\index{NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}!setRight@{setRight}}
+\index{setRight@{setRight}!NodeCompos$<$ T $>$@{NodeCompos$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setRight()}{setRight()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_node_compos}{Node\+Compos}}$<$ T $>$\+::set\+Right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Set right child of the node
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \mbox{\hyperlink{class_node}{Node}} which is set as a right child of this node \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{Node$<$ T $>$}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Tree.\+h\end{DoxyCompactItemize}
