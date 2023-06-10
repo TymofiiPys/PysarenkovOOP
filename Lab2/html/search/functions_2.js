@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['isleaf_0',['isLeaf',['../class_node.html#aefdffa61ae1796a57cefb6fc88f6765d',1,'Node::isLeaf()'],['../class_node_leaf.html#a8df31e4db4a7dc11fe49b4524188cdcc',1,'NodeLeaf::isLeaf()']]]
+  ['remove_0',['Remove',['../class_node.html#a023adaa4561ad9c2e6429a1e8f82ef4e',1,'Node::Remove()'],['../class_binary_node.html#a1da9f4ffdf82d36aefdac5df495d46dc',1,'BinaryNode::Remove()']]]
 ];

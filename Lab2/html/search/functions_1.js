@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['getkey_0',['getKey',['../class_node.html#a3c04afa4e4c8e555cc87a22757ab5f6a',1,'Node']]],
-  ['getparent_1',['getParent',['../class_node.html#aca0c178a5de50ba0c602add2155e189e',1,'Node']]]
+  ['isleaf_0',['isLeaf',['../class_node.html#aefdffa61ae1796a57cefb6fc88f6765d',1,'Node::isLeaf()'],['../class_node_leaf.html#a8df31e4db4a7dc11fe49b4524188cdcc',1,'NodeLeaf::isLeaf()']]]
 ];
