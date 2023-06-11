@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #include "doctest.h"
 #include "Tree.h"
+#include "TreeFactory.h"
+#include "TreeIterator.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

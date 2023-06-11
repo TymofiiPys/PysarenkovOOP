@@ -1,9 +1,11 @@
-// TestLab2.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <iostream>
 #include "..\doctest.h"
 #include "..\Tree.h"
+#include "..\TreeFactory.h"
+#include "..\TreeIterator.h"
+#include <fstream>
+#include <string>
 
 int main()
 {
@@ -36,6 +38,7 @@ TEST_CASE("int tree") {
     CHECK(!root->Search(20));
     root->Remove(50);
     CHECK(!root->Search(50));
+    delete root;
 }
 
 TEST_CASE("std::string tree") {
@@ -48,15 +51,54 @@ TEST_CASE("std::string tree") {
     CHECK(!root->Search("auaua"));
     CHECK(root->Search("obobo"));
     CHECK(!root->Search("iiiiiiiiiii"));
+    delete root;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+TEST_CASE("singleton test") {
+    TreeFactory* factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory->createTree(BinSearchTree, 100);
+    root->Add(20);
+    root->Add(10);
+    root->Add(500);
+    root->Add(30);
+    CHECK(root->Search(10));
+    CHECK(!root->Search(40));
+    CHECK(root->Search(500));
+    CHECK(!root->Search(399));
+    delete root;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+TEST_CASE("iterator test") {
+    TreeFactory* factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory->createTree(BinSearchTree, 50);
+    root->Add(30);
+    root->Add(20);
+    root->Add(40);
+    root->Add(70);
+    root->Add(60);
+    root->Add(80);
+    TreeIterator<int>* it = root->CreateIterator();
+    std::string trav = "";
+    for (it->First(); !it->isDone(); it->Next()) {
+        trav += std::to_string(it->Current()->getKey()) + " ";
+    }
+    delete it;
+    CHECK(trav == "20 30 40 50 60 70 80 ");
+    delete root;
+}
+
+//TEST_CASE("save/read test") {
+//    TreeFactory* factory = TreeFactory::getTreeFac();
+//    Node<int>* root = factory->createTree(BinSearchTree, 100);
+//    root->Add(20);
+//    root->Add(10);
+//    root->Add(500);
+//    root->Add(30);
+//    std::ofstream o("root.dat", std::ios::binary);
+//    o << root;
+//    o.close();
+//    std::ifstream i("root.dat", std::ios::binary | std::ios::ate);
+//    auto size = i.tellg();
+//    i.seekg(0);
+//    i.read(root, size);
+//}

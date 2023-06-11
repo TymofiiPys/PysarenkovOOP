@@ -14,6 +14,8 @@ SOURCES += \
 
 HEADERS += \
     Tree.h \
+    TreeFactory.h \
+    TreeIterator.h \
     mainwindow.h
 
 FORMS += \

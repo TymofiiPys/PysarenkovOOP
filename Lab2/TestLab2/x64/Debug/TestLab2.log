@@ -1,136 +1,176 @@
 ﻿  TestLab2.cpp
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(115,10): message : see declaration of 'NodeCompos<T>::setLeft'
+E:\Univ\prog\Lab2\Tree.h(147,10): message : see declaration of 'NodeCompos<T>::setLeft'
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(16,60): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
+E:\Univ\prog\Lab2\TreeFactory.h(38,1): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(118,10): message : see declaration of 'NodeCompos<T>::setRight'
+E:\Univ\prog\Lab2\Tree.h(150,10): message : see declaration of 'NodeCompos<T>::setRight'
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::getLeft' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::getLeft' via dominance
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(121,14): message : see declaration of 'NodeCompos<T>::getLeft'
+E:\Univ\prog\Lab2\Tree.h(153,14): message : see declaration of 'NodeCompos<T>::getLeft'
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::getRight' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<int>': inherits 'NodeCompos<T>::NodeCompos<T>::getRight' via dominance
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(124,14): message : see declaration of 'NodeCompos<T>::getRight'
+E:\Univ\prog\Lab2\Tree.h(156,14): message : see declaration of 'NodeCompos<T>::getRight'
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<double>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(147,10): message : see declaration of 'NodeCompos<T>::setLeft'
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\TreeFactory.h(65,1): message : see reference to class template instantiation 'BinaryNodeCompos<double>' being compiled
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<double>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(150,10): message : see declaration of 'NodeCompos<T>::setRight'
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<double>': inherits 'NodeCompos<T>::NodeCompos<T>::getLeft' via dominance
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(153,14): message : see declaration of 'NodeCompos<T>::getLeft'
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<double>': inherits 'NodeCompos<T>::NodeCompos<T>::getRight' via dominance
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(156,14): message : see declaration of 'NodeCompos<T>::getRight'
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::setLeft' via dominance
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(115,10): message : see declaration of 'NodeCompos<T>::setLeft'
+E:\Univ\prog\Lab2\Tree.h(147,10): message : see declaration of 'NodeCompos<T>::setLeft'
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(42,76): message : see reference to class template instantiation 'BinaryNodeCompos<std::string>' being compiled
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
+E:\Univ\prog\Lab2\TreeFactory.h(74,1): message : see reference to class template instantiation 'BinaryNodeCompos<std::string>' being compiled
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::setRight' via dominance
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(118,10): message : see declaration of 'NodeCompos<T>::setRight'
+E:\Univ\prog\Lab2\Tree.h(150,10): message : see declaration of 'NodeCompos<T>::setRight'
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::getLeft' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::getLeft' via dominance
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(121,14): message : see declaration of 'NodeCompos<T>::getLeft'
+E:\Univ\prog\Lab2\Tree.h(153,14): message : see declaration of 'NodeCompos<T>::getLeft'
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(275,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::getRight' via dominance
+E:\Univ\prog\Lab2\Tree.h(319,1): warning C4250: 'BinaryNodeCompos<std::string>': inherits 'NodeCompos<T>::NodeCompos<T>::getRight' via dominance
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(124,14): message : see declaration of 'NodeCompos<T>::getRight'
+E:\Univ\prog\Lab2\Tree.h(156,14): message : see declaration of 'NodeCompos<T>::getRight'
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(310,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
+E:\Univ\prog\Lab2\Tree.h(373,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(137,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
+E:\Univ\prog\Lab2\Tree.h(169,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(168,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
+E:\Univ\prog\Lab2\Tree.h(277,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
           with
           [
               T=std::string
           ]
-E:\Univ\prog\Lab2\Tree.h(161,1): message : while compiling class template member function 'void BinaryNodeCompos<std::string>::Add(T)'
+E:\Univ\prog\Lab2\Tree.h(275,1): message : while compiling class template member function 'Node<std::string> *BinaryNodeCompos<std::string>::RemoveDummy(void)'
+E:\Univ\prog\Lab2\TreeFactory.h(74,1): message : see reference to class template instantiation 'BinaryNodeCompos<std::string>' being compiled
+E:\Univ\prog\Lab2\Tree.h(373,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
           with
           [
-              T=std::string
+              T=double
           ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(43,14): message : see reference to function template instantiation 'void BinaryNodeCompos<std::string>::Add(T)' being compiled
+E:\Univ\prog\Lab2\Tree.h(169,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
           with
           [
-              T=std::string
+              T=double
           ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(42,76): message : see reference to class template instantiation 'BinaryNodeCompos<std::string>' being compiled
-E:\Univ\prog\Lab2\Tree.h(310,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
+E:\Univ\prog\Lab2\Tree.h(277,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
+          with
+          [
+              T=double
+          ]
+E:\Univ\prog\Lab2\Tree.h(275,1): message : while compiling class template member function 'Node<double> *BinaryNodeCompos<double>::RemoveDummy(void)'
+E:\Univ\prog\Lab2\TreeFactory.h(65,1): message : see reference to class template instantiation 'BinaryNodeCompos<double>' being compiled
+E:\Univ\prog\Lab2\Tree.h(373,1): warning C4250: 'BinaryNodeLeaf<T>': inherits 'NodeLeaf<T>::NodeLeaf<T>::isLeaf' via dominance
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(137,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
+E:\Univ\prog\Lab2\Tree.h(169,10): message : see declaration of 'NodeLeaf<T>::isLeaf'
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(168,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
+E:\Univ\prog\Lab2\Tree.h(277,1): message : see reference to class template instantiation 'BinaryNodeLeaf<T>' being compiled
           with
           [
               T=int
           ]
-E:\Univ\prog\Lab2\Tree.h(161,1): message : while compiling class template member function 'void BinaryNodeCompos<int>::Add(T)'
-          with
-          [
-              T=int
-          ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(17,14): message : see reference to function template instantiation 'void BinaryNodeCompos<int>::Add(T)' being compiled
-          with
-          [
-              T=int
-          ]
-E:\Univ\prog\Lab2\TestLab2\TestLab2.cpp(16,60): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
+E:\Univ\prog\Lab2\Tree.h(275,1): message : while compiling class template member function 'Node<int> *BinaryNodeCompos<int>::RemoveDummy(void)'
+E:\Univ\prog\Lab2\TreeFactory.h(38,1): message : see reference to class template instantiation 'BinaryNodeCompos<int>' being compiled
   TestLab2.vcxproj -> E:\Univ\prog\Lab2\TestLab2\x64\Debug\TestLab2.exe

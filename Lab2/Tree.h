@@ -1,10 +1,15 @@
 #ifndef TREE_H
 #define TREE_H
+
 #include <vector>
+
 
 enum Color{
     BLACK, RED
 };
+
+template<typename T>
+class TreeIterator;
 
 /**
  * \interface Node Tree.h
@@ -30,6 +35,10 @@ public:
     * \param key Key which will be added to the tree
     */
     virtual void Add(T key){}
+    /*
+    * Addition of a node to the tree (used for traversal)
+    */
+    virtual Node* AddDummy() { return this; }
     //! 
     //! Search for a key in the tree
     //! 
@@ -42,6 +51,10 @@ public:
     //! \param key Node, containing this key, will be removed
     //! 
     virtual Node<T>* Remove(T key) { return this; }
+    /*
+    * Removal of a node to the tree (used for traversal)
+    */
+    virtual Node* RemoveDummy() { return this; }
     /** Set left child of the node
     *
     * \param n Node which is set as a left child of this node
@@ -97,6 +110,12 @@ public:
     //! \return Node with the least key in a tree rooted by this node
     //! 
     virtual Node* getMin() { return nullptr; }
+    //!
+    //! Get node with the greatest key
+    //! 
+    //! \return Node with the greatest key in a tree rooted by this node
+    //! 
+    virtual Node* getMax() { return nullptr; }
     //! 
     //! Check whether the node is leaf
     //! 
@@ -105,10 +124,13 @@ public:
     virtual bool isLeaf(){
         return false;
     }
+    TreeIterator<T> *CreateIterator(){
+        return new TreeIterator<T>(this);
+    }
 };
 
 /**
-* \brief Class for composite nodes
+* \brief Class for composite nodes and tree roots with no children
 *
 * Class which represents nodes with children
 */
@@ -242,8 +264,20 @@ public:
                 this->right_ = this->right_->Remove(this->key_);
             }
         }
+        //if there is no children anymore
+        if (!this->left_ && !this->right_) {
+            BinaryNodeLeaf<T>* toLeaf = new BinaryNodeLeaf<T>(this);
+            toLeaf->setChild();
+            return toLeaf;
+        }
         return this;
     };
+    Node<T>* RemoveDummy() override {
+        delete this->getRight();
+        BinaryNodeLeaf<T>* toLeaf = new BinaryNodeLeaf<T>(this);
+        toLeaf->setChild();
+        return toLeaf;
+    }
     Node<T>* getSuccessor() override {
         return this->right_->getMin();
     }
@@ -255,8 +289,18 @@ public:
             min = this;
         return min;
     }
+    Node<T>* getMax() override {
+        Node<T>* max;
+        if (this->right_)
+            max = this->right_->getMax();
+        else
+            max = this;
+        return max;
+    }
     //!Set this node as a child of its parent
     void setChild() {
+        if (!this->parent_)
+            return;
         if (this->key_ < this->parent_->getKey())
             this->parent_->setLeft(this);
         else
@@ -265,6 +309,8 @@ public:
     //!Set this node as a child of passed parent
     //! \param parent Node, which will have this as a child
     void setChild(BinaryNodeCompos<T>* parent) {
+        if (!this->parent_)
+            return;
         if (this->key_ < parent->getKey())
             parent->setLeft(this);
         else
@@ -286,6 +332,14 @@ public:
         toCompos->Add(key);
         delete this;
     }
+    Node<T>* AddDummy() override{
+        //Conversion of leaf to composite
+        BinaryNodeCompos<T>* toCompos = new BinaryNodeCompos<T>(this);
+        toCompos->setChild();
+        //Addition of the key to a child node of the converted node
+        toCompos->setRight(new BinaryNodeLeaf<T>((T)NULL));
+        return toCompos;
+    }
     Node<T>* Search(T key) override {
         if (this->key_ == key)
             return this;
@@ -304,6 +358,17 @@ public:
     //}
     Node<T>* getMin() override {
         return this;
+    }
+    Node<T>* getMax() override {
+        return this;
+    }
+    void setChild() {
+        if (!this->parent_)
+            return;
+        if (this->key_ < this->parent_->getKey())
+            this->parent_->setLeft(this);
+        else
+            this->parent_->setRight(this);
     }
 };
 
