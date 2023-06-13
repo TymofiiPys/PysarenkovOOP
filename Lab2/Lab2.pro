@@ -15,6 +15,7 @@ SOURCES += \
 HEADERS += \
     Tree.h \
     TreeFactory.h \
+    TreeIterStrategy.h \
     TreeIterator.h \
     mainwindow.h
 

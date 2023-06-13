@@ -11,6 +11,15 @@ enum Color{
 template<typename T>
 class TreeIterator;
 
+template<typename T>
+class InOrderIterator;
+
+template<typename T>
+class PreOrderIterator;
+
+template<typename T>
+class PostOrderIterator;
+
 /**
  * \interface Node Tree.h
  *
@@ -24,7 +33,7 @@ protected:
     //! Parent of the node
     Node* parent_;
 public:
-    Node() : key_(NULL), parent_(nullptr){}
+    Node() : key_(0), parent_(nullptr){}
     Node(T key) : key_(key), parent_(nullptr){}
     Node(T key, Node* parent) : key_(key), parent_(parent){}
     /* Destructor*/
@@ -52,7 +61,7 @@ public:
     //! 
     virtual Node<T>* Remove(T key) { return this; }
     /*
-    * Removal of a node to the tree (used for traversal)
+    * Removal of a node from the tree (used for traversal)
     */
     virtual Node* RemoveDummy() { return this; }
     /** Set left child of the node
@@ -81,6 +90,17 @@ public:
     */
     void setParent(Node* p){
         this->parent_ = p;
+    }
+    Node* setDummyParent() {
+        this->parent_ = new Node(0);
+        this->parent_->setRight(this);
+        return this->parent_;
+    }
+    Node* RemoveDummyParent() {
+        Node* p = this->parent_;
+        this->parent_ = nullptr;
+        delete p;
+        return this;
     }
     //! 
     //! Get parent of the node
@@ -124,10 +144,31 @@ public:
     virtual bool isLeaf(){
         return false;
     }
-    TreeIterator<T> *CreateIterator(){
-        return new TreeIterator<T>(this);
+    virtual void setChild() {
+        if (!this->parent_)
+            return;
+        if (this->key_ < this->parent_->getKey())
+            this->parent_->setLeft(this);
+        else
+            this->parent_->setRight(this);
+    }
+    TreeIterator<T> *CreateInOrderIterator(){
+        return new InOrderIterator<T>(this);
+    }
+    TreeIterator<T> *CreatePreOrderIterator(){
+        return new PreOrderIterator<T>(this);
+    }
+    TreeIterator<T>* CreatePostOrderIterator() {
+        return new PostOrderIterator<T>(this);
     }
 };
+
+template<>
+Node<std::string>* Node<std::string>::setDummyParent() {
+    this->parent_ = new Node("");
+    this->parent_->setRight(this);
+    return this->parent_;
+}
 
 /**
 * \brief Class for composite nodes and tree roots with no children
@@ -189,7 +230,9 @@ class BinaryNodeCompos : public BinaryNode<T>, public NodeCompos<T>{
 public:
     BinaryNodeCompos(){}
     BinaryNodeCompos(T key) : Node<T>(key), NodeCompos<T>(){}
-    BinaryNodeCompos(BinaryNodeLeaf<T> *leaf) : Node<T>(leaf->getKey(), leaf->getParent()), NodeCompos<T>(){}   
+    BinaryNodeCompos(BinaryNodeLeaf<T> *leaf) : Node<T>(leaf->getKey(), leaf->getParent()), NodeCompos<T>(){
+        this->setChild();
+    }   
     void Add(T key) override{
         if(key < this->key_)
         {
@@ -267,16 +310,21 @@ public:
         //if there is no children anymore
         if (!this->left_ && !this->right_) {
             BinaryNodeLeaf<T>* toLeaf = new BinaryNodeLeaf<T>(this);
-            toLeaf->setChild();
             return toLeaf;
         }
         return this;
     };
+    Node<T>* AddDummy() override {
+        this->setRight(new BinaryNodeLeaf<T>((T)NULL));
+        return this;
+    }
     Node<T>* RemoveDummy() override {
+        Node<T>* dummy = this->getRight();
         delete this->getRight();
-        BinaryNodeLeaf<T>* toLeaf = new BinaryNodeLeaf<T>(this);
-        toLeaf->setChild();
-        return toLeaf;
+        this->right_ = nullptr;
+        if(!this->getLeft())
+            return new BinaryNodeLeaf<T>(this);
+        return this;
     }
     Node<T>* getSuccessor() override {
         return this->right_->getMin();
@@ -308,14 +356,14 @@ public:
     }
     //!Set this node as a child of passed parent
     //! \param parent Node, which will have this as a child
-    void setChild(BinaryNodeCompos<T>* parent) {
+ /*   void setChild(BinaryNodeCompos<T>* parent) {
         if (!this->parent_)
             return;
         if (this->key_ < parent->getKey())
             parent->setLeft(this);
         else
             parent->setRight(this);
-    }
+    }*/
 };
 
 //! Class for leaf Binary Search Tree nodes
@@ -323,11 +371,12 @@ template<typename T>
 class BinaryNodeLeaf : public BinaryNode<T>, public NodeLeaf<T>{
 public:
     BinaryNodeLeaf(T key) : Node<T>(key), NodeLeaf<T>(){}
-    BinaryNodeLeaf(BinaryNodeCompos<T>* comp) : Node<T>(comp->getKey(), comp->getParent()), NodeLeaf<T>() {}
+    BinaryNodeLeaf(BinaryNodeCompos<T>* comp) : Node<T>(comp->getKey(), comp->getParent()), NodeLeaf<T>() {
+        this->setChild();
+    }
     void Add(T key) override{
         //Conversion of leaf to composite
         BinaryNodeCompos<T>* toCompos = new BinaryNodeCompos<T>(this);
-        toCompos->setChild();
         //Addition of the key to a child node of the converted node
         toCompos->Add(key);
         delete this;
@@ -335,7 +384,6 @@ public:
     Node<T>* AddDummy() override{
         //Conversion of leaf to composite
         BinaryNodeCompos<T>* toCompos = new BinaryNodeCompos<T>(this);
-        toCompos->setChild();
         //Addition of the key to a child node of the converted node
         toCompos->setRight(new BinaryNodeLeaf<T>((T)NULL));
         return toCompos;
@@ -362,15 +410,13 @@ public:
     Node<T>* getMax() override {
         return this;
     }
-    void setChild() {
-        if (!this->parent_)
-            return;
-        if (this->key_ < this->parent_->getKey())
-            this->parent_->setLeft(this);
-        else
-            this->parent_->setRight(this);
-    }
 };
+
+template<>
+Node<std::string>* BinaryNodeCompos<std::string>::AddDummy() {
+    this->setRight(new BinaryNodeLeaf<std::string>(""));
+    return this;
+}
 
 //template<class T>
 //class BNode : public Node<T>{

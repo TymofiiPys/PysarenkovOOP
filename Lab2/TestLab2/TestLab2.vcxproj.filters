@@ -29,5 +29,8 @@
     <ClInclude Include="..\TreeIterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\TreeIterStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
