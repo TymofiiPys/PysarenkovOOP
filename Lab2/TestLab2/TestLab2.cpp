@@ -5,6 +5,7 @@
 #include "..\TreeFactory.h"
 #include "..\TreeIterator.h"
 #include "..\TreeIterStrategy.h"
+#include "..\TreeTemplate.h"
 #include <fstream>
 #include <string>
 
@@ -123,6 +124,37 @@ TEST_CASE("strategy test") {
     out = trav->Iterate(root);
     CHECK(out == "A C E D B H I G F ");
     delete root;
+}
+
+TEST_CASE("template method test") {
+    TreeFactory* factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory->createTree(BinSearchTree, 15);
+    root->Add(6);
+    root->Add(3);
+    root->Add(7);
+    root->Add(2);
+    root->Add(4);
+    root->Add(13);
+    root->Add(9);
+    root->Add(18);
+    root->Add(17);
+    root->Add(20);
+    TreeAnalyzer<int>* t = new NumberTreeAnalyzer<int>(root);
+    std::string out = t->Analyze();
+    CHECK(out == "Height: 5\nLeast element: 2\nGreatest element: 20\nSum of all keys in the tree: 114");
+    delete t;
+    delete root;
+    Node<std::string>* root2 = factory->createTree(BinSearchTree, "binary");
+    root2->Add("search");
+    root2->Add("tree");
+    root2->Add("also");
+    root2->Add("called");
+    root2->Add("an");
+    root2->Add("ordered");
+    root2->Add("sorted");
+    TreeAnalyzer<std::string>* t2 = new StringTreeAnalyzer(root2);
+    out = t2->Analyze();
+    CHECK(out == "Height: 4\nLeast element: also\nGreatest element: tree\nLongest word: ordered, of length: 7");
 }
 
 //TEST_CASE("save/read test") {

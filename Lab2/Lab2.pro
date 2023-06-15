@@ -17,6 +17,7 @@ HEADERS += \
     TreeFactory.h \
     TreeIterStrategy.h \
     TreeIterator.h \
+    TreeTemplate.h \
     mainwindow.h
 
 FORMS += \

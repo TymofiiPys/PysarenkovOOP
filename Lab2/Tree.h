@@ -161,6 +161,28 @@ public:
     TreeIterator<T>* CreatePostOrderIterator() {
         return new PostOrderIterator<T>(this);
     }
+    int getHeight(int depth = 1) {
+        int h = depth;
+        int lh = h, rh = h;
+        if (this->getLeft())
+            lh = this->getLeft()->getHeight(depth+1);
+        if(this->getRight())
+            rh = this->getRight()->getHeight(depth+1);
+        if (lh > rh)
+            h = lh;
+        else
+            h = rh;
+        return h;
+    }
+    std::string getLongestWord() { return ""; }
+    T getSumOfAllNodes() {
+        T ls = 0, rs = 0;
+        if (this->getLeft())
+            ls = this->getLeft()->getSumOfAllNodes();
+        if (this->getRight())
+            rs = this->getRight()->getSumOfAllNodes();
+        return this->getKey() + ls + rs;
+    }
 };
 
 template<>
@@ -169,6 +191,26 @@ Node<std::string>* Node<std::string>::setDummyParent() {
     this->parent_->setRight(this);
     return this->parent_;
 }
+
+template<>
+std::string Node<std::string>::getLongestWord() {
+    std::string lw = "", rw = "", w = this->getKey();
+    if (this->getLeft())
+        lw = this->getLeft()->getLongestWord();
+    if (this->getRight())
+        rw = this->getRight()->getLongestWord();
+    if (lw.length() > rw.length())
+        return lw.length() > w.length() ? lw : w;
+    else
+        return rw.length() > w.length() ? rw : w;
+    return w;
+}
+
+template<>
+std::string Node<std::string>::getSumOfAllNodes() {
+    return "";
+}
+
 
 /**
 * \brief Class for composite nodes and tree roots with no children

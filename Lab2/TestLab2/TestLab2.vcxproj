@@ -134,6 +134,7 @@
     <ClInclude Include="..\TreeFactory.h" />
     <ClInclude Include="..\TreeIterator.h" />
     <ClInclude Include="..\TreeIterStrategy.h" />
+    <ClInclude Include="..\TreeTemplate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
