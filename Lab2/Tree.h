@@ -3,9 +3,14 @@
 
 #include <vector>
 
+//#define (std::string)T 
 
 enum Color{
     BLACK, RED
+};
+
+enum TypeNode {
+    IntNode, StringNode, DoubleNode
 };
 
 template<typename T>
@@ -33,7 +38,7 @@ protected:
     //! Parent of the node
     Node* parent_;
 public:
-    Node() : key_(0), parent_(nullptr){}
+    Node() : key_(NULL), parent_(nullptr){}
     Node(T key) : key_(key), parent_(nullptr){}
     Node(T key, Node* parent) : key_(key), parent_(parent){}
     /* Destructor*/
@@ -44,6 +49,7 @@ public:
     * \param key Key which will be added to the tree
     */
     virtual void Add(T key){}
+    virtual void AddToStringedNode(std::string key){}
     /*
     * Addition of a node to the tree (used for traversal)
     */
@@ -191,7 +197,11 @@ Node<std::string>* Node<std::string>::setDummyParent() {
     this->parent_->setRight(this);
     return this->parent_;
 }
-
+template<>
+Node<std::string>::Node() {
+    this->key_ = "";
+    this->parent_ = nullptr;
+}
 template<>
 std::string Node<std::string>::getLongestWord() {
     std::string lw = "", rw = "", w = this->getKey();
@@ -296,6 +306,9 @@ public:
             }
         }
     }
+    void AddToStringedNode(std::string key) override{
+        return;
+    }
     Node<T>* Search(T key) override{
         Node<T>* b = nullptr;
         if (key < this->key_)
@@ -396,6 +409,9 @@ public:
         else
             this->parent_->setRight(this);
     }
+    void setSNChild() {
+        return;
+    }
     //!Set this node as a child of passed parent
     //! \param parent Node, which will have this as a child
  /*   void setChild(BinaryNodeCompos<T>* parent) {
@@ -407,6 +423,16 @@ public:
             parent->setRight(this);
     }*/
 };
+
+template<>
+void BinaryNodeCompos<std::string>::setSNChild() {
+    if (!this->parent_)
+        return;
+    if (std::stod(this->key_) < std::stod(this->parent_->getKey()))
+        this->parent_->setLeft(this);
+    else
+        this->parent_->setRight(this);
+}
 
 //! Class for leaf Binary Search Tree nodes
 template<typename T>
@@ -422,6 +448,9 @@ public:
         //Addition of the key to a child node of the converted node
         toCompos->Add(key);
         delete this;
+    }
+    void AddToStringedNode(std::string key) override {
+        return;
     }
     Node<T>* AddDummy() override{
         //Conversion of leaf to composite
@@ -460,6 +489,38 @@ Node<std::string>* BinaryNodeCompos<std::string>::AddDummy() {
     return this;
 }
 
+template<>
+void BinaryNodeCompos<std::string>::AddToStringedNode(std::string key) {
+    if (std::stod(key) < std::stod(this->key_))
+    {
+        if (this->left_)
+            this->left_->AddToStringedNode(key);
+        else
+        {
+            this->left_ = new BinaryNodeLeaf<std::string>(key);
+            this->left_->setParent(this);
+        }
+    }
+    else {
+        if (this->right_)
+            this->right_->AddToStringedNode(key);
+        else
+        {
+            this->right_ = new BinaryNodeLeaf<std::string>(key);
+            this->right_->setParent(this);
+        }
+    }
+}
+
+template<>
+void BinaryNodeLeaf<std::string>::AddToStringedNode(std::string key) {
+    BinaryNodeCompos<std::string>* toCompos = new BinaryNodeCompos<std::string>(this->getKey());
+    toCompos->setParent(this->getParent());
+    //Addition of the key to a child node of the converted node
+    toCompos->Add(key);
+    toCompos->setSNChild();
+    delete this;
+}
 //template<class T>
 //class BNode : public Node<T>{
 //private:

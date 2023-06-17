@@ -14,6 +14,8 @@ SOURCES += \
 
 HEADERS += \
     Tree.h \
+    TreeAdapter.h \
+    TreeBackup.h \
     TreeFactory.h \
     TreeIterStrategy.h \
     TreeIterator.h \

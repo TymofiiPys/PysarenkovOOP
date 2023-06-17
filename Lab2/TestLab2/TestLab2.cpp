@@ -6,8 +6,11 @@
 #include "..\TreeIterator.h"
 #include "..\TreeIterStrategy.h"
 #include "..\TreeTemplate.h"
+#include "..\TreeBackup.h"
+#include "..\TreeAdapter.h"
 #include <fstream>
 #include <string>
+#include <time.h>
 
 int main()
 {
@@ -157,6 +160,38 @@ TEST_CASE("template method test") {
     CHECK(out == "Height: 4\nLeast element: also\nGreatest element: tree\nLongest word: ordered, of length: 7");
 }
 
+TEST_CASE("adapter test") {
+    TreeFactory* factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory->createTree(BinSearchTree, 15);
+    root->Add(6);
+    root->Add(3);
+    root->Add(7);
+    root->Add(2);
+    root->Add(4);
+    root->Add(13);
+    root->Add(9);
+    root->Add(18);
+    root->Add(17);
+    root->Add(20);
+    TNodeAdapter<int>* toStr = new TNodeAdapter<int>(root, IntNode);
+    StringedNode* sn = toStr->getStrNode();
+    Node<std::string>* sr = sn->getTree();
+    StringedNodeAdapter<int>* toInt = new StringedNodeAdapter<int>(sn);
+    Node<int>* root2 = toInt->getNode();
+
+    TreeIterator<int>* it = root2->CreateInOrderIterator();
+    std::string trav = "";
+    for (it->First(); !it->isDone(); it->Next()) {
+        trav += std::to_string(it->Current()->getKey()) + " ";
+    }
+    delete it;
+    CHECK(trav == "2 3 4 6 7 9 13 15 17 18 20 ");
+}
+
+TEST_CASE("memento/command test") {
+    std::time_t t = std::time(0);
+    std::string s = std::ctime(&t);
+}
 //TEST_CASE("save/read test") {
 //    TreeFactory* factory = TreeFactory::getTreeFac();
 //    Node<int>* root = factory->createTree(BinSearchTree, 100);
