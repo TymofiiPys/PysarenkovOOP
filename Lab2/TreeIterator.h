@@ -111,14 +111,6 @@ public:
         else {
             this->iter_ = this->iter_->getParent();
         }
-        /*if(this->iter_->)
-        while (this->iter_->getLeft() || this->iter_->getRight()) {
-            if (this->iter_->getLeft()) {
-                this->iter_ = this->iter_->getLeft();
-            }
-            else
-                this->iter_ = this->iter_->getRight();
-        }*/
     }
 };
 

@@ -14,7 +14,7 @@ private:
 	Node<std::string>* root_;
 	std::string type_;
 public:
-	StringedNode() {};
+	StringedNode() : root_(nullptr), type_("string") {};
 	StringedNode(Node<std::string>* root, TypeNode type) : root_(root){
 		switch (type) {
 		case IntNode:
@@ -41,6 +41,12 @@ public:
 			t = DoubleNode;
 		return t;
 	}
+	std::string getTypeStr() {
+		return this->type_;
+	}
+	/*Snapshot* getSnapshot(std::string descr) {
+		return new Snapshot(this, type_, descr);
+	}*/
 };
 
 template <typename T>
@@ -56,8 +62,10 @@ public:
 		//}
 		TreeFactory* factory = TreeFactory::getTreeFac();
 		Node<std::string>* sn = factory->createTree(BinSearchTree, std::to_string(root_->getKey()));
-		addNodes(sn, root_->getLeft());
-		addNodes(sn, root_->getRight());
+		if (root_->getLeft())
+			addNodes(sn, root_->getLeft());
+		if(root_->getRight())
+			addNodes(sn, root_->getRight());
 		return new StringedNode(sn, type_);
 	}
 	void addNodes(Node<std::string>* dest, Node<T>* source) {
@@ -89,13 +97,15 @@ public:
 		TreeFactory* factory = TreeFactory::getTreeFac();
 		Node<std::string>* sn = root_->getTree();
 
-		Node<T>* n = factory->createTree(BinSearchTree, (T)std::stod(sn->getKey()));
-		addNodes(n, sn->getLeft());
-		addNodes(n, sn->getRight());
+		Node<T>* n = factory->createTree(BinSearchTree, T(Converter<std::string>(sn->getKey())));
+		if(sn->getLeft())
+			addNodes(n, sn->getLeft());
+		if(sn->getRight())
+			addNodes(n, sn->getRight());
 		return n;
 	}
 	void addNodes(Node<T>* dest, Node<std::string>* source) {
-		dest->Add((T)std::stod(source->getKey()));
+		dest->Add(T(Converter<std::string>(source->getKey())));
 		if (source->getLeft())
 		{
 			addNodes(dest, source->getLeft());

@@ -10,6 +10,7 @@ protected:
 	Node<KeyType>* root_;
 public:
 	TreeAnalyzer(){}
+    virtual ~TreeAnalyzer(){}
 	TreeAnalyzer(Node<KeyType>* root) : root_(root){}
 	std::string Analyze() {
 		if (!root_)

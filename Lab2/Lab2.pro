@@ -13,9 +13,11 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    Converter.h \
     Tree.h \
     TreeAdapter.h \
     TreeBackup.h \
+    TreeFacade.h \
     TreeFactory.h \
     TreeIterStrategy.h \
     TreeIterator.h \

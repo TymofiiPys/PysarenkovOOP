@@ -35,10 +35,11 @@ class Node{
 protected:
     //! Key of the node, can be of any type (int/double/char/std::string)
     T key_;
+    //TypeNode type_;
     //! Parent of the node
     Node* parent_;
 public:
-    Node() : key_(NULL), parent_(nullptr){}
+    Node() : key_(T(Converter<int>(0))),  parent_(nullptr){}
     Node(T key) : key_(key), parent_(nullptr){}
     Node(T key, Node* parent) : key_(key), parent_(parent){}
     /* Destructor*/
@@ -98,7 +99,7 @@ public:
         this->parent_ = p;
     }
     Node* setDummyParent() {
-        this->parent_ = new Node(0);
+        this->parent_ = new Node();
         this->parent_->setRight(this);
         return this->parent_;
     }
@@ -189,19 +190,11 @@ public:
             rs = this->getRight()->getSumOfAllNodes();
         return this->getKey() + ls + rs;
     }
+    /*Snapshot* getSnapshot(TypeNode type, std::string descr) {
+        return new Snapshot(this, type, descr);
+    }*/
 };
 
-template<>
-Node<std::string>* Node<std::string>::setDummyParent() {
-    this->parent_ = new Node("");
-    this->parent_->setRight(this);
-    return this->parent_;
-}
-template<>
-Node<std::string>::Node() {
-    this->key_ = "";
-    this->parent_ = nullptr;
-}
 template<>
 std::string Node<std::string>::getLongestWord() {
     std::string lw = "", rw = "", w = this->getKey();
@@ -215,12 +208,6 @@ std::string Node<std::string>::getLongestWord() {
         return rw.length() > w.length() ? rw : w;
     return w;
 }
-
-template<>
-std::string Node<std::string>::getSumOfAllNodes() {
-    return "";
-}
-
 
 /**
 * \brief Class for composite nodes and tree roots with no children
@@ -280,7 +267,7 @@ class BinaryNodeLeaf;
 template<typename T>
 class BinaryNodeCompos : public BinaryNode<T>, public NodeCompos<T>{
 public:
-    BinaryNodeCompos(){}
+    BinaryNodeCompos() : Node<T>(), NodeCompos<T>(){}
     BinaryNodeCompos(T key) : Node<T>(key), NodeCompos<T>(){}
     BinaryNodeCompos(BinaryNodeLeaf<T> *leaf) : Node<T>(leaf->getKey(), leaf->getParent()), NodeCompos<T>(){
         this->setChild();
@@ -370,7 +357,7 @@ public:
         return this;
     };
     Node<T>* AddDummy() override {
-        this->setRight(new BinaryNodeLeaf<T>((T)NULL));
+        this->setRight(new BinaryNodeLeaf<T>());
         return this;
     }
     Node<T>* RemoveDummy() override {
@@ -412,16 +399,6 @@ public:
     void setSNChild() {
         return;
     }
-    //!Set this node as a child of passed parent
-    //! \param parent Node, which will have this as a child
- /*   void setChild(BinaryNodeCompos<T>* parent) {
-        if (!this->parent_)
-            return;
-        if (this->key_ < parent->getKey())
-            parent->setLeft(this);
-        else
-            parent->setRight(this);
-    }*/
 };
 
 template<>
@@ -438,6 +415,7 @@ void BinaryNodeCompos<std::string>::setSNChild() {
 template<typename T>
 class BinaryNodeLeaf : public BinaryNode<T>, public NodeLeaf<T>{
 public:
+    BinaryNodeLeaf() : Node<T>(), NodeLeaf<T>(){}
     BinaryNodeLeaf(T key) : Node<T>(key), NodeLeaf<T>(){}
     BinaryNodeLeaf(BinaryNodeCompos<T>* comp) : Node<T>(comp->getKey(), comp->getParent()), NodeLeaf<T>() {
         this->setChild();
@@ -453,10 +431,8 @@ public:
         return;
     }
     Node<T>* AddDummy() override{
-        //Conversion of leaf to composite
         BinaryNodeCompos<T>* toCompos = new BinaryNodeCompos<T>(this);
-        //Addition of the key to a child node of the converted node
-        toCompos->setRight(new BinaryNodeLeaf<T>((T)NULL));
+        toCompos->setRight(new BinaryNodeLeaf<T>());
         return toCompos;
     }
     Node<T>* Search(T key) override {
@@ -482,12 +458,6 @@ public:
         return this;
     }
 };
-
-template<>
-Node<std::string>* BinaryNodeCompos<std::string>::AddDummy() {
-    this->setRight(new BinaryNodeLeaf<std::string>(""));
-    return this;
-}
 
 template<>
 void BinaryNodeCompos<std::string>::AddToStringedNode(std::string key) {

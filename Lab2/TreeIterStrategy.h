@@ -24,20 +24,7 @@ public:
         std::string r = "";
         TreeIterator<T> *it = root->CreateInOrderIterator();
         for (it->First(); !it->isDone(); it->Next()) {
-            r += std::to_string(it->Current()->getKey()) + " ";
-        }
-        delete it;
-        return r;
-    }
-};
-
-template <>
-class InOrderStrategy<std::string> : public TreeIterStrategy<std::string> {
-    std::string doTraverse(Node<std::string>* root) override {
-        std::string r = "";
-        TreeIterator<std::string>* it = root->CreateInOrderIterator();
-        for (it->First(); !it->isDone(); it->Next()) {
-            r += it->Current()->getKey() + " ";
+            r += std::string(Converter<T>(it->Current()->getKey())) + "\n";
         }
         delete it;
         return r;
@@ -50,20 +37,7 @@ class PreOrderStrategy : public TreeIterStrategy<T> {
         std::string r = "";
         TreeIterator<T>* it = root->CreatePreOrderIterator();
         for (it->First(); !it->isDone(); it->Next()) {
-            r += std::to_string(it->Current()->getKey()) + " ";
-        }
-        delete it;
-        return r;
-    }
-};
-
-template <>
-class PreOrderStrategy<std::string> : public TreeIterStrategy<std::string> {
-    std::string doTraverse(Node<std::string>* root) override {
-        std::string r = "";
-        TreeIterator<std::string>* it = root->CreatePreOrderIterator();
-        for (it->First(); !it->isDone(); it->Next()) {
-            r += it->Current()->getKey() + " ";
+            r += std::string(Converter<T>(it->Current()->getKey())) + "\n";
         }
         delete it;
         return r;
@@ -76,20 +50,7 @@ class PostOrderStrategy : public TreeIterStrategy<T> {
         std::string r = "";
         TreeIterator<T>* it = root->CreatePostOrderIterator();
         for (it->First(); !it->isDone(); it->Next()) {
-            r += std::to_string(it->Current()->getKey()) + " ";
-        }
-        delete it;
-        return r;
-    }
-};
-
-template <>
-class PostOrderStrategy<std::string>: public TreeIterStrategy<std::string> {
-    std::string doTraverse(Node<std::string>* root) override {
-        std::string r = "";
-        TreeIterator<std::string>* it = root->CreatePostOrderIterator();
-        for (it->First(); !it->isDone(); it->Next()) {
-            r += it->Current()->getKey() + " ";
+            r += std::string(Converter<T>(it->Current()->getKey())) + "\n";
         }
         delete it;
         return r;
