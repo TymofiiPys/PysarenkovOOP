@@ -128,12 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="TestLab2.cpp" />
+    <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Converter.h" />
+    <ClInclude Include="..\StringedNode.h" />
     <ClInclude Include="..\Tree.h" />
     <ClInclude Include="..\TreeAdapter.h" />
-    <ClInclude Include="..\TreeBackup.h" />
     <ClInclude Include="..\TreeFacade.h" />
     <ClInclude Include="..\TreeFactory.h" />
     <ClInclude Include="..\TreeIterator.h" />

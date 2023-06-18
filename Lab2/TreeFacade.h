@@ -1,5 +1,19 @@
 #ifndef TREEFACADE_H
 #define TREEFACADE_H
+#include <string>
+#include <vector>
+#include <fstream>
+
+template<typename T>
+class Node;
+
+class StringedNode;
+
+enum TreeType;
+
+enum TypeNode;
+
+enum TravType;
 
 class Snapshot {
 private:
@@ -124,38 +138,6 @@ public:
 		undocom->execute();
 	}
 };
-
-//class Snapshot {
-//private:
-//	StringedNode* root_;
-//	std::string descr_;
-//	std::string date_;
-//public:
-//	template<typename T>
-//	Snapshot(Node<T>* root, TypeNode type, std::string descr) : descr_(descr) {
-//		TNodeAdapter<T>* adapter = new TNodeAdapter<T>(root, type);
-//		this->root_ = adapter->getStrNode();
-//		delete adapter;
-//		std::time_t now = std::time(0);
-//		this->date_ = std::ctime(&now)/*.substr(0, 19)*/;
-//	};
-//	template<typename T>
-//	Node<T>* getTree() {
-//		StringedNodeAdapter<T>* adapter = new StringedNodeAdapter<T>(this->root_);
-//		Node<T>* n = adapter->getNode();
-//		delete adapter;
-//		return n;
-//	}
-//	StringedNode* getStrNode() {
-//		return this->root_;
-//	}
-//	std::string getName() {
-//		return "(" + this->date_ + ") " + this->descr_;
-//	}
-//	std::string getDate() {
-//		return this->date_;
-//	}
-//};
 
 template<typename T>
 class Command {

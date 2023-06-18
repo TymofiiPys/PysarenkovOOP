@@ -10,13 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tests.cpp
 
 HEADERS += \
     Converter.h \
+    StringedNode.h \
     Tree.h \
     TreeAdapter.h \
-    TreeBackup.h \
     TreeFacade.h \
     TreeFactory.h \
     TreeIterStrategy.h \

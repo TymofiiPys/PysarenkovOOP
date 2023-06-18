@@ -1,7 +1,8 @@
 #ifndef TREEITERATOR_H
 #define TREEITERATOR_H
 
-#include "Tree.h"
+template<typename T>
+class Node;
 
 template <typename KeyType>
 class TreeIterator{

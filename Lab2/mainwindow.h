@@ -2,6 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ui_mainwindow.h"
+#include "TreeFacade.h"
+
+//template<typename T>
+//class Node;
+
+//template<typename T>
+//class TreeFacade;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,7 +26,11 @@ public:
 private slots:
     void on_action_exit_triggered();
     
+    void on_pushButton_create_tree_clicked();
+    
 private:
     Ui::MainWindow *ui;
+//    TreeFacade<int> a;
 };
+
 #endif // MAINWINDOW_H

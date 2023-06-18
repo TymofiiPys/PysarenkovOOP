@@ -1,16 +1,11 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include <vector>
-
-//#define (std::string)T 
+//#define (std::string)T
+#include "Converter.h"
 
 enum Color{
     BLACK, RED
-};
-
-enum TypeNode {
-    IntNode, StringNode, DoubleNode
 };
 
 template<typename T>

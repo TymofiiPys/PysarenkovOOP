@@ -19,3 +19,10 @@ void MainWindow::on_action_exit_triggered()
     QApplication::exit();
 }
 
+
+void MainWindow::on_pushButton_create_tree_clicked()
+{
+
+}
+
+

@@ -1,10 +1,10 @@
 #ifndef TREEITERSTRATEGY_H
 #define TREEITERSTRATEGY_H
 #include <memory>
-#include <iostream>
-#include "Tree.h"
 
-enum TravType{
+#include "TreeIterator.h"
+
+enum TravType {
     InOrder, PreOrder, PostOrder
 };
 

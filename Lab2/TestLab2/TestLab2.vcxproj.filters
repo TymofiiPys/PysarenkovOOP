@@ -18,6 +18,9 @@
     <ClCompile Include="TestLab2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Tree.h">
@@ -35,9 +38,6 @@
     <ClInclude Include="..\TreeTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\TreeBackup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\TreeAdapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\TreeFacade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StringedNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

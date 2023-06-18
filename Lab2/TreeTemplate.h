@@ -1,8 +1,10 @@
 #ifndef TREETEMPLATE_H
 #define TREETEMPLATE_H
 
-#include "Tree.h"
-#include <iostream>
+template<typename T>
+class Node;
+
+#include <string>
 
 template <typename KeyType>
 class TreeAnalyzer {
@@ -74,5 +76,7 @@ public:
 		return "Longest word: " + theword + ", of length: " + std::to_string(theword.length());
 	}
 };
+
+
 
 #endif // TREETEMPLATE_H

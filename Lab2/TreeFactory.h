@@ -2,7 +2,6 @@
 #define TREEFACTORY_H
 
 #include "Tree.h"
-#include <string>
 
 enum TreeType{
     BinSearchTree,
