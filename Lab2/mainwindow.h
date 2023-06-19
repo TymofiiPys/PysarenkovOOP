@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "ui_mainwindow.h"
-#include "TreeFacade.h"
+#include "Trees.h"
 
 //template<typename T>
 //class Node;
@@ -28,9 +28,28 @@ private slots:
     
     void on_pushButton_create_tree_clicked();
     
+    void on_pushButton_Add_clicked();
+    
+    void on_pushButton_Remove_clicked();
+    
+    void on_action_save_triggered();
+    
+    void on_action_save_as_triggered();
+    
+    void on_action_undo_triggered();
+    
+    void on_pushButton_Analyze_clicked();
+    
+    void on_pushButton_Traverse_clicked();
+    
 private:
     Ui::MainWindow *ui;
-//    TreeFacade<int> a;
+    TreeFacade<int>* FacadeInt;
+    TreeFacade<double>* FacadeDouble;
+    TreeFacade<std::string>* FacadeString;
+    QString typenode;
+    QString treetype;
+    QString savepath;
 };
 
 #endif // MAINWINDOW_H

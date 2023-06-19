@@ -40,7 +40,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_typenoe">
+          <widget class="QComboBox" name="comboBox_typenode">
            <item>
             <property name="text">
              <string>Integer</string>
@@ -112,7 +112,11 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_key"/>
+                <widget class="QLineEdit" name="lineEdit_key">
+                 <property name="maxLength">
+                  <number>128</number>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -240,6 +244,15 @@
          <height>649</height>
         </rect>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QGraphicsView" name="graphicsView_tree">
+          <property name="alignment">
+           <set>Qt::AlignHCenter|Qt::AlignTop</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

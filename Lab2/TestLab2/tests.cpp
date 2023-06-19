@@ -1,5 +1,6 @@
 #include "..\doctest.h"
 #include "..\TreeFactory.h"
+#include "..\TreeIterator.h"
 #include "..\TreeIterStrategy.h"
 #include "..\TreeTemplate.h"
 #include "..\TreeAdapter.h"

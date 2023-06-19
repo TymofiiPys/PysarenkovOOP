@@ -1,9 +1,5 @@
-#include "..\doctest.h"
-#include "..\TreeFactory.h"
-#include "..\TreeIterStrategy.h"
-#include "..\TreeTemplate.h"
-#include "..\TreeAdapter.h"
-#include "..\TreeFacade.h"
+#include "doctest.h"
+#include "TREES.h"
 
 TEST_CASE("convert types test") {
     double a = 123.33;
@@ -70,8 +66,8 @@ TEST_CASE("std::string tree") {
 }
 
 TEST_CASE("singleton test") {
-    TreeFactory* factory = TreeFactory::getTreeFac();
-    Node<int>* root = factory->createTree(BinSearchTree, 100);
+    TreeFactory& factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory.createTree(BinSearchTree, 100);
     root->Add(20);
     root->Add(10);
     root->Add(500);
@@ -84,8 +80,8 @@ TEST_CASE("singleton test") {
 }
 
 TEST_CASE("iterator test") {
-    TreeFactory* factory = TreeFactory::getTreeFac();
-    Node<int>* root = factory->createTree(BinSearchTree, 50);
+    TreeFactory& factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory.createTree(BinSearchTree, 50);
     root->Add(30);
     root->Add(20);
     root->Add(40);
@@ -117,8 +113,8 @@ TEST_CASE("iterator test") {
 }
 
 TEST_CASE("strategy test") {
-    TreeFactory* factory = TreeFactory::getTreeFac();
-    Node<std::string>* root = factory->createTree(BinSearchTree, "F");
+    TreeFactory& factory = TreeFactory::getTreeFac();
+    Node<std::string>* root = factory.createTree(BinSearchTree, "F");
     root->Add("B");
     root->Add("A");
     root->Add("D");
@@ -140,8 +136,8 @@ TEST_CASE("strategy test") {
 }
 
 TEST_CASE("template method test") {
-    TreeFactory* factory = TreeFactory::getTreeFac();
-    Node<int>* root = factory->createTree(BinSearchTree, 15);
+    TreeFactory& factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory.createTree(BinSearchTree, 15);
     root->Add(6);
     root->Add(3);
     root->Add(7);
@@ -157,7 +153,7 @@ TEST_CASE("template method test") {
     CHECK(out == "Height: 5\nLeast element: 2\nGreatest element: 20\nSum of all keys in the tree: 114");
     delete t;
     delete root;
-    Node<std::string>* root2 = factory->createTree(BinSearchTree, "binary");
+    Node<std::string>* root2 = factory.createTree(BinSearchTree, "binary");
     root2->Add("search");
     root2->Add("tree");
     root2->Add("also");
@@ -171,8 +167,8 @@ TEST_CASE("template method test") {
 }
 
 TEST_CASE("adapter test") {
-    TreeFactory* factory = TreeFactory::getTreeFac();
-    Node<int>* root = factory->createTree(BinSearchTree, 15);
+    TreeFactory& factory = TreeFactory::getTreeFac();
+    Node<int>* root = factory.createTree(BinSearchTree, 15);
     root->Add(6);
     root->Add(3);
     root->Add(7);
@@ -199,7 +195,7 @@ TEST_CASE("adapter test") {
 }
 
 TEST_CASE("facade/memento/command test") {
-    TreeFacade<int>* facade = new TreeFacade<int>(IntNode, BinSearchTree);
+    TreeFacade<int>* facade = new TreeFacade<int>("Integer", "Binary Search Tree");
     facade->AddKey("15");
     facade->AddKey("6");
     facade->AddKey("3");
@@ -215,4 +211,5 @@ TEST_CASE("facade/memento/command test") {
     facade->Undo();
     std::string out = facade->Iterate("Preorder");
     CHECK(out == "15\n6\n3\n2\n4\n7\n13\n9\n18\n17\n");
+    std::remove("tree.txt");
 }

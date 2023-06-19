@@ -78,8 +78,8 @@ Node<std::string>* StringedNodeAdapter<std::string>::getNode() {
 	return this->root_->getTree();
 }
 
-class BinaryTreeAdapter {
+//class BinaryTreeAdapter {
 
-};
+//};
 
 #endif // TREEADAPTER_H

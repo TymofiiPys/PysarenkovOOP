@@ -1,8 +1,8 @@
 #ifndef TREEITERATOR_H
 #define TREEITERATOR_H
 
-template<typename T>
-class Node;
+//template<typename T>
+//class Node;
 
 template <typename KeyType>
 class TreeIterator{

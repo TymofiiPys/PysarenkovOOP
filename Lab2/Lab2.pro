@@ -14,15 +14,7 @@ SOURCES += \
     tests.cpp
 
 HEADERS += \
-    Converter.h \
-    StringedNode.h \
-    Tree.h \
-    TreeAdapter.h \
-    TreeFacade.h \
-    TreeFactory.h \
-    TreeIterStrategy.h \
-    TreeIterator.h \
-    TreeTemplate.h \
+    TREES.h \
     mainwindow.h
 
 FORMS += \
