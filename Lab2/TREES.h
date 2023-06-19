@@ -1211,7 +1211,7 @@ public:
         for (it->First(); !it->isDone(); it->Next()) {
             tablewidget->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getKey())))));
             if(it->Current()->isLeaf() || (!it->Current()->getLeft() && it->Current()->getRight() == it->Last()))
-                tablewidget->setItem(i, 1, new QTableWidgetItem("Лист"));
+                tablewidget->setItem(i, 1, new QTableWidgetItem("Leaf"));
             else{
                 if(it->Current()->getLeft())
                     tablewidget->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getLeft()->getKey())))));

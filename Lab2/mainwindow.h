@@ -48,6 +48,8 @@ private slots:
     
     void on_pushButton_getmax_clicked();
     
+    void on_action_open_triggered();
+    
 private:
     Ui::MainWindow *ui;
     TreeFacade<int>* FacadeInt;

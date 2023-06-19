@@ -249,17 +249,17 @@
          <widget class="QTableWidget" name="tableWidget">
           <column>
            <property name="text">
-            <string>Ключ</string>
+            <string>Key</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Ліва дитина</string>
+            <string>Left child</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Права дитина</string>
+            <string>Right child</string>
            </property>
           </column>
          </widget>

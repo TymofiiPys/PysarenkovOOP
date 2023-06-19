@@ -272,3 +272,67 @@ void MainWindow::on_pushButton_getmax_clicked()
     }
 }
 
+
+void MainWindow::on_action_open_triggered()
+{
+    QString newfilename = QFileDialog::getOpenFileName(this, "Open", "", "Text file (*.txt);;All files (*.*)");
+    if(newfilename != ""){
+        savepath = newfilename;
+        std::string filename = newfilename.toStdString();
+        std::ifstream input(filename);
+        std::string typenode;
+        std::string treetype;
+        std::string node;
+        std::getline(input, typenode);
+        std::getline(input, treetype);
+        FacadeInt = nullptr;
+        FacadeDouble = nullptr;
+        FacadeString = nullptr;
+        if(treetype == "BST")
+            treetype = "Binary Search Tree";
+        if(typenode == "int")
+        {
+            FacadeInt = new TreeFacade<int>("Integer", treetype, this, ui->tableWidget, filename);
+            ui->lineEdit_key->setText("");
+            ui->lineEdit_key->setValidator(new QIntValidator(std::numeric_limits<int>::min(), std::numeric_limits<int>::max()));
+        }
+        if(typenode == "double")
+        {
+            FacadeDouble = new TreeFacade<double>("Double", treetype, this, ui->tableWidget, filename);
+            ui->lineEdit_key->setText("");
+            ui->lineEdit_key->setValidator(new QDoubleValidator(std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), 5));
+        }
+        if(typenode == "string")
+        {
+            FacadeString = new TreeFacade<std::string>("String", treetype, this, ui->tableWidget, filename);
+            ui->lineEdit_key->setText("");
+            ui->lineEdit_key->setValidator(nullptr);
+        }
+        ui->tableWidget->clearContents();
+        ui->groupBox_tree_manag->setEnabled(true);
+        ui->action_save->setEnabled(true);
+        ui->action_save_as->setEnabled(true);
+        ui->action_undo->setEnabled(true);
+        while(!input.eof()){
+            std::getline(input, node);
+            if(!input.eof())
+            {
+                if(typenode == "int")
+                {
+                    FacadeInt->AddKey(node);
+                }
+                if(typenode == "double")
+                {
+                    FacadeDouble->AddKey(node);
+                }
+                if(typenode == "string")
+                {
+                    FacadeString->AddKey(node);
+                }
+            }
+        }
+        ui->lineEdit_key->setText("");
+        input.close();
+    }   
+}
+
