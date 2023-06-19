@@ -1,0 +1,56 @@
+\hypertarget{_stringed_node_8h_source}{}\doxysection{Stringed\+Node.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef STRINGEDNODE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define STRINGEDNODE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{class_node}{Node}};}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{enum} TypeNode \{}
+\DoxyCodeLine{8     IntNode, StringNode, DoubleNode}
+\DoxyCodeLine{9 \};}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_stringed_node}{StringedNode}} \{}
+\DoxyCodeLine{12 \textcolor{keyword}{private}:}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_node}{Node<std::string>}}* root\_;}
+\DoxyCodeLine{14     std::string type\_;}
+\DoxyCodeLine{15 \textcolor{keyword}{public}:}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_stringed_node}{StringedNode}}() \{\};}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_stringed_node}{StringedNode}}(\mbox{\hyperlink{class_node}{Node<std::string>}}* root, TypeNode type) : root\_(root)\{}
+\DoxyCodeLine{18         \textcolor{keywordflow}{switch} (type) \{}
+\DoxyCodeLine{19         \textcolor{keywordflow}{case} IntNode:}
+\DoxyCodeLine{20         \{type\_ = \textcolor{stringliteral}{"{}int"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{21         \textcolor{keywordflow}{case} DoubleNode:}
+\DoxyCodeLine{22         \{type\_ = \textcolor{stringliteral}{"{}double"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{23         \textcolor{keywordflow}{case} StringNode:}
+\DoxyCodeLine{24         \{type\_ = \textcolor{stringliteral}{"{}string"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{25         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{26         \{\textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{27         \}}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_stringed_node}{StringedNode}}* getStrNode() \{}
+\DoxyCodeLine{30         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32     \mbox{\hyperlink{class_node}{Node<std::string>}}* getTree() \{}
+\DoxyCodeLine{33         \textcolor{keywordflow}{return} this-\/>root\_;}
+\DoxyCodeLine{34     \}}
+\DoxyCodeLine{35     TypeNode getType() \{}
+\DoxyCodeLine{36         TypeNode t = StringNode;}
+\DoxyCodeLine{37         \textcolor{keywordflow}{if} (type\_ == \textcolor{stringliteral}{"{}int"{}})}
+\DoxyCodeLine{38             t = IntNode;}
+\DoxyCodeLine{39         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type\_ == \textcolor{stringliteral}{"{}double"{}})}
+\DoxyCodeLine{40             t = DoubleNode;}
+\DoxyCodeLine{41         \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43     std::string getTypeStr() \{}
+\DoxyCodeLine{44         \textcolor{keywordflow}{return} this-\/>type\_;}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46     \textcolor{comment}{/*Snapshot* getSnapshot(std::string descr) \{}}
+\DoxyCodeLine{47 \textcolor{comment}{        return new Snapshot(this, type\_, descr);}}
+\DoxyCodeLine{48 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{49 \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// STRINGEDNODE\_H}}
+
+\end{DoxyCode}

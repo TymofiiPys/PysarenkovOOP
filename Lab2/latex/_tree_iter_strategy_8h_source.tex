@@ -1,0 +1,94 @@
+\hypertarget{_tree_iter_strategy_8h_source}{}\doxysection{Tree\+Iter\+Strategy.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREEITERSTRATEGY\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREEITERSTRATEGY\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}TreeIterator.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{enum} TravType \{}
+\DoxyCodeLine{8     InOrder, PreOrder, PostOrder}
+\DoxyCodeLine{9 \};}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{16 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}\{}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_iter_strategy}{\string~TreeIterStrategy}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{20     \textcolor{keyword}{virtual} std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\{}
+\DoxyCodeLine{21         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{22     \}}
+\DoxyCodeLine{23 \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{30 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_in_order_strategy}{InOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T>\{}
+\DoxyCodeLine{32 \textcolor{keyword}{public}:}
+\DoxyCodeLine{33     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{34         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{35         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *it = root-\/>\mbox{\hyperlink{class_node_aa6069d766b602ce6ffa7e640a625a2bc}{CreateInOrderIterator}}();}
+\DoxyCodeLine{36         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{37             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{38         \}}
+\DoxyCodeLine{39         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{40         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{41     \}}
+\DoxyCodeLine{42 \};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{49 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{50 \textcolor{keyword}{class }\mbox{\hyperlink{class_pre_order_strategy}{PreOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T> \{}
+\DoxyCodeLine{51     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{52         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{53         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}}* it = root-\/>\mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{CreatePreOrderIterator}}();}
+\DoxyCodeLine{54         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{55             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{58         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60 \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{67 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{68 \textcolor{keyword}{class }\mbox{\hyperlink{class_post_order_strategy}{PostOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T> \{}
+\DoxyCodeLine{69     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{70         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{71         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}}* it = root-\/>\mbox{\hyperlink{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}{CreatePostOrderIterator}}();}
+\DoxyCodeLine{72         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{73             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{74         \}}
+\DoxyCodeLine{75         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{76         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78 \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{85 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{86 \textcolor{keyword}{class }\mbox{\hyperlink{class_traverser}{Traverser}}\{}
+\DoxyCodeLine{87 \textcolor{keyword}{private}:}
+\DoxyCodeLine{88     std::unique\_ptr<TreeIterStrategy<T>> strategy\_;}
+\DoxyCodeLine{89 \textcolor{keyword}{public}:}
+\DoxyCodeLine{90     \mbox{\hyperlink{class_traverser}{Traverser}}()\{\}}
+\DoxyCodeLine{91     \mbox{\hyperlink{class_traverser}{Traverser}}(TravType type)\{}
+\DoxyCodeLine{92         this-\/>\mbox{\hyperlink{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}{set\_strategy}}(type);}
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}{set\_strategy}}(TravType type)\{}
+\DoxyCodeLine{100         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{101         \textcolor{keywordflow}{case} InOrder:}
+\DoxyCodeLine{102         \{strategy\_ = std::make\_unique<InOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{103         \textcolor{keywordflow}{case} PreOrder:}
+\DoxyCodeLine{104         \{strategy\_ = std::make\_unique<PreOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{105         \textcolor{keywordflow}{case} PostOrder:}
+\DoxyCodeLine{106         \{strategy\_ = std::make\_unique<PostOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{107         \}}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{115     std::string \mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(\mbox{\hyperlink{class_node}{Node<T>}}* root)\{}
+\DoxyCodeLine{116         \textcolor{keywordflow}{if}(strategy\_)\{}
+\DoxyCodeLine{117             \textcolor{keywordflow}{return} strategy\_-\/>doTraverse(root);}
+\DoxyCodeLine{118         \}}
+\DoxyCodeLine{119         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{120             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}No strategy set\(\backslash\)n"{}};}
+\DoxyCodeLine{121         \}}
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123 \};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREEITERSTRATEGY\_H}}
+
+\end{DoxyCode}

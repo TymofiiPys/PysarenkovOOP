@@ -1,0 +1,148 @@
+\hypertarget{class_tree_iterator}{}\doxysection{Tree\+Iterator\texorpdfstring{$<$}{<} Key\+Type \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_tree_iterator}\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+
+
+Class for traversal of trees.  
+
+
+
+
+{\ttfamily \#include $<$Tree\+Iterator.\+h$>$}
+
+Inheritance diagram for Tree\+Iterator\texorpdfstring{$<$}{<} Key\+Type \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.972222cm]{class_tree_iterator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}} ()
+\item 
+virtual void \mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{is\+Done}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}} ()
+\item 
+\mbox{\Hypertarget{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}\label{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}} 
+virtual void {\bfseries First} ()
+\item 
+virtual void \mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}} ()
+\item 
+\mbox{\Hypertarget{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}\label{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}} 
+virtual bool {\bfseries is\+Done} ()
+\item 
+\mbox{\Hypertarget{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}\label{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}} 
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ {\bfseries Current} ()
+\item 
+\mbox{\Hypertarget{class_tree_iterator_aa5b7cc172c88ab6e202c16e02e7d2df9}\label{class_tree_iterator_aa5b7cc172c88ab6e202c16e02e7d2df9}} 
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ {\bfseries Last} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\+\_\+}}
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\+\_\+}}
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\+\_\+}}
+\item 
+\mbox{\Hypertarget{class_tree_iterator_a25767ec1f3056eb72073547f05feefe4}\label{class_tree_iterator_a25767ec1f3056eb72073547f05feefe4}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ {\bfseries max\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Key\+Type$>$\newline
+class Tree\+Iterator$<$ Key\+Type $>$}
+Class for traversal of trees. 
+
+Class which traverses trees 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}\label{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!Current@{Current}}
+\index{Current@{Current}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{Current()}{Current()}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+Current (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get the current node
+
+\begin{DoxyReturn}{Returns}
+the current node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}\label{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!First@{First}}
+\index{First@{First}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{First()}{First()}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+virtual void \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+First (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set current iterator to start \mbox{\Hypertarget{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}\label{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!isDone@{isDone}}
+\index{isDone@{isDone}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{isDone()}{isDone()}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+virtual bool \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::is\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Check if the current iterator is at Last\+\_\+
+
+\begin{DoxyReturn}{Returns}
+true if it is, false if it is not 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}\label{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!Next@{Next}}
+\index{Next@{Next}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{Next()}{Next()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+virtual void \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Increment current iterator 
+
+Reimplemented in \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{In\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Pre\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Post\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{In\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Pre\+Order\+Iterator$<$ Key\+Type $>$}}, and \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Post\+Order\+Iterator$<$ Key\+Type $>$}}.
+
+\mbox{\Hypertarget{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}\label{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!Next@{Next}}
+\index{Next@{Next}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{Next()}{Next()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+virtual void \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{In\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Pre\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Post\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{In\+Order\+Iterator$<$ Key\+Type $>$}}, \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Pre\+Order\+Iterator$<$ Key\+Type $>$}}, and \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Post\+Order\+Iterator$<$ Key\+Type $>$}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}\label{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!First\_@{First\_}}
+\index{First\_@{First\_}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{First\_}{First\_}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+First\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+First node \mbox{\Hypertarget{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}\label{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!iter\_@{iter\_}}
+\index{iter\_@{iter\_}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{iter\_}{iter\_}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::iter\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+Current node \mbox{\Hypertarget{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}\label{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}} 
+\index{TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}!Last\_@{Last\_}}
+\index{Last\_@{Last\_}!TreeIterator$<$ KeyType $>$@{TreeIterator$<$ KeyType $>$}}
+\doxysubsubsection{\texorpdfstring{Last\_}{Last\_}}
+{\footnotesize\ttfamily template$<$typename Key\+Type $>$ \\
+\mbox{\hyperlink{class_node}{Node}}$<$ Key\+Type $>$ $\ast$ \mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ Key\+Type $>$\+::\+Last\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+Last node 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Tree.\+h\item 
+Tree\+Iterator.\+h\item 
+TREES.\+h\end{DoxyCompactItemize}

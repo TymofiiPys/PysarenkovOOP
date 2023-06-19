@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['node_0',['Node',['../class_node.html',1,'']]],
-  ['nodecompos_1',['NodeCompos',['../class_node_compos.html',1,'']]],
-  ['nodeleaf_2',['NodeLeaf',['../class_node_leaf.html',1,'']]]
+  ['last_5f_0',['Last_',['../class_tree_iterator.html#aeccb81c4eb72d41a858ff658e8858c4b',1,'TreeIterator']]],
+  ['left_5f_1',['left_',['../class_node_compos.html#a18bc9f2d8974ff55e96a49e3b6de1188',1,'NodeCompos']]]
 ];

@@ -5,22 +5,64 @@
 \DoxyCodeLine{2 \textcolor{preprocessor}{\#define MAINWINDOW\_H}}
 \DoxyCodeLine{3 }
 \DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QMainWindow>}}
-\DoxyCodeLine{5 }
-\DoxyCodeLine{6 QT\_BEGIN\_NAMESPACE}
-\DoxyCodeLine{7 \textcolor{keyword}{namespace }Ui \{ \textcolor{keyword}{class }\mbox{\hyperlink{class_main_window}{MainWindow}}; \}}
-\DoxyCodeLine{8 QT\_END\_NAMESPACE}
-\DoxyCodeLine{9 }
-\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_main_window}{MainWindow}} : \textcolor{keyword}{public} QMainWindow}
-\DoxyCodeLine{11 \{}
-\DoxyCodeLine{12     Q\_OBJECT}
-\DoxyCodeLine{13     }
-\DoxyCodeLine{14 \textcolor{keyword}{public}:}
-\DoxyCodeLine{15     \mbox{\hyperlink{class_main_window}{MainWindow}}(QWidget *parent = \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{16     \mbox{\hyperlink{class_main_window}{\string~MainWindow}}();}
-\DoxyCodeLine{17     }
-\DoxyCodeLine{18 \textcolor{keyword}{private}:}
-\DoxyCodeLine{19     Ui::MainWindow *ui;}
-\DoxyCodeLine{20 \};}
-\DoxyCodeLine{21 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// MAINWINDOW\_H}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}ui\_mainwindow.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Trees.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{9 \textcolor{comment}{//class Node;}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{12 \textcolor{comment}{//class TreeFacade;}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 QT\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }Ui \{ \textcolor{keyword}{class }\mbox{\hyperlink{class_main_window}{MainWindow}}; \}}
+\DoxyCodeLine{16 QT\_END\_NAMESPACE}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_main_window}{MainWindow}} : \textcolor{keyword}{public} QMainWindow}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20     Q\_OBJECT}
+\DoxyCodeLine{21     }
+\DoxyCodeLine{22 \textcolor{keyword}{public}:}
+\DoxyCodeLine{23     \mbox{\hyperlink{class_main_window}{MainWindow}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{24     \mbox{\hyperlink{class_main_window}{\string~MainWindow}}();}
+\DoxyCodeLine{25     }
+\DoxyCodeLine{26 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} on\_action\_exit\_triggered();}
+\DoxyCodeLine{28     }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} on\_pushButton\_create\_tree\_clicked();}
+\DoxyCodeLine{30     }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} on\_pushButton\_Add\_clicked();}
+\DoxyCodeLine{32     }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} on\_pushButton\_Remove\_clicked();}
+\DoxyCodeLine{34     }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} on\_action\_save\_triggered();}
+\DoxyCodeLine{36     }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} on\_action\_save\_as\_triggered();}
+\DoxyCodeLine{38     }
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} on\_action\_undo\_triggered();}
+\DoxyCodeLine{40     }
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} on\_pushButton\_Analyze\_clicked();}
+\DoxyCodeLine{42     }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} on\_pushButton\_Traverse\_clicked();}
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} on\_pushButton\_Search\_clicked();}
+\DoxyCodeLine{46     }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} on\_pushButton\_getmin\_clicked();}
+\DoxyCodeLine{48     }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} on\_pushButton\_getmax\_clicked();}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} on\_action\_open\_triggered();}
+\DoxyCodeLine{52     }
+\DoxyCodeLine{53 \textcolor{keyword}{private}:}
+\DoxyCodeLine{54     Ui::MainWindow *ui;}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_tree_facade}{TreeFacade<int>}}* FacadeInt;}
+\DoxyCodeLine{56     \mbox{\hyperlink{class_tree_facade}{TreeFacade<double>}}* FacadeDouble;}
+\DoxyCodeLine{57     \mbox{\hyperlink{class_tree_facade}{TreeFacade<std::string>}}* FacadeString;}
+\DoxyCodeLine{58     QString typenode;}
+\DoxyCodeLine{59     QString treetype;}
+\DoxyCodeLine{60     QString savepath;}
+\DoxyCodeLine{61 \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// MAINWINDOW\_H}}
 
 \end{DoxyCode}

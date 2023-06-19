@@ -1,0 +1,87 @@
+\hypertarget{_tree_template_8h_source}{}\doxysection{Tree\+Template.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREETEMPLATE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREETEMPLATE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{class_node}{Node}};}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{template} <\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}} \{}
+\DoxyCodeLine{11 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_node}{Node<KeyType>}}* root\_;}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}()\{\}}
+\DoxyCodeLine{15     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_analyzer}{\string~TreeAnalyzer}}()\{\}}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) : root\_(root)\{\}}
+\DoxyCodeLine{17     std::string Analyze() \{}
+\DoxyCodeLine{18         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{19         \{}
+\DoxyCodeLine{20             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}The tree is not set or is null\(\backslash\)n"{}};}
+\DoxyCodeLine{21         \}}
+\DoxyCodeLine{22         std::string ret = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{23         \textcolor{keywordtype}{int} h = this-\/>findHeight();}
+\DoxyCodeLine{24         ret += \textcolor{stringliteral}{"{}Height: "{}} + std::to\_string(h) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{25         std::string min = this-\/>findMin();}
+\DoxyCodeLine{26         ret += min + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{27         std::string max = this-\/>findMax();}
+\DoxyCodeLine{28         ret += max;}
+\DoxyCodeLine{29         std::string lword = this-\/>findLongestWord();}
+\DoxyCodeLine{30         \textcolor{keywordflow}{if} (lword != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{31             ret += \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + lword;}
+\DoxyCodeLine{32         std::string sum = this-\/>findSumOfAllNodes();}
+\DoxyCodeLine{33         \textcolor{keywordflow}{if} (sum != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{34             ret += \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + sum;}
+\DoxyCodeLine{35         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{36     \}}
+\DoxyCodeLine{37     \textcolor{keywordtype}{int} findHeight() \{}
+\DoxyCodeLine{38         \textcolor{keywordflow}{return} root\_-\/>\mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{getHeight}}();}
+\DoxyCodeLine{39     \}}
+\DoxyCodeLine{40     \textcolor{keyword}{virtual} std::string findMin()\{}
+\DoxyCodeLine{41         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Least element: "{}};}
+\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43     \textcolor{keyword}{virtual} std::string findMax() \{}
+\DoxyCodeLine{44         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Greatest element: "{}};}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46     \textcolor{keyword}{virtual} std::string findLongestWord() \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}; \}}
+\DoxyCodeLine{47     \textcolor{keyword}{virtual} std::string findSumOfAllNodes() \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}; \}}
+\DoxyCodeLine{48 \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{keyword}{template} <\textcolor{keyword}{typename} Number>}
+\DoxyCodeLine{51 \textcolor{keyword}{class }\mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}<Number> \{}
+\DoxyCodeLine{52 \textcolor{keyword}{public}:}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<Number>}}* root) : \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}<Number>(root) \{\}}
+\DoxyCodeLine{54     std::string findMin()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{55         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<Number>::findMin}}() + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}());}
+\DoxyCodeLine{56     \}}
+\DoxyCodeLine{57     std::string findMax()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{58         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<Number>::findMax}}() + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}());}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60     std::string findSumOfAllNodes()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{61         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Sum of all keys in the tree: "{}} + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{getSumOfAllNodes}}());}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63 \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{keyword}{class }\mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}<std::string> \{}
+\DoxyCodeLine{66 \textcolor{keyword}{public}:}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<std::string>}}* root) : \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}(root) \{\}}
+\DoxyCodeLine{68     std::string findMin()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{69         \textcolor{keywordflow}{return} TreeAnalyzer::findMin() + this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}();}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71     std::string findMax()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{72         \textcolor{keywordflow}{return} TreeAnalyzer::findMax() + this-\/>root\_-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}();}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74     std::string findLongestWord()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{75         std::string theword = this-\/>root\_-\/>\mbox{\hyperlink{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}{getLongestWord}}();}
+\DoxyCodeLine{76         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Longest word: "{}} + theword + \textcolor{stringliteral}{"{}, of length: "{}} + std::to\_string(theword.length());}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78 \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREETEMPLATE\_H}}
+
+\end{DoxyCode}

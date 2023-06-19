@@ -1,0 +1,92 @@
+\hypertarget{_tree_backup_8h_source}{}\doxysection{Tree\+Backup.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//\#ifndef TREEBACKUP\_H}}
+\DoxyCodeLine{2 \textcolor{comment}{//\#define TREEBACKUP\_H}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{comment}{//\#include "{}Tree.h"{}}}
+\DoxyCodeLine{5 \textcolor{comment}{//\#include "{}TreeAdapter.h"{}}}
+\DoxyCodeLine{6 \textcolor{comment}{//\#include "{}TreeFacade.h"{}}}
+\DoxyCodeLine{7 \textcolor{comment}{//}}
+\DoxyCodeLine{8 \textcolor{comment}{//class Snapshot \{}}
+\DoxyCodeLine{9 \textcolor{comment}{//private:}}
+\DoxyCodeLine{10 \textcolor{comment}{//  StringedNode* root\_;}}
+\DoxyCodeLine{11 \textcolor{comment}{//  std::string descr\_;}}
+\DoxyCodeLine{12 \textcolor{comment}{//  std::string date\_;}}
+\DoxyCodeLine{13 \textcolor{comment}{//public:}}
+\DoxyCodeLine{14 \textcolor{comment}{//  template<typename T>}}
+\DoxyCodeLine{15 \textcolor{comment}{//  Snapshot(Node<T>* root, TypeNode type, std::string descr) : descr\_(descr) \{}}
+\DoxyCodeLine{16 \textcolor{comment}{//      TNodeAdapter<T>* adapter = new TNodeAdapter<T>(root, type);}}
+\DoxyCodeLine{17 \textcolor{comment}{//      this-\/>root\_ = adapter-\/>getStrNode();}}
+\DoxyCodeLine{18 \textcolor{comment}{//      delete adapter;}}
+\DoxyCodeLine{19 \textcolor{comment}{//      std::time\_t now = std::time(0);}}
+\DoxyCodeLine{20 \textcolor{comment}{//      this-\/>date\_ = std::ctime(\&now)/*.substr(0, 19)*/;}}
+\DoxyCodeLine{21 \textcolor{comment}{//  \};}}
+\DoxyCodeLine{22 \textcolor{comment}{//  template<typename T>}}
+\DoxyCodeLine{23 \textcolor{comment}{//  Node<T>* getTree() \{}}
+\DoxyCodeLine{24 \textcolor{comment}{//      StringedNodeAdapter<T>* adapter = new StringedNodeAdapter<T>(this-\/>root\_);}}
+\DoxyCodeLine{25 \textcolor{comment}{//      Node<T>* n = adapter-\/>getNode();}}
+\DoxyCodeLine{26 \textcolor{comment}{//      delete adapter;}}
+\DoxyCodeLine{27 \textcolor{comment}{//      return n;}}
+\DoxyCodeLine{28 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{29 \textcolor{comment}{//  StringedNode* getStrNode() \{}}
+\DoxyCodeLine{30 \textcolor{comment}{//      return this-\/>root\_;}}
+\DoxyCodeLine{31 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{32 \textcolor{comment}{//  std::string getName() \{}}
+\DoxyCodeLine{33 \textcolor{comment}{//      return "{}("{} + this-\/>date\_ + "{}) "{} + this-\/>descr\_;}}
+\DoxyCodeLine{34 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{35 \textcolor{comment}{//  std::string getDate() \{}}
+\DoxyCodeLine{36 \textcolor{comment}{//      return this-\/>date\_;}}
+\DoxyCodeLine{37 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{38 \textcolor{comment}{//\};}}
+\DoxyCodeLine{39 \textcolor{comment}{//}}
+\DoxyCodeLine{40 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{41 \textcolor{comment}{//class Command \{}}
+\DoxyCodeLine{42 \textcolor{comment}{//protected:}}
+\DoxyCodeLine{43 \textcolor{comment}{//  std::vector<Snapshot*> snaps;}}
+\DoxyCodeLine{44 \textcolor{comment}{//  TreeFacade<T>* fac;}}
+\DoxyCodeLine{45 \textcolor{comment}{//  //StringedNode* root;}}
+\DoxyCodeLine{46 \textcolor{comment}{//public:}}
+\DoxyCodeLine{47 \textcolor{comment}{//  Command()\{\}}}
+\DoxyCodeLine{48 \textcolor{comment}{//  Command(TreeFacade<T>* facc) : fac(facc) \{\};}}
+\DoxyCodeLine{49 \textcolor{comment}{//  virtual void execute() \{\};}}
+\DoxyCodeLine{50 \textcolor{comment}{//  void makeBackup() \{}}
+\DoxyCodeLine{51 \textcolor{comment}{//      if(this-\/>snaps.size() <= 50)}}
+\DoxyCodeLine{52 \textcolor{comment}{//          this-\/>snaps.push\_back(fac-\/>getSnapshot());}}
+\DoxyCodeLine{53 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{54 \textcolor{comment}{//\};}}
+\DoxyCodeLine{55 \textcolor{comment}{//}}
+\DoxyCodeLine{56 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{57 \textcolor{comment}{//class SaveCommand : public Command<T> \{}}
+\DoxyCodeLine{58 \textcolor{comment}{//public:}}
+\DoxyCodeLine{59 \textcolor{comment}{//  SaveCommand() : Command<T>() \{\};}}
+\DoxyCodeLine{60 \textcolor{comment}{//  SaveCommand(TreeFacade<T>* facc) : Command<T>(facc) \{\};}}
+\DoxyCodeLine{61 \textcolor{comment}{//  void execute() override\{}}
+\DoxyCodeLine{62 \textcolor{comment}{//      std::ofstream output("{}tree.txt"{});}}
+\DoxyCodeLine{63 \textcolor{comment}{//      StringedNode* sn = (*this-\/>snaps.end())-\/>getStrNode();}}
+\DoxyCodeLine{64 \textcolor{comment}{//      output << sn-\/>getTypeStr() << "{}\(\backslash\)n"{};}}
+\DoxyCodeLine{65 \textcolor{comment}{//      Node<std::string>* n = sn-\/>getTree();}}
+\DoxyCodeLine{66 \textcolor{comment}{//      Traverser<std::string>* trav = new Traverser<std::string>(PreOrder);}}
+\DoxyCodeLine{67 \textcolor{comment}{//      std::string out = trav-\/>Iterate(n);}}
+\DoxyCodeLine{68 \textcolor{comment}{//      output << out;}}
+\DoxyCodeLine{69 \textcolor{comment}{//      output.close();}}
+\DoxyCodeLine{70 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{71 \textcolor{comment}{//\};}}
+\DoxyCodeLine{72 \textcolor{comment}{//}}
+\DoxyCodeLine{73 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{74 \textcolor{comment}{//class UndoCommand : public Command<T> \{}}
+\DoxyCodeLine{75 \textcolor{comment}{//public:}}
+\DoxyCodeLine{76 \textcolor{comment}{//  UndoCommand() : Command<T>() \{\};}}
+\DoxyCodeLine{77 \textcolor{comment}{//  UndoCommand(TreeFacade<T>* facc) : Command<T>(TreeFacade<T>* facc) \{\};}}
+\DoxyCodeLine{78 \textcolor{comment}{//  void execute() override \{}}
+\DoxyCodeLine{79 \textcolor{comment}{//      if (!this-\/>snaps.size())}}
+\DoxyCodeLine{80 \textcolor{comment}{//          return;}}
+\DoxyCodeLine{81 \textcolor{comment}{//      Snapshot* snap = this-\/>snaps.back();}}
+\DoxyCodeLine{82 \textcolor{comment}{//      this-\/>snaps.pop\_back();}}
+\DoxyCodeLine{83 \textcolor{comment}{//      this-\/>fac-\/>restore(snap);}}
+\DoxyCodeLine{84 \textcolor{comment}{//  \}}}
+\DoxyCodeLine{85 \textcolor{comment}{//\};}}
+\DoxyCodeLine{86 \textcolor{comment}{//}}
+\DoxyCodeLine{87 \textcolor{comment}{//\#endif // TREEBACKUP\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,77 @@
+\hypertarget{class_traverser}{}\doxysection{Traverser\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_traverser}\index{Traverser$<$ T $>$@{Traverser$<$ T $>$}}
+
+
+Class for choosing traversal of trees.  
+
+
+
+
+{\ttfamily \#include $<$Tree\+Iter\+Strategy.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_traverser_a9d1e7ef19703a9c9fce2f2de63029742}\label{class_traverser_a9d1e7ef19703a9c9fce2f2de63029742}} 
+{\bfseries Traverser} (Trav\+Type type)
+\item 
+void \mbox{\hyperlink{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}{set\+\_\+strategy}} (Trav\+Type type)
+\item 
+std\+::string \mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$root)
+\item 
+\mbox{\Hypertarget{class_traverser_a9d1e7ef19703a9c9fce2f2de63029742}\label{class_traverser_a9d1e7ef19703a9c9fce2f2de63029742}} 
+{\bfseries Traverser} (Trav\+Type type)
+\item 
+\mbox{\Hypertarget{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}\label{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}} 
+void {\bfseries set\+\_\+strategy} (Trav\+Type type)
+\item 
+\mbox{\Hypertarget{class_traverser_a1f012aa4878defcad176c07ebaa787c8}\label{class_traverser_a1f012aa4878defcad176c07ebaa787c8}} 
+std\+::string {\bfseries Iterate} (\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$root)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Traverser$<$ T $>$}
+Class for choosing traversal of trees. 
+
+Class for choosing traversal of trees 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_traverser_a1f012aa4878defcad176c07ebaa787c8}\label{class_traverser_a1f012aa4878defcad176c07ebaa787c8}} 
+\index{Traverser$<$ T $>$@{Traverser$<$ T $>$}!Iterate@{Iterate}}
+\index{Iterate@{Iterate}!Traverser$<$ T $>$@{Traverser$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Iterate()}{Iterate()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::string \mbox{\hyperlink{class_traverser}{Traverser}}$<$ T $>$\+::\+Iterate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Launch and return result of iteration
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & The tree which is traversed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Keys in set order 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}\label{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}} 
+\index{Traverser$<$ T $>$@{Traverser$<$ T $>$}!set\_strategy@{set\_strategy}}
+\index{set\_strategy@{set\_strategy}!Traverser$<$ T $>$@{Traverser$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set\_strategy()}{set\_strategy()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_traverser}{Traverser}}$<$ T $>$\+::set\+\_\+strategy (\begin{DoxyParamCaption}\item[{Trav\+Type}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set traversal method
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & Method of traversal \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Tree\+Iter\+Strategy.\+h\item 
+TREES.\+h\end{DoxyCompactItemize}

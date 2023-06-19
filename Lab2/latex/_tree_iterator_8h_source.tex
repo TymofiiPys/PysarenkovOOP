@@ -1,0 +1,124 @@
+\hypertarget{_tree_iterator_8h_source}{}\doxysection{Tree\+Iterator.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREEITERATOR\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREEITERATOR\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{comment}{//template<typename T>}}
+\DoxyCodeLine{5 \textcolor{comment}{//class Node;}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{12 \textcolor{keyword}{template} <\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_iterator}{TreeIterator}}\{}
+\DoxyCodeLine{14 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}};}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}};}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_node}{Node<KeyType>}}* max\_;}
+\DoxyCodeLine{28 \textcolor{keyword}{public}:}
+\DoxyCodeLine{29     \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}() : \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}}(nullptr), \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}}(nullptr), \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}(nullptr), max\_(nullptr)\{\}}
+\DoxyCodeLine{30     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_iterator}{\string~TreeIterator}}() \{\}}
+\DoxyCodeLine{34     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}()\{ \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}}; \}}
+\DoxyCodeLine{38     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()\{\}}
+\DoxyCodeLine{44     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}()\{}
+\DoxyCodeLine{45         \textcolor{keywordflow}{return} (\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} == \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}});}
+\DoxyCodeLine{46     \}}
+\DoxyCodeLine{52     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()\{}
+\DoxyCodeLine{53         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}};}
+\DoxyCodeLine{54     \}}
+\DoxyCodeLine{55 \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{62 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{63 \textcolor{keyword}{class }\mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType>\{}
+\DoxyCodeLine{64 \textcolor{keyword}{public}:}
+\DoxyCodeLine{65     \mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}}() \{\}}
+\DoxyCodeLine{66     \mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) \{}
+\DoxyCodeLine{67         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}();}
+\DoxyCodeLine{68         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{69         this-\/>max\_ = root-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>AddDummy();}
+\DoxyCodeLine{70         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = this-\/>max\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{71     \}}
+\DoxyCodeLine{72     \mbox{\hyperlink{class_in_order_iterator}{\string~InOrderIterator}}() \{}
+\DoxyCodeLine{73         this-\/>max\_ = this-\/>max\_-\/>RemoveDummy();}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{Next}}()\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{76         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()) \{}
+\DoxyCodeLine{77             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_a3329e51812286333e81c3804a623da9e}{getSuccessor}}();}
+\DoxyCodeLine{78         \}}
+\DoxyCodeLine{79         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{80             \mbox{\hyperlink{class_node}{Node<KeyType>}}* parent = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{81             \textcolor{keywordflow}{while} (\textcolor{comment}{/*parent-\/>getRight() ||*/} parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == this-\/>iter\_) \{}
+\DoxyCodeLine{82                 this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{83                 parent = parent-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{84             \}}
+\DoxyCodeLine{85             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{86         \}}
+\DoxyCodeLine{87     \}}
+\DoxyCodeLine{88 \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{96 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{97 \textcolor{keyword}{class }\mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType> \{}
+\DoxyCodeLine{98 \textcolor{keyword}{public}:}
+\DoxyCodeLine{99     \mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}}()\{\}}
+\DoxyCodeLine{100     \mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root)\{}
+\DoxyCodeLine{101         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root;}
+\DoxyCodeLine{102         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{103         this-\/>max\_ = root-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>AddDummy();}
+\DoxyCodeLine{104         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = this-\/>max\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106     \mbox{\hyperlink{class_pre_order_iterator}{\string~PreOrderIterator}}() \{}
+\DoxyCodeLine{107         this-\/>max\_ = this-\/>max\_-\/>RemoveDummy();}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Next}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{110         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()) \{}
+\DoxyCodeLine{111             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}();}
+\DoxyCodeLine{112         \}}
+\DoxyCodeLine{113         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{114         \{}
+\DoxyCodeLine{115             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{116         \}}
+\DoxyCodeLine{117         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{118             \mbox{\hyperlink{class_node}{Node<KeyType>}}* parent = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{119             \textcolor{keywordflow}{while} (!parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() || parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == this-\/>iter\_)}
+\DoxyCodeLine{120             \{}
+\DoxyCodeLine{121                 this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{122                 parent = parent-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{123             \}}
+\DoxyCodeLine{124             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{125         \}}
+\DoxyCodeLine{126     \}}
+\DoxyCodeLine{127 \};}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{134 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{135 \textcolor{keyword}{class }\mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType> \{}
+\DoxyCodeLine{136 \textcolor{keyword}{public}:}
+\DoxyCodeLine{137     \mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}}() \{\}}
+\DoxyCodeLine{138     \mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) \{}
+\DoxyCodeLine{139         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}();}
+\DoxyCodeLine{140         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{141         this-\/>max\_ = root;}
+\DoxyCodeLine{142         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = root-\/>\mbox{\hyperlink{class_node_a5a8202d10fb4090d3b649b426aa07a34}{setDummyParent}}();}
+\DoxyCodeLine{143     \}}
+\DoxyCodeLine{144     \mbox{\hyperlink{class_post_order_iterator}{\string~PostOrderIterator}}() \{}
+\DoxyCodeLine{145         this-\/>max\_ = this-\/>max\_-\/>\mbox{\hyperlink{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}{RemoveDummyParent}}();}
+\DoxyCodeLine{146     \}}
+\DoxyCodeLine{147     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Next}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{148         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() \&\& this-\/>iter\_-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() != this-\/>iter\_) \{}
+\DoxyCodeLine{149             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{150             \textcolor{keywordflow}{while} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}() || this-\/>iter\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()) \{}
+\DoxyCodeLine{151                 \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()) \{}
+\DoxyCodeLine{152                     this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}();}
+\DoxyCodeLine{153                 \}}
+\DoxyCodeLine{154                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{155                     this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{156             \}}
+\DoxyCodeLine{157         \}}
+\DoxyCodeLine{158         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{159             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{160         \}}
+\DoxyCodeLine{161     \}}
+\DoxyCodeLine{162 \};}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREEITERATOR\_H}}
+
+\end{DoxyCode}

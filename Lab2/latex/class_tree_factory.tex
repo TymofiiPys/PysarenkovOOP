@@ -1,0 +1,128 @@
+\hypertarget{class_tree_factory}{}\doxysection{Tree\+Factory Class Reference}
+\label{class_tree_factory}\index{TreeFactory@{TreeFactory}}
+
+
+Class for creation of trees.  
+
+
+
+
+{\ttfamily \#include $<$Tree\+Factory.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_tree_factory_a3184ab2f98efa27e011e3f8af7e4083d}\label{class_tree_factory_a3184ab2f98efa27e011e3f8af7e4083d}} 
+{\bfseries Tree\+Factory} (\mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \&other)=delete
+\item 
+\mbox{\Hypertarget{class_tree_factory_a6cc5137a45a2acace0d614232feeb1a3}\label{class_tree_factory_a6cc5137a45a2acace0d614232feeb1a3}} 
+void {\bfseries operator=} (const \mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \&)=delete
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ int $>$ $\ast$ \mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{create\+Tree}} (Tree\+Type type, int rootkey)
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ double $>$ $\ast$ \mbox{\hyperlink{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}{create\+Tree}} (Tree\+Type type, double rootkey)
+\item 
+\mbox{\hyperlink{class_node}{Node}}$<$ std\+::string $>$ $\ast$ \mbox{\hyperlink{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}{create\+Tree}} (Tree\+Type type, std\+::string rootkey)
+\item 
+\mbox{\Hypertarget{class_tree_factory_a3184ab2f98efa27e011e3f8af7e4083d}\label{class_tree_factory_a3184ab2f98efa27e011e3f8af7e4083d}} 
+{\bfseries Tree\+Factory} (\mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \&other)=delete
+\item 
+\mbox{\Hypertarget{class_tree_factory_a6cc5137a45a2acace0d614232feeb1a3}\label{class_tree_factory_a6cc5137a45a2acace0d614232feeb1a3}} 
+void {\bfseries operator=} (const \mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \&)=delete
+\item 
+\mbox{\Hypertarget{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}\label{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ int $>$ $\ast$ {\bfseries create\+Tree} (Tree\+Type type, int rootkey)
+\item 
+\mbox{\Hypertarget{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}\label{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ double $>$ $\ast$ {\bfseries create\+Tree} (Tree\+Type type, double rootkey)
+\item 
+\mbox{\Hypertarget{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}\label{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}} 
+\mbox{\hyperlink{class_node}{Node}}$<$ std\+::string $>$ $\ast$ {\bfseries create\+Tree} (Tree\+Type type, std\+::string rootkey)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} $\ast$ \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{get\+Tree\+Fac}} ()
+\item 
+\mbox{\Hypertarget{class_tree_factory_aad8cf86b3a747b05504b4e2b167134ca}\label{class_tree_factory_aad8cf86b3a747b05504b4e2b167134ca}} 
+static \mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \& {\bfseries get\+Tree\+Fac} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for creation of trees. 
+
+Class which creates trees 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}\label{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}} 
+\index{TreeFactory@{TreeFactory}!createTree@{createTree}}
+\index{createTree@{createTree}!TreeFactory@{TreeFactory}}
+\doxysubsubsection{\texorpdfstring{createTree()}{createTree()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$<$ double $>$ $\ast$ Tree\+Factory\+::create\+Tree (\begin{DoxyParamCaption}\item[{Tree\+Type}]{type,  }\item[{double}]{rootkey }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Create Double tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & Type of the tree \\
+\hline
+{\em rootkey} & Key of the root \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new Tree 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}\label{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}} 
+\index{TreeFactory@{TreeFactory}!createTree@{createTree}}
+\index{createTree@{createTree}!TreeFactory@{TreeFactory}}
+\doxysubsubsection{\texorpdfstring{createTree()}{createTree()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$<$ int $>$ $\ast$ Tree\+Factory\+::create\+Tree (\begin{DoxyParamCaption}\item[{Tree\+Type}]{type,  }\item[{int}]{rootkey }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Create Integer tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & Type of the tree \\
+\hline
+{\em rootkey} & Key of the root \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new Tree 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}\label{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}} 
+\index{TreeFactory@{TreeFactory}!createTree@{createTree}}
+\index{createTree@{createTree}!TreeFactory@{TreeFactory}}
+\doxysubsubsection{\texorpdfstring{createTree()}{createTree()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$<$ std\+::string $>$ $\ast$ Tree\+Factory\+::create\+Tree (\begin{DoxyParamCaption}\item[{Tree\+Type}]{type,  }\item[{std\+::string}]{rootkey }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Create String tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & Type of the tree \\
+\hline
+{\em rootkey} & Key of the root \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new Tree 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}\label{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}} 
+\index{TreeFactory@{TreeFactory}!getTreeFac@{getTreeFac}}
+\index{getTreeFac@{getTreeFac}!TreeFactory@{TreeFactory}}
+\doxysubsubsection{\texorpdfstring{getTreeFac()}{getTreeFac()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} \& Tree\+Factory\+::get\+Tree\+Fac (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the factory
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_tree_factory}{Tree\+Factory}} 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Tree\+Factory.\+h\item 
+TREES.\+h\end{DoxyCompactItemize}

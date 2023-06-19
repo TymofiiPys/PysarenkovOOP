@@ -1,0 +1,201 @@
+\hypertarget{_tree_facade_8h_source}{}\doxysection{Tree\+Facade.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREEFACADE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREEFACADE\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_node}{Node}};}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_stringed_node}{StringedNode}};}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{enum} TreeType;}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{enum} TypeNode;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{enum} TravType;}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_snapshot}{Snapshot}} \{}
+\DoxyCodeLine{19 \textcolor{keyword}{private}:}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* root\_;}
+\DoxyCodeLine{21     std::string tt\_;}
+\DoxyCodeLine{22     std::string descr\_;}
+\DoxyCodeLine{23     std::string date\_;}
+\DoxyCodeLine{24 \textcolor{keyword}{public}:}
+\DoxyCodeLine{25     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_snapshot}{Snapshot}}(\mbox{\hyperlink{class_node}{Node<T>}}* root, TypeNode type, TreeType tt, std::string descr) : descr\_(descr) \{}
+\DoxyCodeLine{27         \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter<T>}}* adapter = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter<T>}}(root, type);}
+\DoxyCodeLine{28         this-\/>root\_ = adapter-\/>getStrNode();}
+\DoxyCodeLine{29         \textcolor{keyword}{delete} adapter;}
+\DoxyCodeLine{30         std::time\_t now = std::time(0);}
+\DoxyCodeLine{31         \textcolor{keywordflow}{switch} (tt) \{}
+\DoxyCodeLine{32         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{33             tt\_ = \textcolor{stringliteral}{"{}BST"{}};}
+\DoxyCodeLine{34         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{35             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37         this-\/>date\_ = std::ctime(\&now)\textcolor{comment}{/*.substr(0, 19)*/};}
+\DoxyCodeLine{38     \};}
+\DoxyCodeLine{39     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{40     \mbox{\hyperlink{class_node}{Node<T>}}* getTree() \{}
+\DoxyCodeLine{41         \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter<T>}}* adapter = \textcolor{keyword}{new} \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter<T>}}(this-\/>root\_);}
+\DoxyCodeLine{42         \mbox{\hyperlink{class_node}{Node<T>}}* n = adapter-\/>getNode();}
+\DoxyCodeLine{43         \textcolor{keyword}{delete} adapter;}
+\DoxyCodeLine{44         \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* getStrNode() \{}
+\DoxyCodeLine{47         \textcolor{keywordflow}{return} this-\/>root\_;}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49     TreeType getTreeType() \{}
+\DoxyCodeLine{50         \textcolor{keywordflow}{if} (tt\_ == \textcolor{stringliteral}{"{}BST"{}})}
+\DoxyCodeLine{51             \textcolor{keywordflow}{return} BinSearchTree;}
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53     std::string getTreeTypeStr() \{}
+\DoxyCodeLine{54         \textcolor{keywordflow}{return} tt\_;}
+\DoxyCodeLine{55     \}}
+\DoxyCodeLine{56     std::string getName() \{}
+\DoxyCodeLine{57         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}("{}} + this-\/>date\_ + \textcolor{stringliteral}{"{}) "{}} + this-\/>descr\_;}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59     std::string getDate() \{}
+\DoxyCodeLine{60         \textcolor{keywordflow}{return} this-\/>date\_;}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62 \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{65 \textcolor{keyword}{class }\mbox{\hyperlink{class_command}{Command}};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{68 \textcolor{keyword}{class }\mbox{\hyperlink{class_save_command}{SaveCommand}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{71 \textcolor{keyword}{class }\mbox{\hyperlink{class_undo_command}{UndoCommand}};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{74 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_facade}{TreeFacade}} \{}
+\DoxyCodeLine{75 \textcolor{keyword}{private}:}
+\DoxyCodeLine{76     \mbox{\hyperlink{class_node}{Node<T>}}* root\_;}
+\DoxyCodeLine{77     TypeNode ntype\_;}
+\DoxyCodeLine{78     TreeType ttype\_;}
+\DoxyCodeLine{79     std::string last\_action\_desc\_;}
+\DoxyCodeLine{80     \mbox{\hyperlink{class_command}{Command<T>}}* savecom;}
+\DoxyCodeLine{81     \mbox{\hyperlink{class_command}{Command<T>}}* undocom;}
+\DoxyCodeLine{82     \textcolor{keywordtype}{void} SyncSnaps(std::vector<Snapshot*> s) \{}
+\DoxyCodeLine{83         this-\/>savecom-\/>setSnaps(s);}
+\DoxyCodeLine{84         this-\/>undocom-\/>setSnaps(s);}
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86 \textcolor{keyword}{public}:}
+\DoxyCodeLine{87     \mbox{\hyperlink{class_tree_facade}{TreeFacade}}() : root\_(\textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{88         this-\/>savecom = \textcolor{keyword}{new} \mbox{\hyperlink{class_save_command}{SaveCommand<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{89         this-\/>undocom = \textcolor{keyword}{new} \mbox{\hyperlink{class_undo_command}{UndoCommand<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91     \mbox{\hyperlink{class_tree_facade}{TreeFacade}}(TypeNode ntype, TreeType ttype) : \mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}() \{}
+\DoxyCodeLine{92         this-\/>ntype\_ = ntype;}
+\DoxyCodeLine{93         this-\/>ttype\_ = ttype;}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95     \textcolor{keywordtype}{void} AddKey(std::string key) \{}
+\DoxyCodeLine{96         \textcolor{keywordflow}{if} (!root\_) \{}
+\DoxyCodeLine{97             \mbox{\hyperlink{class_tree_factory}{TreeFactory}}* factory = \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}();}
+\DoxyCodeLine{98             root\_ = factory-\/>\mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(ttype\_, T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{99         \}}
+\DoxyCodeLine{100         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{101             root\_-\/>Add(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{102             savecom-\/>makeBackup();}
+\DoxyCodeLine{103             SyncSnaps(savecom-\/>getSnaps());}
+\DoxyCodeLine{104         \}}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106     \textcolor{keywordtype}{void} RemoveKey(std::string key) \{}
+\DoxyCodeLine{107         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{108             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{109         root\_-\/>\mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Remove}}(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{110     \}}
+\DoxyCodeLine{111     \mbox{\hyperlink{class_snapshot}{Snapshot}}* getSnapshot() \{}
+\DoxyCodeLine{112         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_snapshot}{Snapshot}}(root\_, ntype\_, ttype\_, last\_action\_desc\_);}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114     \textcolor{keywordtype}{void} restore(\mbox{\hyperlink{class_snapshot}{Snapshot}}* snap) \{}
+\DoxyCodeLine{115         this-\/>root\_ = snap-\/>getTree<T>();}
+\DoxyCodeLine{116         this-\/>ntype\_ = snap-\/>getStrNode()-\/>getType();}
+\DoxyCodeLine{117         this-\/>ttype\_ = snap-\/>getTreeType();}
+\DoxyCodeLine{118         SyncSnaps(undocom-\/>getSnaps());}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120     std::string Iterate(std::string travtype) \{}
+\DoxyCodeLine{121         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{122             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{123         TravType tt;}
+\DoxyCodeLine{124         \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Inorder"{}}) tt = InOrder;}
+\DoxyCodeLine{125         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Preorder"{}}) tt = PreOrder;}
+\DoxyCodeLine{126         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Postorder"{}}) tt = PostOrder;}
+\DoxyCodeLine{127         \mbox{\hyperlink{class_traverser}{Traverser<T>}}* trav = \textcolor{keyword}{new} \mbox{\hyperlink{class_traverser}{Traverser<T>}}(tt);}
+\DoxyCodeLine{128         std::string out = trav-\/>\mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(root\_);}
+\DoxyCodeLine{129         \textcolor{keywordflow}{return} out;}
+\DoxyCodeLine{130     \}}
+\DoxyCodeLine{131     \textcolor{comment}{/*void setRoot(Node<T>* root) \{}}
+\DoxyCodeLine{132 \textcolor{comment}{        this-\/>root\_ = root;}}
+\DoxyCodeLine{133 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{134     \textcolor{keywordtype}{void} Save() \{}
+\DoxyCodeLine{135         savecom-\/>execute();}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137     \textcolor{keywordtype}{void} Undo() \{}
+\DoxyCodeLine{138         undocom-\/>execute();}
+\DoxyCodeLine{139     \}}
+\DoxyCodeLine{140 \};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{143 \textcolor{keyword}{class }\mbox{\hyperlink{class_command}{Command}} \{}
+\DoxyCodeLine{144 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{145     std::vector<Snapshot*> snaps;}
+\DoxyCodeLine{146     \mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* fac;}
+\DoxyCodeLine{147     \textcolor{comment}{//StringedNode* root;}}
+\DoxyCodeLine{148 \textcolor{keyword}{public}:}
+\DoxyCodeLine{149     \mbox{\hyperlink{class_command}{Command}}() \{\}}
+\DoxyCodeLine{150     \mbox{\hyperlink{class_command}{Command}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : fac(facc) \{\};}
+\DoxyCodeLine{151     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} execute() \{\};}
+\DoxyCodeLine{152     \textcolor{keywordtype}{void} makeBackup() \{}
+\DoxyCodeLine{153         \textcolor{keywordflow}{if} (this-\/>snaps.size() <= 50)}
+\DoxyCodeLine{154             this-\/>snaps.push\_back(fac-\/>getSnapshot());}
+\DoxyCodeLine{155     \}}
+\DoxyCodeLine{156     std::vector<Snapshot*> getSnaps() \{}
+\DoxyCodeLine{157         \textcolor{keywordflow}{return} snaps;}
+\DoxyCodeLine{158     \}}
+\DoxyCodeLine{159     \textcolor{keywordtype}{void} setSnaps(std::vector<Snapshot*> s) \{}
+\DoxyCodeLine{160         this-\/>snaps = s;}
+\DoxyCodeLine{161     \}}
+\DoxyCodeLine{162 \};}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{165 \textcolor{keyword}{class }\mbox{\hyperlink{class_save_command}{SaveCommand}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_command}{Command}}<T> \{}
+\DoxyCodeLine{166 \textcolor{keyword}{public}:}
+\DoxyCodeLine{167     \mbox{\hyperlink{class_save_command}{SaveCommand}}() : \mbox{\hyperlink{class_command}{Command}}<T>() \{\};}
+\DoxyCodeLine{168     \mbox{\hyperlink{class_save_command}{SaveCommand}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : \mbox{\hyperlink{class_command}{Command}}<T>(facc) \{\};}
+\DoxyCodeLine{169     \textcolor{keywordtype}{void} execute()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{170         std::ofstream output(\textcolor{stringliteral}{"{}tree.txt"{}});}
+\DoxyCodeLine{171         \mbox{\hyperlink{class_snapshot}{Snapshot}}* snap = this-\/>snaps.back();}
+\DoxyCodeLine{172         \mbox{\hyperlink{class_stringed_node}{StringedNode}}* sn = snap-\/>getStrNode();}
+\DoxyCodeLine{173         output << sn-\/>getTypeStr() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << snap-\/>getTreeTypeStr() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{174         \mbox{\hyperlink{class_node}{Node<std::string>}}* n = sn-\/>getTree();}
+\DoxyCodeLine{175         \mbox{\hyperlink{class_traverser}{Traverser<std::string>}}* trav = \textcolor{keyword}{new} \mbox{\hyperlink{class_traverser}{Traverser<std::string>}}(PreOrder);}
+\DoxyCodeLine{176         std::string out = trav-\/>\mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(n);}
+\DoxyCodeLine{177         output << out;}
+\DoxyCodeLine{178         output.close();}
+\DoxyCodeLine{179     \}}
+\DoxyCodeLine{180 \};}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{183 \textcolor{keyword}{class }\mbox{\hyperlink{class_undo_command}{UndoCommand}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_command}{Command}}<T> \{}
+\DoxyCodeLine{184 \textcolor{keyword}{public}:}
+\DoxyCodeLine{185     \mbox{\hyperlink{class_undo_command}{UndoCommand}}() : \mbox{\hyperlink{class_command}{Command}}<T>() \{\};}
+\DoxyCodeLine{186     \mbox{\hyperlink{class_undo_command}{UndoCommand}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : \mbox{\hyperlink{class_command}{Command}}<T>(facc) \{\};}
+\DoxyCodeLine{187     \textcolor{keywordtype}{void} execute()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{188         \textcolor{keywordflow}{if} (!(this-\/>snaps.size() -\/ 1))}
+\DoxyCodeLine{189             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{190         this-\/>snaps.pop\_back();}
+\DoxyCodeLine{191         \mbox{\hyperlink{class_snapshot}{Snapshot}}* snap = this-\/>snaps.back();}
+\DoxyCodeLine{192         this-\/>fac-\/>restore(snap);}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194 \};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREEFACADE\_H}}
+
+\end{DoxyCode}

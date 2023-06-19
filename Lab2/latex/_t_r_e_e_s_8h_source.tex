@@ -1,0 +1,1308 @@
+\hypertarget{_t_r_e_e_s_8h_source}{}\doxysection{TREES.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREES\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREES\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}qtablewidget.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QGraphicsView>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QGraphicsTextItem>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QMessageBox>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <time.h>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{comment}{//Converter}}
+\DoxyCodeLine{17 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_converter}{Converter}} \{}
+\DoxyCodeLine{19 \textcolor{keyword}{private}:}
+\DoxyCodeLine{20     T key\_;}
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_converter}{Converter}}() \{\};}
+\DoxyCodeLine{23     \mbox{\hyperlink{class_converter}{Converter}}(T key) : key\_(key) \{\};}
+\DoxyCodeLine{24     \textcolor{keyword}{operator} int() \{}
+\DoxyCodeLine{25         \textcolor{keywordflow}{return} int(key\_);}
+\DoxyCodeLine{26     \}}
+\DoxyCodeLine{27     \textcolor{keyword}{operator} std::string() \{}
+\DoxyCodeLine{28         \textcolor{keywordflow}{return} std::to\_string(key\_);}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30     \textcolor{keyword}{operator} double() \{}
+\DoxyCodeLine{31         \textcolor{keywordflow}{return} double(key\_);}
+\DoxyCodeLine{32     \}}
+\DoxyCodeLine{33 \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{36 \textcolor{keyword}{inline} \mbox{\hyperlink{class_converter}{Converter<std::string>::operator}} int() \{}
+\DoxyCodeLine{37     \textcolor{keywordflow}{return} std::stoi(key\_);}
+\DoxyCodeLine{38 \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{41 \textcolor{keyword}{inline} \mbox{\hyperlink{class_converter}{Converter<std::string>::operator}} double() \{}
+\DoxyCodeLine{42     \textcolor{keywordflow}{return} std::stod(key\_);}
+\DoxyCodeLine{43 \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{46 \textcolor{keyword}{inline} \mbox{\hyperlink{class_converter}{Converter<std::string>::operator}} std::string() \{}
+\DoxyCodeLine{47     \textcolor{keywordflow}{return} key\_;}
+\DoxyCodeLine{48 \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{comment}{//Tree}}
+\DoxyCodeLine{52 \textcolor{keyword}{enum} Color\{}
+\DoxyCodeLine{53     BLACK, RED}
+\DoxyCodeLine{54 \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{keyword}{enum} TreeType\{}
+\DoxyCodeLine{57     BinSearchTree,}
+\DoxyCodeLine{58 \};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{keyword}{enum} TypeNode \{}
+\DoxyCodeLine{61     IntNode, StringNode, DoubleNode}
+\DoxyCodeLine{62 \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{65 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_iterator}{TreeIterator}};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{68 \textcolor{keyword}{class }\mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{71 \textcolor{keyword}{class }\mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{74 \textcolor{keyword}{class }\mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{81 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{82 \textcolor{keyword}{class }\mbox{\hyperlink{class_node}{Node}}\{}
+\DoxyCodeLine{83 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{85     T \mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}};}
+\DoxyCodeLine{86     \textcolor{comment}{//TypeNode type\_;}}
+\DoxyCodeLine{88 \textcolor{comment}{}    \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}};}
+\DoxyCodeLine{89 \textcolor{keyword}{public}:}
+\DoxyCodeLine{90     \mbox{\hyperlink{class_node}{Node}}() : \mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}}(T(\mbox{\hyperlink{class_converter}{Converter<int>}}(0))),  \mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}}(\textcolor{keyword}{nullptr})\{\}}
+\DoxyCodeLine{91     \mbox{\hyperlink{class_node}{Node}}(T key) : \mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}}(key), \mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}}(\textcolor{keyword}{nullptr})\{\}}
+\DoxyCodeLine{92     \mbox{\hyperlink{class_node}{Node}}(T key, \mbox{\hyperlink{class_node}{Node}}* parent) : \mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}}(key), \mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}}(parent)\{\}}
+\DoxyCodeLine{93     \textcolor{comment}{/* Destructor*/}}
+\DoxyCodeLine{94     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{\string~Node}}()\{\}}
+\DoxyCodeLine{95     \textcolor{comment}{/*}}
+\DoxyCodeLine{96 \textcolor{comment}{    * Addition of a key to the tree}}
+\DoxyCodeLine{97 \textcolor{comment}{    * }}
+\DoxyCodeLine{98 \textcolor{comment}{    * \(\backslash\)param key Key which will be added to the tree}}
+\DoxyCodeLine{99 \textcolor{comment}{    */}}
+\DoxyCodeLine{100     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} Add(T key)\{\}}
+\DoxyCodeLine{101     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} AddToStringedNode(std::string key)\{\}}
+\DoxyCodeLine{102     \textcolor{comment}{/*}}
+\DoxyCodeLine{103 \textcolor{comment}{    * Addition of a node to the tree (used for traversal)}}
+\DoxyCodeLine{104 \textcolor{comment}{    */}}
+\DoxyCodeLine{105     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* AddDummy() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{this}; \}}
+\DoxyCodeLine{111     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}}(T key) \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{117     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Remove}}(T key) \{ \textcolor{keywordflow}{return} \textcolor{keyword}{this}; \}}
+\DoxyCodeLine{118     \textcolor{comment}{/*}}
+\DoxyCodeLine{119 \textcolor{comment}{    * Removal of a node from the tree (used for traversal)}}
+\DoxyCodeLine{120 \textcolor{comment}{    */}}
+\DoxyCodeLine{121     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* RemoveDummy() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{this}; \}}
+\DoxyCodeLine{126     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{setLeft}}(\mbox{\hyperlink{class_node}{Node}}* n)\{\}}
+\DoxyCodeLine{131     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{setRight}}(\mbox{\hyperlink{class_node}{Node}}* n)\{\}}
+\DoxyCodeLine{136     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{141     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{143     \textcolor{comment}{/*}}
+\DoxyCodeLine{144 \textcolor{comment}{    * \(\backslash\)param p Node which is set as parent of this node}}
+\DoxyCodeLine{145 \textcolor{comment}{    */}}
+\DoxyCodeLine{146     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}{setParent}}(\mbox{\hyperlink{class_node}{Node}}* p)\{}
+\DoxyCodeLine{147         this-\/>parent\_ = p;}
+\DoxyCodeLine{148     \}}
+\DoxyCodeLine{149     \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a5a8202d10fb4090d3b649b426aa07a34}{setDummyParent}}() \{}
+\DoxyCodeLine{150         this-\/>parent\_ = \textcolor{keyword}{new} \mbox{\hyperlink{class_node}{Node}}();}
+\DoxyCodeLine{151         this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{setRight}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{152         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}};}
+\DoxyCodeLine{153     \}}
+\DoxyCodeLine{154     \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}{RemoveDummyParent}}() \{}
+\DoxyCodeLine{155         \mbox{\hyperlink{class_node}{Node}}* p = this-\/>\mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}};}
+\DoxyCodeLine{156         this-\/>parent\_ = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{157         \textcolor{keyword}{delete} p;}
+\DoxyCodeLine{158         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{159     \}}
+\DoxyCodeLine{165     \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}() \{}
+\DoxyCodeLine{166         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}};}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{173     T \mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}() \{}
+\DoxyCodeLine{174         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}};}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{181     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a3329e51812286333e81c3804a623da9e}{getSuccessor}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{187     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{193     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node}}* \mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{199     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{isLeaf}}()\{}
+\DoxyCodeLine{200         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{201     \}}
+\DoxyCodeLine{202     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}{setChild}}() \{}
+\DoxyCodeLine{203         \textcolor{keywordflow}{if} (!this-\/>parent\_)}
+\DoxyCodeLine{204             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{205         \textcolor{keywordflow}{if} (this-\/>key\_ < this-\/>\mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}}-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())}
+\DoxyCodeLine{206             this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{setLeft}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{207         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{208             this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{setRight}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{209     \}}
+\DoxyCodeLine{210     \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *\mbox{\hyperlink{class_node_aa6069d766b602ce6ffa7e640a625a2bc}{CreateInOrderIterator}}()\{}
+\DoxyCodeLine{211         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_in_order_iterator}{InOrderIterator<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{212     \}}
+\DoxyCodeLine{213     \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *\mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{CreatePreOrderIterator}}()\{}
+\DoxyCodeLine{214         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{215     \}}
+\DoxyCodeLine{216     \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}}* \mbox{\hyperlink{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}{CreatePostOrderIterator}}() \{}
+\DoxyCodeLine{217         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{218     \}}
+\DoxyCodeLine{219     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{getHeight}}(\textcolor{keywordtype}{int} depth = 1) \{}
+\DoxyCodeLine{220         \textcolor{keywordtype}{int} h = depth;}
+\DoxyCodeLine{221         \textcolor{keywordtype}{int} lh = h, rh = h;}
+\DoxyCodeLine{222         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{223             lh = this-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()-\/>\mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{getHeight}}(depth+1);}
+\DoxyCodeLine{224         \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{225             rh = this-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()-\/>\mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{getHeight}}(depth+1);}
+\DoxyCodeLine{226         \textcolor{keywordflow}{if} (lh > rh)}
+\DoxyCodeLine{227             h = lh;}
+\DoxyCodeLine{228         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{229             h = rh;}
+\DoxyCodeLine{230         \textcolor{keywordflow}{return} h;}
+\DoxyCodeLine{231     \}}
+\DoxyCodeLine{232     std::string \mbox{\hyperlink{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}{getLongestWord}}() \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}; \}}
+\DoxyCodeLine{233     T \mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{getSumOfAllNodes}}() \{}
+\DoxyCodeLine{234         T ls = 0, rs = 0;}
+\DoxyCodeLine{235         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{236             ls = this-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()-\/>\mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{getSumOfAllNodes}}();}
+\DoxyCodeLine{237         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{238             rs = this-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()-\/>\mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{getSumOfAllNodes}}();}
+\DoxyCodeLine{239         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}() + ls + rs;}
+\DoxyCodeLine{240     \}}
+\DoxyCodeLine{241     \textcolor{comment}{/*Snapshot* getSnapshot(TypeNode type, std::string descr) \{}}
+\DoxyCodeLine{242 \textcolor{comment}{        return new Snapshot(this, type, descr);}}
+\DoxyCodeLine{243 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{244 \};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{247 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}{Node<std::string>::getLongestWord}}() \{}
+\DoxyCodeLine{248     std::string lw = \textcolor{stringliteral}{"{}"{}}, rw = \textcolor{stringliteral}{"{}"{}}, w = this-\/>getKey();}
+\DoxyCodeLine{249     \textcolor{keywordflow}{if} (this-\/>getLeft())}
+\DoxyCodeLine{250         lw = this-\/>getLeft()-\/>getLongestWord();}
+\DoxyCodeLine{251     \textcolor{keywordflow}{if} (this-\/>getRight())}
+\DoxyCodeLine{252         rw = this-\/>getRight()-\/>getLongestWord();}
+\DoxyCodeLine{253     \textcolor{keywordflow}{if} (lw.length() > rw.length())}
+\DoxyCodeLine{254         \textcolor{keywordflow}{return} lw.length() > w.length() ? lw : w;}
+\DoxyCodeLine{255     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{256         \textcolor{keywordflow}{return} rw.length() > w.length() ? rw : w;}
+\DoxyCodeLine{257     \textcolor{keywordflow}{return} w;}
+\DoxyCodeLine{258 \}}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{265 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{266 \textcolor{keyword}{class }\mbox{\hyperlink{class_node_compos}{NodeCompos}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_node}{Node}}<T>\{}
+\DoxyCodeLine{267 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{269     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}};}
+\DoxyCodeLine{271     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}};}
+\DoxyCodeLine{272 \textcolor{keyword}{public}:}
+\DoxyCodeLine{273     \mbox{\hyperlink{class_node_compos}{NodeCompos}}() : \mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}(nullptr), \mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}(nullptr)\{\}}
+\DoxyCodeLine{274     \mbox{\hyperlink{class_node_compos}{NodeCompos}}(\mbox{\hyperlink{class_node}{Node<T>}}* left, \mbox{\hyperlink{class_node}{Node<T>}}* right) : \mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}(left), \mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}(right)\{\}}
+\DoxyCodeLine{275     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{setLeft}}(\mbox{\hyperlink{class_node}{Node<T>}}* n)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{276         this-\/>left\_ = n;}
+\DoxyCodeLine{277     \}}
+\DoxyCodeLine{278     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{setRight}}(\mbox{\hyperlink{class_node}{Node<T>}}* n)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{279         this-\/>right\_ = n;}
+\DoxyCodeLine{280     \}}
+\DoxyCodeLine{281     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{getLeft}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{282         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}};}
+\DoxyCodeLine{283     \}}
+\DoxyCodeLine{284     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{getRight}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{285         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}};}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287 \};}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{290 \textcolor{comment}{/*}}
+\DoxyCodeLine{291 \textcolor{comment}{* Class which represents nodes without children}}
+\DoxyCodeLine{292 \textcolor{comment}{*/}}
+\DoxyCodeLine{293 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{294 \textcolor{keyword}{class }\mbox{\hyperlink{class_node_leaf}{NodeLeaf}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_node}{Node}}<T>\{}
+\DoxyCodeLine{295 \textcolor{keyword}{public}:}
+\DoxyCodeLine{296     \mbox{\hyperlink{class_node_leaf}{NodeLeaf}}()\{\}}
+\DoxyCodeLine{297     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{isLeaf}}()\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{298         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{299     \}}
+\DoxyCodeLine{300 \};}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{303 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{304 \textcolor{keyword}{class }\mbox{\hyperlink{class_binary_node}{BinaryNode}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_node}{Node}}<T>\{}
+\DoxyCodeLine{305 \textcolor{keyword}{public}:}
+\DoxyCodeLine{306     \mbox{\hyperlink{class_binary_node}{BinaryNode}}()\{}
+\DoxyCodeLine{307         }
+\DoxyCodeLine{308     \}}
+\DoxyCodeLine{309 \};}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{312 \textcolor{keyword}{class }\mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf}};}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{315 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{316 \textcolor{keyword}{class }\mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_binary_node}{BinaryNode}}<T>, \textcolor{keyword}{public} \mbox{\hyperlink{class_node_compos}{NodeCompos}}<T>\{}
+\DoxyCodeLine{317 \textcolor{keyword}{public}:}
+\DoxyCodeLine{318     \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos}}() : \mbox{\hyperlink{class_node}{Node}}<T>(), \mbox{\hyperlink{class_node_compos}{NodeCompos}}<T>()\{\}}
+\DoxyCodeLine{319     \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos}}(T key) : \mbox{\hyperlink{class_node}{Node}}<T>(key), \mbox{\hyperlink{class_node_compos}{NodeCompos}}<T>()\{\}}
+\DoxyCodeLine{320     \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos}}(\mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}} *leaf) : \mbox{\hyperlink{class_node}{Node}}<T>(leaf-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}(), leaf-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()), \mbox{\hyperlink{class_node_compos}{NodeCompos}}<T>()\{}
+\DoxyCodeLine{321         this-\/>\mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{setChild}}();}
+\DoxyCodeLine{322     \}   }
+\DoxyCodeLine{323     \textcolor{keywordtype}{void} Add(T key)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{324         \textcolor{keywordflow}{if}(key < this-\/>\mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}})}
+\DoxyCodeLine{325         \{}
+\DoxyCodeLine{326             \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}})}
+\DoxyCodeLine{327                 this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}-\/>Add(key);}
+\DoxyCodeLine{328             \textcolor{keywordflow}{else} \textcolor{comment}{//when there is right but there's no left child}}
+\DoxyCodeLine{329             \{}
+\DoxyCodeLine{330                 this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}(key);}
+\DoxyCodeLine{331                 this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{332             \}}
+\DoxyCodeLine{333         \}}
+\DoxyCodeLine{334         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{335             \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}})}
+\DoxyCodeLine{336                 this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>Add(key);}
+\DoxyCodeLine{337             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{338             \{}
+\DoxyCodeLine{339                 this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}(key);}
+\DoxyCodeLine{340                 this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{341             \}}
+\DoxyCodeLine{342         \}}
+\DoxyCodeLine{343     \}}
+\DoxyCodeLine{344     \textcolor{keywordtype}{void} AddToStringedNode(std::string key)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{345         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{346     \}}
+\DoxyCodeLine{347     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Search}}(T key)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{348         \mbox{\hyperlink{class_node}{Node<T>}}* b = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{349         \textcolor{keywordflow}{if} (key < this-\/>\mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}})}
+\DoxyCodeLine{350         \{}
+\DoxyCodeLine{351             \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}})}
+\DoxyCodeLine{352                 b = this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}-\/>Search(key);}
+\DoxyCodeLine{353             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{354                 \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{355         \}}
+\DoxyCodeLine{356         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (key > this-\/>key\_) \{}
+\DoxyCodeLine{357             \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}})}
+\DoxyCodeLine{358                 b = this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>Search(key);}
+\DoxyCodeLine{359             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{360                 \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{361         \}}
+\DoxyCodeLine{362         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{363             \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{364         \textcolor{keywordflow}{return} b;}
+\DoxyCodeLine{365     \}}
+\DoxyCodeLine{366     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Remove}}(T key)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{367         \textcolor{keywordflow}{if} (key < this-\/>\mbox{\hyperlink{class_node_a4ee8a248df41ddad03dcff9cac64726d}{key\_}})}
+\DoxyCodeLine{368         \{}
+\DoxyCodeLine{369             \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}})}
+\DoxyCodeLine{370                 this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}} = this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}-\/>Remove(key);}
+\DoxyCodeLine{371             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{372                 \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{373         \}}
+\DoxyCodeLine{374         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (key > this-\/>key\_) \{}
+\DoxyCodeLine{375             \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}})}
+\DoxyCodeLine{376                 this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}} = this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>Remove(key);}
+\DoxyCodeLine{377             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{378                 \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{379         \}}
+\DoxyCodeLine{380         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{381             \textcolor{keywordflow}{if} (!this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}})}
+\DoxyCodeLine{382             \{}
+\DoxyCodeLine{383                 \mbox{\hyperlink{class_node}{Node<T>}}* right = this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}};}
+\DoxyCodeLine{384                 right-\/>\mbox{\hyperlink{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}{setParent}}(this-\/>parent\_);}
+\DoxyCodeLine{385                 \textcolor{keyword}{delete} \textcolor{keyword}{this};}
+\DoxyCodeLine{386                 \textcolor{keywordflow}{return} right;}
+\DoxyCodeLine{387             \}}
+\DoxyCodeLine{388             \textcolor{keywordflow}{if} (!this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}) \{}
+\DoxyCodeLine{389                 \mbox{\hyperlink{class_node}{Node<T>}}* left = this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}};}
+\DoxyCodeLine{390                 left-\/>\mbox{\hyperlink{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}{setParent}}(this-\/>parent\_);}
+\DoxyCodeLine{391                 \textcolor{keyword}{delete} \textcolor{keyword}{this};}
+\DoxyCodeLine{392                 \textcolor{keywordflow}{return} left;}
+\DoxyCodeLine{393             \}}
+\DoxyCodeLine{394             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{395                 \mbox{\hyperlink{class_node}{Node<T>}}* succ = this-\/>\mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{getSuccessor}}();}
+\DoxyCodeLine{396                 this-\/>key\_ = succ-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}();}
+\DoxyCodeLine{397                 this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}} = this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>Remove(this-\/>key\_);}
+\DoxyCodeLine{398             \}}
+\DoxyCodeLine{399         \}}
+\DoxyCodeLine{400         \textcolor{comment}{//if there is no children anymore}}
+\DoxyCodeLine{401         \textcolor{keywordflow}{if} (!this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}} \&\& !this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}) \{}
+\DoxyCodeLine{402             \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}* toLeaf = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{403             \textcolor{keywordflow}{return} toLeaf;}
+\DoxyCodeLine{404         \}}
+\DoxyCodeLine{405         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{406     \};}
+\DoxyCodeLine{407     \mbox{\hyperlink{class_node}{Node<T>}}* AddDummy()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{408         this-\/>\mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{setRight}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}());}
+\DoxyCodeLine{409         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{410     \}}
+\DoxyCodeLine{411     \mbox{\hyperlink{class_node}{Node<T>}}* RemoveDummy()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{412         \mbox{\hyperlink{class_node}{Node<T>}}* dummy = this-\/>\mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{getRight}}();}
+\DoxyCodeLine{413         \textcolor{keyword}{delete} this-\/>\mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{getRight}}();}
+\DoxyCodeLine{414         this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{415         \textcolor{keywordflow}{if}(!this-\/>\mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{getLeft}}())}
+\DoxyCodeLine{416             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{417         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{418     \}}
+\DoxyCodeLine{419     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{getSuccessor}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{420         \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>getMin();}
+\DoxyCodeLine{421     \}}
+\DoxyCodeLine{422     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{getMin}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{423         \mbox{\hyperlink{class_node}{Node<T>}}* min;}
+\DoxyCodeLine{424         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}})}
+\DoxyCodeLine{425             min = this-\/>\mbox{\hyperlink{class_node_compos_a18bc9f2d8974ff55e96a49e3b6de1188}{left\_}}-\/>getMin();}
+\DoxyCodeLine{426         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{427             min = \textcolor{keyword}{this};}
+\DoxyCodeLine{428         \textcolor{keywordflow}{return} min;}
+\DoxyCodeLine{429     \}}
+\DoxyCodeLine{430     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_compos_aff7440463e955fcd91b6d5bf4d144494}{getMax}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{431         \mbox{\hyperlink{class_node}{Node<T>}}* max;}
+\DoxyCodeLine{432         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}})}
+\DoxyCodeLine{433             max = this-\/>\mbox{\hyperlink{class_node_compos_ae0d4486613b68d76cf1a989a180a65b6}{right\_}}-\/>getMax();}
+\DoxyCodeLine{434         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{435             max = \textcolor{keyword}{this};}
+\DoxyCodeLine{436         \textcolor{keywordflow}{return} max;}
+\DoxyCodeLine{437     \}}
+\DoxyCodeLine{439     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{setChild}}() \{}
+\DoxyCodeLine{440         \textcolor{keywordflow}{if} (!this-\/>parent\_)}
+\DoxyCodeLine{441             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{442         \textcolor{keywordflow}{if} (this-\/>key\_ < this-\/>\mbox{\hyperlink{class_node_a5df398bcb75ce3720cd6f03fec59a687}{parent\_}}-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())}
+\DoxyCodeLine{443             this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{setLeft}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{444         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{445             this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{setRight}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{446     \}}
+\DoxyCodeLine{447     \textcolor{keywordtype}{void} setSNChild() \{}
+\DoxyCodeLine{448         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{449     \}}
+\DoxyCodeLine{450 \};}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{453 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>::setSNChild}}() \{}
+\DoxyCodeLine{454     \textcolor{keywordflow}{if} (!this-\/>parent\_)}
+\DoxyCodeLine{455         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{456     \textcolor{keywordflow}{if} (std::stod(this-\/>key\_) < std::stod(this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}()))}
+\DoxyCodeLine{457         this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{setLeft}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{458     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{459         this-\/>parent\_-\/>\mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{setRight}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{460 \}}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{463 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{464 \textcolor{keyword}{class }\mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_binary_node}{BinaryNode}}<T>, \textcolor{keyword}{public} \mbox{\hyperlink{class_node_leaf}{NodeLeaf}}<T>\{}
+\DoxyCodeLine{465 \textcolor{keyword}{public}:}
+\DoxyCodeLine{466     \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf}}() : \mbox{\hyperlink{class_node}{Node<T>}}(), \mbox{\hyperlink{class_node_leaf}{NodeLeaf<T>}}()\{\}}
+\DoxyCodeLine{467     \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf}}(T key) : \mbox{\hyperlink{class_node}{Node<T>}}(key), \mbox{\hyperlink{class_node_leaf}{NodeLeaf<T>}}()\{\}}
+\DoxyCodeLine{468     \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf}}(\mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<T>}}* comp) : \mbox{\hyperlink{class_node}{Node<T>}}(comp-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}(), comp-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()), \mbox{\hyperlink{class_node_leaf}{NodeLeaf<T>}}() \{}
+\DoxyCodeLine{469         this-\/>\mbox{\hyperlink{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}{setChild}}();}
+\DoxyCodeLine{470     \}}
+\DoxyCodeLine{471     \textcolor{keywordtype}{void} Add(T key)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{472         \textcolor{comment}{//Conversion of leaf to composite}}
+\DoxyCodeLine{473         \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<T>}}* toCompos = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{474         \textcolor{comment}{//Addition of the key to a child node of the converted node}}
+\DoxyCodeLine{475         toCompos-\/>Add(key);}
+\DoxyCodeLine{476         \textcolor{keyword}{delete} \textcolor{keyword}{this};}
+\DoxyCodeLine{477     \}}
+\DoxyCodeLine{478     \textcolor{keywordtype}{void} AddToStringedNode(std::string key)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{479         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{480     \}}
+\DoxyCodeLine{481     \mbox{\hyperlink{class_node}{Node<T>}}* AddDummy()\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{482         \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<T>}}* toCompos = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{483         toCompos-\/>\mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{setRight}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<T>}}());}
+\DoxyCodeLine{484         \textcolor{keywordflow}{return} toCompos;}
+\DoxyCodeLine{485     \}}
+\DoxyCodeLine{486     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Search}}(T key)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{487         \textcolor{keywordflow}{if} (this-\/>key\_ == key)}
+\DoxyCodeLine{488             \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{489         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{490     \}}
+\DoxyCodeLine{491     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Remove}}(T key)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{492         \textcolor{keywordflow}{if} (this-\/>key\_ == key)}
+\DoxyCodeLine{493         \{}
+\DoxyCodeLine{494             \textcolor{keyword}{delete} \textcolor{keyword}{this};}
+\DoxyCodeLine{495             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{496         \}}
+\DoxyCodeLine{497         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{498     \}}
+\DoxyCodeLine{499     \textcolor{comment}{//Node<T>* getSuccessor() override \{}}
+\DoxyCodeLine{500     \textcolor{comment}{//    return this-\/>right\_-\/>getMin();}}
+\DoxyCodeLine{501     \textcolor{comment}{//\}}}
+\DoxyCodeLine{502     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{getMin}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{503         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{504     \}}
+\DoxyCodeLine{505     \mbox{\hyperlink{class_node}{Node<T>}}* \mbox{\hyperlink{class_binary_node_leaf_aa3dc573485458f24688891cb3196164e}{getMax}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{506         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{507     \}}
+\DoxyCodeLine{508 \};}
+\DoxyCodeLine{509 }
+\DoxyCodeLine{510 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{511 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>::AddToStringedNode}}(std::string key) \{}
+\DoxyCodeLine{512     \textcolor{keywordflow}{if} (std::stod(key) < std::stod(this-\/>key\_))}
+\DoxyCodeLine{513     \{}
+\DoxyCodeLine{514         \textcolor{keywordflow}{if} (this-\/>left\_)}
+\DoxyCodeLine{515             this-\/>left\_-\/>AddToStringedNode(key);}
+\DoxyCodeLine{516         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{517         \{}
+\DoxyCodeLine{518             this-\/>left\_ = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<std::string>}}(key);}
+\DoxyCodeLine{519             this-\/>left\_-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{520         \}}
+\DoxyCodeLine{521     \}}
+\DoxyCodeLine{522     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{523         \textcolor{keywordflow}{if} (this-\/>right\_)}
+\DoxyCodeLine{524             this-\/>right\_-\/>AddToStringedNode(key);}
+\DoxyCodeLine{525         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{526         \{}
+\DoxyCodeLine{527             this-\/>right\_ = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<std::string>}}(key);}
+\DoxyCodeLine{528             this-\/>right\_-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{529         \}}
+\DoxyCodeLine{530     \}}
+\DoxyCodeLine{531 \}}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{534 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_binary_node_leaf}{BinaryNodeLeaf<std::string>::AddToStringedNode}}(std::string key) \{}
+\DoxyCodeLine{535     \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>}}* toCompos = \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>}}(this-\/>getKey());}
+\DoxyCodeLine{536     toCompos-\/>\mbox{\hyperlink{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}{setParent}}(this-\/>getParent());}
+\DoxyCodeLine{537     \textcolor{comment}{//Addition of the key to a child node of the converted node}}
+\DoxyCodeLine{538     toCompos-\/>Add(key);}
+\DoxyCodeLine{539     toCompos-\/>setSNChild();}
+\DoxyCodeLine{540     \textcolor{keyword}{delete} \textcolor{keyword}{this};}
+\DoxyCodeLine{541 \}}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544 \textcolor{comment}{//TreeFactory}}
+\DoxyCodeLine{545 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_factory}{TreeFactory}}\{}
+\DoxyCodeLine{546 \textcolor{keyword}{private}:}
+\DoxyCodeLine{547 \textcolor{comment}{//    static TreeFactory* treefact;}}
+\DoxyCodeLine{548 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{549     \mbox{\hyperlink{class_tree_factory}{TreeFactory}}() \{\};}
+\DoxyCodeLine{550     \mbox{\hyperlink{class_tree_factory}{\string~TreeFactory}}() \{\};}
+\DoxyCodeLine{551 \textcolor{keyword}{public}:}
+\DoxyCodeLine{552     \mbox{\hyperlink{class_tree_factory}{TreeFactory}}(\mbox{\hyperlink{class_tree_factory}{TreeFactory}} \&other) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{553     \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_tree_factory}{TreeFactory}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{554     \textcolor{keyword}{static} \mbox{\hyperlink{class_tree_factory}{TreeFactory}}\& \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{getTreeFac}}();}
+\DoxyCodeLine{555     }
+\DoxyCodeLine{556     \textcolor{comment}{/*template<typename T>}}
+\DoxyCodeLine{557 \textcolor{comment}{    Node<T>* createTree(TreeType type, T rootkey) \{}}
+\DoxyCodeLine{558 \textcolor{comment}{        switch (type) \{}}
+\DoxyCodeLine{559 \textcolor{comment}{        case BinSearchTree:}}
+\DoxyCodeLine{560 \textcolor{comment}{            return new BinaryNodeCompos<T>(rootkey);}}
+\DoxyCodeLine{561 \textcolor{comment}{        default:}}
+\DoxyCodeLine{562 \textcolor{comment}{            return nullptr;}}
+\DoxyCodeLine{563 \textcolor{comment}{        \}}}
+\DoxyCodeLine{564 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{565     }
+\DoxyCodeLine{566     \mbox{\hyperlink{class_node}{Node<int>}}* \mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(TreeType type, \textcolor{keywordtype}{int} rootkey)\{}
+\DoxyCodeLine{567         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{568         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{569             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<int>}}(rootkey);}
+\DoxyCodeLine{570         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{571             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{572         \}}
+\DoxyCodeLine{573     \}}
+\DoxyCodeLine{574     }
+\DoxyCodeLine{575     \mbox{\hyperlink{class_node}{Node<double>}}* \mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(TreeType type, \textcolor{keywordtype}{double} rootkey)\{}
+\DoxyCodeLine{576         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{577         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{578             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<double>}}(rootkey);}
+\DoxyCodeLine{579         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{580             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{581         \}}
+\DoxyCodeLine{582     \}}
+\DoxyCodeLine{583     }
+\DoxyCodeLine{584     \mbox{\hyperlink{class_node}{Node<std::string>}}* \mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(TreeType type, std::string rootkey)\{}
+\DoxyCodeLine{585         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{586         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{587             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>}}(rootkey);}
+\DoxyCodeLine{588         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{589             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{590         \}}
+\DoxyCodeLine{591     \}}
+\DoxyCodeLine{592 \};}
+\DoxyCodeLine{593 }
+\DoxyCodeLine{594 \textcolor{comment}{//TreeFactory* TreeFactory::treefact = nullptr;}}
+\DoxyCodeLine{595 }
+\DoxyCodeLine{596 \textcolor{keyword}{inline} \mbox{\hyperlink{class_tree_factory}{TreeFactory}}\& \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}()\{}
+\DoxyCodeLine{597     \textcolor{keyword}{static} \mbox{\hyperlink{class_tree_factory}{TreeFactory}} treefact;}
+\DoxyCodeLine{598     \textcolor{keywordflow}{return} treefact;}
+\DoxyCodeLine{599 \}}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602 \textcolor{comment}{//TreeIterator}}
+\DoxyCodeLine{603 \textcolor{keyword}{template} <\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{604 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_iterator}{TreeIterator}}\{}
+\DoxyCodeLine{605 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{606     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{607     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}};}
+\DoxyCodeLine{608     \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}};}
+\DoxyCodeLine{609     \mbox{\hyperlink{class_node}{Node<KeyType>}}* max\_;}
+\DoxyCodeLine{610 \textcolor{keyword}{public}:}
+\DoxyCodeLine{611     \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}() : \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}}(\textcolor{keyword}{nullptr}), \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}}(\textcolor{keyword}{nullptr}), \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}(\textcolor{keyword}{nullptr}), max\_(\textcolor{keyword}{nullptr})\{\}}
+\DoxyCodeLine{612     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_iterator}{\string~TreeIterator}}() \{\}}
+\DoxyCodeLine{613     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}()\{ \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = \mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}}; \}}
+\DoxyCodeLine{614     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()\{\}}
+\DoxyCodeLine{615     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}()\{}
+\DoxyCodeLine{616         \textcolor{keywordflow}{return} (\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} == \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}});}
+\DoxyCodeLine{617     \}}
+\DoxyCodeLine{618     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node<KeyType>}}* \mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()\{}
+\DoxyCodeLine{619         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}};}
+\DoxyCodeLine{620     \}}
+\DoxyCodeLine{621     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_node}{Node<KeyType>}}* Last()\{}
+\DoxyCodeLine{622         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}};}
+\DoxyCodeLine{623     \}}
+\DoxyCodeLine{624 \};}
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{627 \textcolor{keyword}{class }\mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType>\{}
+\DoxyCodeLine{628 \textcolor{keyword}{public}:}
+\DoxyCodeLine{629     \mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}}() \{\}}
+\DoxyCodeLine{630     \mbox{\hyperlink{class_in_order_iterator}{InOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) \{}
+\DoxyCodeLine{631         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}();}
+\DoxyCodeLine{632         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{633         this-\/>max\_ = root-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>AddDummy();}
+\DoxyCodeLine{634         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = this-\/>max\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{635     \}}
+\DoxyCodeLine{636     \mbox{\hyperlink{class_in_order_iterator}{\string~InOrderIterator}}() \{}
+\DoxyCodeLine{637         this-\/>max\_ = this-\/>max\_-\/>RemoveDummy();}
+\DoxyCodeLine{638     \}}
+\DoxyCodeLine{639     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_in_order_iterator_aee741dba81f19c617c3ad13dd144be9e}{Next}}()\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{640         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()) \{}
+\DoxyCodeLine{641             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_a3329e51812286333e81c3804a623da9e}{getSuccessor}}();}
+\DoxyCodeLine{642         \}}
+\DoxyCodeLine{643         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{644             \mbox{\hyperlink{class_node}{Node<KeyType>}}* parent = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{645             \textcolor{keywordflow}{while} (\textcolor{comment}{/*parent-\/>getRight() ||*/} parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == this-\/>iter\_) \{}
+\DoxyCodeLine{646                 this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{647                 parent = parent-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{648             \}}
+\DoxyCodeLine{649             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{650         \}}
+\DoxyCodeLine{651     \}}
+\DoxyCodeLine{652 \};}
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{655 \textcolor{keyword}{class }\mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType> \{}
+\DoxyCodeLine{656 \textcolor{keyword}{public}:}
+\DoxyCodeLine{657     \mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}}()\{\}}
+\DoxyCodeLine{658     \mbox{\hyperlink{class_pre_order_iterator}{PreOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root)\{}
+\DoxyCodeLine{659         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root;}
+\DoxyCodeLine{660         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{661         this-\/>max\_ = root-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>AddDummy();}
+\DoxyCodeLine{662         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = this-\/>max\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{663     \}}
+\DoxyCodeLine{664     \mbox{\hyperlink{class_pre_order_iterator}{\string~PreOrderIterator}}() \{}
+\DoxyCodeLine{665         this-\/>max\_ = this-\/>max\_-\/>RemoveDummy();}
+\DoxyCodeLine{666     \}}
+\DoxyCodeLine{667     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pre_order_iterator_a29aa3ea06e73f386f8a34c093829e8f9}{Next}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{668         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()) \{}
+\DoxyCodeLine{669             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}();}
+\DoxyCodeLine{670         \}}
+\DoxyCodeLine{671         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{672         \{}
+\DoxyCodeLine{673             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{674         \}}
+\DoxyCodeLine{675         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{676             \mbox{\hyperlink{class_node}{Node<KeyType>}}* parent = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{677             \textcolor{keywordflow}{while} (!parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() || parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == this-\/>iter\_)}
+\DoxyCodeLine{678             \{}
+\DoxyCodeLine{679                 this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent;}
+\DoxyCodeLine{680                 parent = parent-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{681             \}}
+\DoxyCodeLine{682             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = parent-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{683         \}}
+\DoxyCodeLine{684     \}}
+\DoxyCodeLine{685 \};}
+\DoxyCodeLine{686 }
+\DoxyCodeLine{687 \textcolor{keyword}{template}<\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{688 \textcolor{keyword}{class }\mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iterator}{TreeIterator}}<KeyType> \{}
+\DoxyCodeLine{689 \textcolor{keyword}{public}:}
+\DoxyCodeLine{690     \mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}}() \{\}}
+\DoxyCodeLine{691     \mbox{\hyperlink{class_post_order_iterator}{PostOrderIterator}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) \{}
+\DoxyCodeLine{692         this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}} = root-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}();}
+\DoxyCodeLine{693         this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a61ba541846f82856fdb653135c64e49a}{First\_}};}
+\DoxyCodeLine{694         this-\/>max\_ = root;}
+\DoxyCodeLine{695         this-\/>\mbox{\hyperlink{class_tree_iterator_aeccb81c4eb72d41a858ff658e8858c4b}{Last\_}} = root-\/>\mbox{\hyperlink{class_node_a5a8202d10fb4090d3b649b426aa07a34}{setDummyParent}}();}
+\DoxyCodeLine{696     \}}
+\DoxyCodeLine{697     \mbox{\hyperlink{class_post_order_iterator}{\string~PostOrderIterator}}() \{}
+\DoxyCodeLine{698         this-\/>max\_ = this-\/>max\_-\/>\mbox{\hyperlink{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}{RemoveDummyParent}}();}
+\DoxyCodeLine{699     \}}
+\DoxyCodeLine{700     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_post_order_iterator_ae37adbee4006ba04a984c4660c28e225}{Next}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{701         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() \&\& this-\/>iter\_-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() != this-\/>iter\_) \{}
+\DoxyCodeLine{702             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{703             \textcolor{keywordflow}{while} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}() || this-\/>iter\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()) \{}
+\DoxyCodeLine{704                 \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()) \{}
+\DoxyCodeLine{705                     this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}();}
+\DoxyCodeLine{706                 \}}
+\DoxyCodeLine{707                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{708                     this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}();}
+\DoxyCodeLine{709             \}}
+\DoxyCodeLine{710         \}}
+\DoxyCodeLine{711         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{712             this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}} = this-\/>\mbox{\hyperlink{class_tree_iterator_a08d3d7ec5473735529f4e54ca84d74e7}{iter\_}}-\/>\mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{getParent}}();}
+\DoxyCodeLine{713         \}}
+\DoxyCodeLine{714     \}}
+\DoxyCodeLine{715 \};}
+\DoxyCodeLine{716 }
+\DoxyCodeLine{717 \textcolor{keyword}{enum} TravType \{}
+\DoxyCodeLine{718     InOrder, PreOrder, PostOrder}
+\DoxyCodeLine{719 \};}
+\DoxyCodeLine{720 }
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722 \textcolor{comment}{//TreeIterStrategy}}
+\DoxyCodeLine{723 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{724 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}\{}
+\DoxyCodeLine{725 \textcolor{keyword}{public}:}
+\DoxyCodeLine{726     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_iter_strategy}{\string~TreeIterStrategy}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{727     \textcolor{keyword}{virtual} std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\{}
+\DoxyCodeLine{728         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{729     \}}
+\DoxyCodeLine{730 \};}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{733 \textcolor{keyword}{class }\mbox{\hyperlink{class_in_order_strategy}{InOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T>\{}
+\DoxyCodeLine{734 \textcolor{keyword}{public}:}
+\DoxyCodeLine{735     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override}\{}
+\DoxyCodeLine{736         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{737         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *it = root-\/>\mbox{\hyperlink{class_node_aa6069d766b602ce6ffa7e640a625a2bc}{CreateInOrderIterator}}();}
+\DoxyCodeLine{738         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{739             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{740         \}}
+\DoxyCodeLine{741         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{742         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{743     \}}
+\DoxyCodeLine{744 \};}
+\DoxyCodeLine{745 }
+\DoxyCodeLine{746 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{747 \textcolor{keyword}{class }\mbox{\hyperlink{class_pre_order_strategy}{PreOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T> \{}
+\DoxyCodeLine{748     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{749         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{750         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}}* it = root-\/>\mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{CreatePreOrderIterator}}();}
+\DoxyCodeLine{751         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{752             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{753         \}}
+\DoxyCodeLine{754         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{755         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{756     \}}
+\DoxyCodeLine{757 \};}
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{760 \textcolor{keyword}{class }\mbox{\hyperlink{class_post_order_strategy}{PostOrderStrategy}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_iter_strategy}{TreeIterStrategy}}<T> \{}
+\DoxyCodeLine{761     std::string doTraverse(\mbox{\hyperlink{class_node}{Node<T>}}* root)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{762         std::string r = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{763         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}}* it = root-\/>\mbox{\hyperlink{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}{CreatePostOrderIterator}}();}
+\DoxyCodeLine{764         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{765             r += std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{766         \}}
+\DoxyCodeLine{767         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{768         \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{769     \}}
+\DoxyCodeLine{770 \};}
+\DoxyCodeLine{771 }
+\DoxyCodeLine{772 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{773 \textcolor{keyword}{class }\mbox{\hyperlink{class_traverser}{Traverser}}\{}
+\DoxyCodeLine{774 \textcolor{keyword}{private}:}
+\DoxyCodeLine{775     std::unique\_ptr<TreeIterStrategy<T>> strategy\_;}
+\DoxyCodeLine{776 \textcolor{keyword}{public}:}
+\DoxyCodeLine{777     \mbox{\hyperlink{class_traverser}{Traverser}}()\{\}}
+\DoxyCodeLine{778     \mbox{\hyperlink{class_traverser}{Traverser}}(TravType type)\{}
+\DoxyCodeLine{779         this-\/>\mbox{\hyperlink{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}{set\_strategy}}(type);}
+\DoxyCodeLine{780     \}}
+\DoxyCodeLine{781     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_traverser_ad9cae72c40101a10b69f8897cc22ccef}{set\_strategy}}(TravType type)\{}
+\DoxyCodeLine{782         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{783         \textcolor{keywordflow}{case} InOrder:}
+\DoxyCodeLine{784         \{strategy\_ = std::make\_unique<InOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{785         \textcolor{keywordflow}{case} PreOrder:}
+\DoxyCodeLine{786         \{strategy\_ = std::make\_unique<PreOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{787         \textcolor{keywordflow}{case} PostOrder:}
+\DoxyCodeLine{788         \{strategy\_ = std::make\_unique<PostOrderStrategy<T>>();\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{789         \}}
+\DoxyCodeLine{790     \}}
+\DoxyCodeLine{791     std::string \mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(\mbox{\hyperlink{class_node}{Node<T>}}* root)\{}
+\DoxyCodeLine{792         \textcolor{keywordflow}{if}(strategy\_)\{}
+\DoxyCodeLine{793             \textcolor{keywordflow}{return} strategy\_-\/>doTraverse(root);}
+\DoxyCodeLine{794         \}}
+\DoxyCodeLine{795         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{796             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}No strategy set\(\backslash\)n"{}};}
+\DoxyCodeLine{797         \}}
+\DoxyCodeLine{798     \}}
+\DoxyCodeLine{799 \};}
+\DoxyCodeLine{800 }
+\DoxyCodeLine{801 }
+\DoxyCodeLine{802 \textcolor{comment}{//StringedNode}}
+\DoxyCodeLine{803 \textcolor{keyword}{class }\mbox{\hyperlink{class_stringed_node}{StringedNode}} \{}
+\DoxyCodeLine{804 \textcolor{keyword}{private}:}
+\DoxyCodeLine{805     \mbox{\hyperlink{class_node}{Node<std::string>}}* root\_;}
+\DoxyCodeLine{806     std::string type\_;}
+\DoxyCodeLine{807 \textcolor{keyword}{public}:}
+\DoxyCodeLine{808     \mbox{\hyperlink{class_stringed_node}{StringedNode}}() \{\};}
+\DoxyCodeLine{809     \mbox{\hyperlink{class_stringed_node}{StringedNode}}(\mbox{\hyperlink{class_node}{Node<std::string>}}* root, TypeNode type) : root\_(root)\{}
+\DoxyCodeLine{810         \textcolor{keywordflow}{switch} (type) \{}
+\DoxyCodeLine{811         \textcolor{keywordflow}{case} IntNode:}
+\DoxyCodeLine{812         \{type\_ = \textcolor{stringliteral}{"{}int"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{813         \textcolor{keywordflow}{case} DoubleNode:}
+\DoxyCodeLine{814         \{type\_ = \textcolor{stringliteral}{"{}double"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{815         \textcolor{keywordflow}{case} StringNode:}
+\DoxyCodeLine{816         \{type\_ = \textcolor{stringliteral}{"{}string"{}}; \textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{817         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{818         \{\textcolor{keywordflow}{break}; \}}
+\DoxyCodeLine{819         \}}
+\DoxyCodeLine{820     \}}
+\DoxyCodeLine{821     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_stringed_node}{StringedNode}}* getStrNode() \{}
+\DoxyCodeLine{822         \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{823     \}}
+\DoxyCodeLine{824     \mbox{\hyperlink{class_node}{Node<std::string>}}* getTree() \{}
+\DoxyCodeLine{825         \textcolor{keywordflow}{return} this-\/>root\_;}
+\DoxyCodeLine{826     \}}
+\DoxyCodeLine{827     TypeNode getType() \{}
+\DoxyCodeLine{828         TypeNode t = StringNode;}
+\DoxyCodeLine{829         \textcolor{keywordflow}{if} (type\_ == \textcolor{stringliteral}{"{}int"{}})}
+\DoxyCodeLine{830             t = IntNode;}
+\DoxyCodeLine{831         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type\_ == \textcolor{stringliteral}{"{}double"{}})}
+\DoxyCodeLine{832             t = DoubleNode;}
+\DoxyCodeLine{833         \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{834     \}}
+\DoxyCodeLine{835     std::string getTypeStr() \{}
+\DoxyCodeLine{836         \textcolor{keywordflow}{return} this-\/>type\_;}
+\DoxyCodeLine{837     \}}
+\DoxyCodeLine{838 \};}
+\DoxyCodeLine{839 }
+\DoxyCodeLine{840 }
+\DoxyCodeLine{841 \textcolor{comment}{//TreesTemplate}}
+\DoxyCodeLine{842 \textcolor{keyword}{template} <\textcolor{keyword}{typename} KeyType>}
+\DoxyCodeLine{843 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}} \{}
+\DoxyCodeLine{844 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{845     \mbox{\hyperlink{class_node}{Node<KeyType>}}* root\_;}
+\DoxyCodeLine{846 \textcolor{keyword}{public}:}
+\DoxyCodeLine{847     \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}()\{\}}
+\DoxyCodeLine{848     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_tree_analyzer}{\string~TreeAnalyzer}}()\{\}}
+\DoxyCodeLine{849     \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<KeyType>}}* root) : root\_(root)\{\}}
+\DoxyCodeLine{850     std::string Analyze() \{}
+\DoxyCodeLine{851         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{852         \{}
+\DoxyCodeLine{853             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}The tree is not set or is null\(\backslash\)n"{}};}
+\DoxyCodeLine{854         \}}
+\DoxyCodeLine{855         std::string ret = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{856         \textcolor{keywordtype}{int} h = this-\/>findHeight();}
+\DoxyCodeLine{857         ret += \textcolor{stringliteral}{"{}Height: "{}} + std::to\_string(h) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{858         std::string min = this-\/>findMin();}
+\DoxyCodeLine{859         ret += min + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{860         std::string max = this-\/>findMax();}
+\DoxyCodeLine{861         ret += max;}
+\DoxyCodeLine{862         std::string lword = this-\/>findLongestWord();}
+\DoxyCodeLine{863         \textcolor{keywordflow}{if} (lword != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{864             ret += \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + lword;}
+\DoxyCodeLine{865         std::string sum = this-\/>findSumOfAllNodes();}
+\DoxyCodeLine{866         \textcolor{keywordflow}{if} (sum != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{867             ret += \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + sum;}
+\DoxyCodeLine{868         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{869     \}}
+\DoxyCodeLine{870     \textcolor{keywordtype}{int} findHeight() \{}
+\DoxyCodeLine{871         \textcolor{keywordflow}{return} root\_-\/>\mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{getHeight}}();}
+\DoxyCodeLine{872     \}}
+\DoxyCodeLine{873     \textcolor{keyword}{virtual} std::string findMin()\{}
+\DoxyCodeLine{874         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Least element: "{}};}
+\DoxyCodeLine{875     \}}
+\DoxyCodeLine{876     \textcolor{keyword}{virtual} std::string findMax() \{}
+\DoxyCodeLine{877         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Greatest element: "{}};}
+\DoxyCodeLine{878     \}}
+\DoxyCodeLine{879     \textcolor{keyword}{virtual} std::string findLongestWord() \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}; \}}
+\DoxyCodeLine{880     \textcolor{keyword}{virtual} std::string findSumOfAllNodes() \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}; \}}
+\DoxyCodeLine{881 \};}
+\DoxyCodeLine{882 }
+\DoxyCodeLine{883 \textcolor{keyword}{template} <\textcolor{keyword}{typename} Number>}
+\DoxyCodeLine{884 \textcolor{keyword}{class }\mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}<Number> \{}
+\DoxyCodeLine{885 \textcolor{keyword}{public}:}
+\DoxyCodeLine{886     \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<Number>}}* root) : \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<Number>}}(root) \{\}}
+\DoxyCodeLine{887     std::string findMin()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{888         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<Number>::findMin}}() + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}());}
+\DoxyCodeLine{889     \}}
+\DoxyCodeLine{890     std::string findMax()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{891         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<Number>::findMax}}() + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}());}
+\DoxyCodeLine{892     \}}
+\DoxyCodeLine{893     std::string findSumOfAllNodes()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{894         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Sum of all keys in the tree: "{}} + std::to\_string(this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{getSumOfAllNodes}}());}
+\DoxyCodeLine{895     \}}
+\DoxyCodeLine{896 \};}
+\DoxyCodeLine{897 }
+\DoxyCodeLine{898 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{899 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer<std::string>::findMin}}()\{}
+\DoxyCodeLine{900     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{901 \}}
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{904 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer<std::string>::findMax}}()\{}
+\DoxyCodeLine{905     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{906 \}}
+\DoxyCodeLine{907 }
+\DoxyCodeLine{908 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{909 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer<std::string>::findSumOfAllNodes}}()\{}
+\DoxyCodeLine{910     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{911 \}}
+\DoxyCodeLine{912 }
+\DoxyCodeLine{913 }
+\DoxyCodeLine{914 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{915 \textcolor{keyword}{class }\mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer}}<T> \{}
+\DoxyCodeLine{916 \textcolor{keyword}{public}:}
+\DoxyCodeLine{917     \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer}}(\mbox{\hyperlink{class_node}{Node<T>}}* root) : \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<T>}}(root) \{\}}
+\DoxyCodeLine{918     std::string findMin()\textcolor{keyword}{ override }\{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};\};}
+\DoxyCodeLine{919         }
+\DoxyCodeLine{920     std::string findMax()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{921         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{922     \}}
+\DoxyCodeLine{923     std::string findLongestWord()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{924         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{925     \}}
+\DoxyCodeLine{926 \};}
+\DoxyCodeLine{927 }
+\DoxyCodeLine{928 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{929 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer<std::string>::findMin}}()\{}
+\DoxyCodeLine{930     \textcolor{keywordflow}{return} TreeAnalyzer::findMin() + this-\/>root\_-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}();}
+\DoxyCodeLine{931 \}}
+\DoxyCodeLine{932 }
+\DoxyCodeLine{933 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{934 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer<std::string>::findMax}}()\{}
+\DoxyCodeLine{935     \textcolor{keywordflow}{return} TreeAnalyzer::findMax() + this-\/>root\_-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}();}
+\DoxyCodeLine{936 \}}
+\DoxyCodeLine{937 }
+\DoxyCodeLine{938 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{939 \textcolor{keyword}{inline} std::string \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer<std::string>::findLongestWord}}()\{}
+\DoxyCodeLine{940     std::string theword = this-\/>root\_-\/>\mbox{\hyperlink{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}{getLongestWord}}();}
+\DoxyCodeLine{941     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Longest word: "{}} + theword + \textcolor{stringliteral}{"{}, of length: "{}} + std::to\_string(theword.length());}
+\DoxyCodeLine{942 \}}
+\DoxyCodeLine{943 }
+\DoxyCodeLine{944 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{945 \textcolor{keyword}{class }\mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_stringed_node}{StringedNode}}\{}
+\DoxyCodeLine{946 \textcolor{keyword}{private}:}
+\DoxyCodeLine{947     \mbox{\hyperlink{class_node}{Node<T>}}* root\_;}
+\DoxyCodeLine{948     TypeNode type\_;}
+\DoxyCodeLine{949 \textcolor{keyword}{public}:}
+\DoxyCodeLine{950     \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter}}(\mbox{\hyperlink{class_node}{Node<T>}}* root, TypeNode type) : root\_(root), type\_(type)\{\}}
+\DoxyCodeLine{951     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* getStrNode()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{952         \textcolor{comment}{//if (type\_ == StringNode) \{}}
+\DoxyCodeLine{953         \textcolor{comment}{//  return new StringedNode(root\_, type\_);}}
+\DoxyCodeLine{954         \textcolor{comment}{//\}}}
+\DoxyCodeLine{955         \mbox{\hyperlink{class_tree_factory}{TreeFactory}}\& factory = \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}();}
+\DoxyCodeLine{956         \mbox{\hyperlink{class_node}{Node<std::string>}}* sn = factory.\mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(BinSearchTree, std::to\_string(root\_-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}()));}
+\DoxyCodeLine{957         \textcolor{keywordflow}{if} (root\_-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{958             addNodes(sn, root\_-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}());}
+\DoxyCodeLine{959         \textcolor{keywordflow}{if}(root\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{960             addNodes(sn, root\_-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}());}
+\DoxyCodeLine{961         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_stringed_node}{StringedNode}}(sn, type\_);}
+\DoxyCodeLine{962     \}}
+\DoxyCodeLine{963     \textcolor{keywordtype}{void} addNodes(\mbox{\hyperlink{class_node}{Node<std::string>}}* dest, \mbox{\hyperlink{class_node}{Node<T>}}* source) \{}
+\DoxyCodeLine{964         dest-\/>AddToStringedNode(std::to\_string(source-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}()));}
+\DoxyCodeLine{965         \textcolor{keywordflow}{if} (source-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{966         \{}
+\DoxyCodeLine{967             addNodes(dest, source-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}());}
+\DoxyCodeLine{968         \}}
+\DoxyCodeLine{969         \textcolor{keywordflow}{if} (source-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{970         \{}
+\DoxyCodeLine{971             addNodes(dest, source-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}());}
+\DoxyCodeLine{972         \}}
+\DoxyCodeLine{973         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{974     \}}
+\DoxyCodeLine{975 \};}
+\DoxyCodeLine{976 }
+\DoxyCodeLine{977 \textcolor{keyword}{template} <>}
+\DoxyCodeLine{978 \textcolor{keyword}{inline} \mbox{\hyperlink{class_stringed_node}{StringedNode}}* \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter<std::string>::getStrNode}}()\{}
+\DoxyCodeLine{979     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_stringed_node}{StringedNode}}(root\_, type\_);}
+\DoxyCodeLine{980 \}}
+\DoxyCodeLine{981 }
+\DoxyCodeLine{982 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{983 \textcolor{keyword}{class }\mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_node}{Node}}<T> \{}
+\DoxyCodeLine{984 \textcolor{keyword}{private}:}
+\DoxyCodeLine{985     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* root\_;}
+\DoxyCodeLine{986 \textcolor{keyword}{public}:}
+\DoxyCodeLine{987     \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter}}(\mbox{\hyperlink{class_stringed_node}{StringedNode}}* root) : root\_(root) \{\}}
+\DoxyCodeLine{988     \mbox{\hyperlink{class_node}{Node<T>}}* getNode() \{}
+\DoxyCodeLine{989         \mbox{\hyperlink{class_tree_factory}{TreeFactory}}\& factory = \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}();}
+\DoxyCodeLine{990         \mbox{\hyperlink{class_node}{Node<std::string>}}* sn = root\_-\/>getTree();}
+\DoxyCodeLine{991         }
+\DoxyCodeLine{992         \mbox{\hyperlink{class_node}{Node<T>}}* n = factory.\mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(BinSearchTree, T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(sn-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())));}
+\DoxyCodeLine{993         \textcolor{keywordflow}{if}(sn-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{994             addNodes(n, sn-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}());}
+\DoxyCodeLine{995         \textcolor{keywordflow}{if}(sn-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{996             addNodes(n, sn-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}());}
+\DoxyCodeLine{997         \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{998     \}}
+\DoxyCodeLine{999     \textcolor{keywordtype}{void} addNodes(\mbox{\hyperlink{class_node}{Node<T>}}* dest, \mbox{\hyperlink{class_node}{Node<std::string>}}* source) \{}
+\DoxyCodeLine{1000         dest-\/>Add(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(source-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())));}
+\DoxyCodeLine{1001         \textcolor{keywordflow}{if} (source-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{1002         \{}
+\DoxyCodeLine{1003             addNodes(dest, source-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}());}
+\DoxyCodeLine{1004         \}}
+\DoxyCodeLine{1005         \textcolor{keywordflow}{if} (source-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}())}
+\DoxyCodeLine{1006         \{}
+\DoxyCodeLine{1007             addNodes(dest, source-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}());}
+\DoxyCodeLine{1008         \}}
+\DoxyCodeLine{1009         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1010     \}}
+\DoxyCodeLine{1011 \};}
+\DoxyCodeLine{1012 }
+\DoxyCodeLine{1013 \textcolor{keyword}{template} <>}
+\DoxyCodeLine{1014 \textcolor{keyword}{inline} \mbox{\hyperlink{class_node}{Node<std::string>}}* \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter<std::string>::getNode}}() \{}
+\DoxyCodeLine{1015     \textcolor{keywordflow}{return} this-\/>root\_-\/>getTree();}
+\DoxyCodeLine{1016 \}}
+\DoxyCodeLine{1017 }
+\DoxyCodeLine{1018 \textcolor{keyword}{class }\mbox{\hyperlink{class_binary_tree_adapter}{BinaryTreeAdapter}} \{}
+\DoxyCodeLine{1019     }
+\DoxyCodeLine{1020 \};}
+\DoxyCodeLine{1021 }
+\DoxyCodeLine{1022 \textcolor{keyword}{class }\mbox{\hyperlink{class_snapshot}{Snapshot}} \{}
+\DoxyCodeLine{1023 \textcolor{keyword}{private}:}
+\DoxyCodeLine{1024     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* root\_;}
+\DoxyCodeLine{1025     std::string tt\_;}
+\DoxyCodeLine{1026     std::string descr\_;}
+\DoxyCodeLine{1027     std::string date\_;}
+\DoxyCodeLine{1028 \textcolor{keyword}{public}:}
+\DoxyCodeLine{1029     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1030     \mbox{\hyperlink{class_snapshot}{Snapshot}}(\mbox{\hyperlink{class_node}{Node<T>}}* root, TypeNode type, TreeType tt, std::string descr) : descr\_(descr) \{}
+\DoxyCodeLine{1031         \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter<T>}}* adapter = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_node_adapter}{TNodeAdapter<T>}}(root, type);}
+\DoxyCodeLine{1032         this-\/>root\_ = adapter-\/>getStrNode();}
+\DoxyCodeLine{1033         \textcolor{keyword}{delete} adapter;}
+\DoxyCodeLine{1034         time\_t now = time(0);}
+\DoxyCodeLine{1035         \textcolor{keywordflow}{switch} (tt) \{}
+\DoxyCodeLine{1036         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{1037             tt\_ = \textcolor{stringliteral}{"{}BST"{}};}
+\DoxyCodeLine{1038         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{1039             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1040         \}}
+\DoxyCodeLine{1041         this-\/>date\_ = ctime(\&now)\textcolor{comment}{/*.substr(0, 19)*/};}
+\DoxyCodeLine{1042     \};}
+\DoxyCodeLine{1043     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1044     \mbox{\hyperlink{class_node}{Node<T>}}* getTree() \{}
+\DoxyCodeLine{1045         \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter<T>}}* adapter = \textcolor{keyword}{new} \mbox{\hyperlink{class_stringed_node_adapter}{StringedNodeAdapter<T>}}(this-\/>root\_);}
+\DoxyCodeLine{1046         \mbox{\hyperlink{class_node}{Node<T>}}* n = adapter-\/>getNode();}
+\DoxyCodeLine{1047         \textcolor{keyword}{delete} adapter;}
+\DoxyCodeLine{1048         \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{1049     \}}
+\DoxyCodeLine{1050     \mbox{\hyperlink{class_stringed_node}{StringedNode}}* getStrNode() \{}
+\DoxyCodeLine{1051         \textcolor{keywordflow}{return} this-\/>root\_;}
+\DoxyCodeLine{1052     \}}
+\DoxyCodeLine{1053     TreeType getTreeType() \{}
+\DoxyCodeLine{1054         \textcolor{keywordflow}{if} (tt\_ == \textcolor{stringliteral}{"{}BST"{}})}
+\DoxyCodeLine{1055             \textcolor{keywordflow}{return} BinSearchTree;}
+\DoxyCodeLine{1056     \}}
+\DoxyCodeLine{1057     std::string getTreeTypeStr() \{}
+\DoxyCodeLine{1058         \textcolor{keywordflow}{return} tt\_;}
+\DoxyCodeLine{1059     \}}
+\DoxyCodeLine{1060     std::string getName() \{}
+\DoxyCodeLine{1061         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}("{}} + this-\/>date\_ + \textcolor{stringliteral}{"{}) "{}} + this-\/>descr\_;}
+\DoxyCodeLine{1062     \}}
+\DoxyCodeLine{1063     std::string getDate() \{}
+\DoxyCodeLine{1064         \textcolor{keywordflow}{return} this-\/>date\_;}
+\DoxyCodeLine{1065     \}}
+\DoxyCodeLine{1066 \};}
+\DoxyCodeLine{1067 }
+\DoxyCodeLine{1068 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1069 \textcolor{keyword}{class }\mbox{\hyperlink{class_command}{Command}};}
+\DoxyCodeLine{1070 }
+\DoxyCodeLine{1071 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1072 \textcolor{keyword}{class }\mbox{\hyperlink{class_save_command}{SaveCommand}};}
+\DoxyCodeLine{1073 }
+\DoxyCodeLine{1074 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1075 \textcolor{keyword}{class }\mbox{\hyperlink{class_undo_command}{UndoCommand}};}
+\DoxyCodeLine{1076 }
+\DoxyCodeLine{1077 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1078 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_facade}{TreeFacade}} \{}
+\DoxyCodeLine{1079 \textcolor{keyword}{private}:}
+\DoxyCodeLine{1080     \mbox{\hyperlink{class_node}{Node<T>}}* root\_;}
+\DoxyCodeLine{1081     TypeNode ntype\_;}
+\DoxyCodeLine{1082     TreeType ttype\_;}
+\DoxyCodeLine{1083     std::string last\_action\_desc\_;}
+\DoxyCodeLine{1084     std::string save\_to;}
+\DoxyCodeLine{1085     QWidget* form\_;}
+\DoxyCodeLine{1086     QTableWidget* tablewidget;}
+\DoxyCodeLine{1087     \mbox{\hyperlink{class_command}{Command<T>}}* savecom;}
+\DoxyCodeLine{1088     \mbox{\hyperlink{class_command}{Command<T>}}* undocom;}
+\DoxyCodeLine{1089     \textcolor{keywordtype}{void} SyncSnaps(std::vector<Snapshot*> s) \{}
+\DoxyCodeLine{1090         this-\/>savecom-\/>setSnaps(s);}
+\DoxyCodeLine{1091         this-\/>undocom-\/>setSnaps(s);}
+\DoxyCodeLine{1092     \}}
+\DoxyCodeLine{1093 \textcolor{keyword}{public}:}
+\DoxyCodeLine{1094     \mbox{\hyperlink{class_tree_facade}{TreeFacade}}() : root\_(nullptr)\{}
+\DoxyCodeLine{1095         this-\/>savecom = \textcolor{keyword}{new} \mbox{\hyperlink{class_save_command}{SaveCommand<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{1096         this-\/>undocom = \textcolor{keyword}{new} \mbox{\hyperlink{class_undo_command}{UndoCommand<T>}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{1097     \}}
+\DoxyCodeLine{1098     \mbox{\hyperlink{class_tree_facade}{TreeFacade}}(std::string ntype, std::string ttype, QWidget* form = \textcolor{keyword}{nullptr}, QTableWidget* tw = \textcolor{keyword}{nullptr}, std::string saveto = \textcolor{stringliteral}{"{}tree.txt"{}}) : \mbox{\hyperlink{class_tree_facade}{TreeFacade}}<T>() \{}
+\DoxyCodeLine{1099         \textcolor{keywordflow}{if} (ntype == \textcolor{stringliteral}{"{}Integer"{}})}
+\DoxyCodeLine{1100             this-\/>ntype\_ = IntNode;}
+\DoxyCodeLine{1101         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ntype == \textcolor{stringliteral}{"{}Double"{}})}
+\DoxyCodeLine{1102             this-\/>ntype\_ = DoubleNode;}
+\DoxyCodeLine{1103         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(ntype == \textcolor{stringliteral}{"{}String"{}})}
+\DoxyCodeLine{1104             this-\/>ntype\_ = StringNode;}
+\DoxyCodeLine{1105         \textcolor{keywordflow}{if} (ttype == \textcolor{stringliteral}{"{}Binary Search Tree"{}})}
+\DoxyCodeLine{1106             this-\/>ttype\_ = BinSearchTree;}
+\DoxyCodeLine{1107         this-\/>save\_to = saveto;}
+\DoxyCodeLine{1108         this-\/>form\_ = form;}
+\DoxyCodeLine{1109         this-\/>tablewidget = tw;}
+\DoxyCodeLine{1110     \}}
+\DoxyCodeLine{1111     \textcolor{keywordtype}{void} AddKey(std::string key) \{}
+\DoxyCodeLine{1112         \textcolor{keywordflow}{if} (!root\_) \{}
+\DoxyCodeLine{1113             \mbox{\hyperlink{class_tree_factory}{TreeFactory}}\& factory = \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}();}
+\DoxyCodeLine{1114             root\_ = factory.\mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(ttype\_, T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{1115         \}}
+\DoxyCodeLine{1116         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1117             root\_-\/>Add(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{1118             savecom-\/>makeBackup();}
+\DoxyCodeLine{1119             SyncSnaps(savecom-\/>getSnaps());}
+\DoxyCodeLine{1120         \}}
+\DoxyCodeLine{1121         \textcolor{keywordflow}{if}(tablewidget)}
+\DoxyCodeLine{1122             Draw();}
+\DoxyCodeLine{1123     \}}
+\DoxyCodeLine{1124     \textcolor{keywordtype}{void} RemoveKey(std::string key) \{}
+\DoxyCodeLine{1125         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{1126             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1127         \textcolor{keywordflow}{if}(!root\_-\/>\mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}}(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key))))\{}
+\DoxyCodeLine{1128             QMessageBox::critical(form\_, \textcolor{stringliteral}{"{}Key not found"{}}, \textcolor{stringliteral}{"{}KEY NOT FOUND!"{}});}
+\DoxyCodeLine{1129             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1130         \}}
+\DoxyCodeLine{1131         root\_-\/>\mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Remove}}(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{1132         \textcolor{keywordflow}{if}(tablewidget)}
+\DoxyCodeLine{1133             Draw();}
+\DoxyCodeLine{1134     \}}
+\DoxyCodeLine{1135     \textcolor{keywordtype}{void} SearchKey(std::string key)\{}
+\DoxyCodeLine{1136         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{1137             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1138         \mbox{\hyperlink{class_node}{Node<T>}}* search = root\_-\/>\mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}}(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key)));}
+\DoxyCodeLine{1139         \textcolor{keywordflow}{if}(!root\_-\/>\mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}}(T(\mbox{\hyperlink{class_converter}{Converter<std::string>}}(key))))\{}
+\DoxyCodeLine{1140             QMessageBox::critical(form\_, \textcolor{stringliteral}{"{}Key not found"{}}, \textcolor{stringliteral}{"{}KEY NOT FOUND!"{}});}
+\DoxyCodeLine{1141             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1142         \}}
+\DoxyCodeLine{1143         Draw(search);}
+\DoxyCodeLine{1144     \}}
+\DoxyCodeLine{1145     \textcolor{keywordtype}{void} getMin()\{}
+\DoxyCodeLine{1146         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{1147             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1148         \mbox{\hyperlink{class_node}{Node<T>}}* search = root\_-\/>\mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{getMin}}();}
+\DoxyCodeLine{1149          Draw(search);}
+\DoxyCodeLine{1150     \}}
+\DoxyCodeLine{1151     \textcolor{keywordtype}{void} getMax()\{}
+\DoxyCodeLine{1152          \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{1153             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1154          \mbox{\hyperlink{class_node}{Node<T>}}* search = root\_-\/>\mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{getMax}}();}
+\DoxyCodeLine{1155          Draw(search);}
+\DoxyCodeLine{1156     \}}
+\DoxyCodeLine{1157     \mbox{\hyperlink{class_snapshot}{Snapshot}}* getSnapshot() \{}
+\DoxyCodeLine{1158         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_snapshot}{Snapshot}}(root\_, ntype\_, ttype\_, last\_action\_desc\_);}
+\DoxyCodeLine{1159     \}}
+\DoxyCodeLine{1160     \textcolor{keywordtype}{void} restore(\mbox{\hyperlink{class_snapshot}{Snapshot}}* snap) \{}
+\DoxyCodeLine{1161         this-\/>root\_ = snap-\/>getTree<T>();}
+\DoxyCodeLine{1162         this-\/>ntype\_ = snap-\/>getStrNode()-\/>getType();}
+\DoxyCodeLine{1163         this-\/>ttype\_ = snap-\/>getTreeType();}
+\DoxyCodeLine{1164         SyncSnaps(undocom-\/>getSnaps());}
+\DoxyCodeLine{1165     \}}
+\DoxyCodeLine{1166     std::string Iterate(std::string travtype) \{}
+\DoxyCodeLine{1167         \textcolor{keywordflow}{if} (!root\_)}
+\DoxyCodeLine{1168             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{1169         TravType tt;}
+\DoxyCodeLine{1170         \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Inorder"{}}) tt = InOrder;}
+\DoxyCodeLine{1171         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Preorder"{}}) tt = PreOrder;}
+\DoxyCodeLine{1172         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (travtype == \textcolor{stringliteral}{"{}Postorder"{}}) tt = PostOrder;}
+\DoxyCodeLine{1173         \mbox{\hyperlink{class_traverser}{Traverser<T>}}* trav = \textcolor{keyword}{new} \mbox{\hyperlink{class_traverser}{Traverser<T>}}(tt);}
+\DoxyCodeLine{1174         std::string out = trav-\/>\mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(root\_);}
+\DoxyCodeLine{1175         \textcolor{keywordflow}{return} out;}
+\DoxyCodeLine{1176     \}}
+\DoxyCodeLine{1177     \textcolor{keywordtype}{void} changeSavePath(std::string newsp)\{}
+\DoxyCodeLine{1178         this-\/>save\_to = newsp;}
+\DoxyCodeLine{1179     \}}
+\DoxyCodeLine{1180     std::string getSavePath()\{}
+\DoxyCodeLine{1181         \textcolor{keywordflow}{return} save\_to;}
+\DoxyCodeLine{1182     \}}
+\DoxyCodeLine{1183     \textcolor{keywordtype}{void} Save() \{}
+\DoxyCodeLine{1184         savecom-\/>execute();}
+\DoxyCodeLine{1185     \}}
+\DoxyCodeLine{1186     \textcolor{keywordtype}{void} Undo() \{}
+\DoxyCodeLine{1187         undocom-\/>execute();}
+\DoxyCodeLine{1188         \textcolor{keywordflow}{if}(tablewidget)}
+\DoxyCodeLine{1189             Draw();}
+\DoxyCodeLine{1190     \}}
+\DoxyCodeLine{1191     std::string Analyze()\{}
+\DoxyCodeLine{1192         \mbox{\hyperlink{class_tree_analyzer}{TreeAnalyzer<T>}} *analyzer;}
+\DoxyCodeLine{1193         \textcolor{keywordflow}{if}(ntype\_ == StringNode)\{}
+\DoxyCodeLine{1194             analyzer = \textcolor{keyword}{new} \mbox{\hyperlink{class_string_tree_analyzer}{StringTreeAnalyzer<T>}}(this-\/>root\_);}
+\DoxyCodeLine{1195         \}}
+\DoxyCodeLine{1196         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{1197             analyzer = \textcolor{keyword}{new} \mbox{\hyperlink{class_number_tree_analyzer}{NumberTreeAnalyzer<T>}}(this-\/>root\_);}
+\DoxyCodeLine{1198         \}}
+\DoxyCodeLine{1199         std::string out = analyzer-\/>Analyze();}
+\DoxyCodeLine{1200         \textcolor{keywordflow}{return} out;}
+\DoxyCodeLine{1201     \}}
+\DoxyCodeLine{1202     \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{class_node}{Node<T>}}* highlighted)\{}
+\DoxyCodeLine{1203         tablewidget-\/>clearContents();}
+\DoxyCodeLine{1204         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *it = root\_-\/>\mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{CreatePreOrderIterator}}();}
+\DoxyCodeLine{1205         \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{1206         \textcolor{keywordtype}{int} count = 0;}
+\DoxyCodeLine{1207         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{1208             count++;}
+\DoxyCodeLine{1209         \}}
+\DoxyCodeLine{1210         tablewidget-\/>setRowCount(count+1);}
+\DoxyCodeLine{1211         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{1212             tablewidget-\/>setItem(i, 0, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1213             \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{isLeaf}}() || (!it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}() \&\& it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == it-\/>Last()))}
+\DoxyCodeLine{1214                 tablewidget-\/>setItem(i, 1, \textcolor{keyword}{new} QTableWidgetItem(\textcolor{stringliteral}{"{}Leaf"{}}));}
+\DoxyCodeLine{1215             \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{1216                 \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{1217                     tablewidget-\/>setItem(i, 1, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1218                 \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() \&\& it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() != it-\/>Last())}
+\DoxyCodeLine{1219                     tablewidget-\/>setItem(i, 2, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1220             \}}
+\DoxyCodeLine{1221             \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}() == highlighted-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())\{}
+\DoxyCodeLine{1222                 tablewidget-\/>setRangeSelected(QTableWidgetSelectionRange(i, 0, i, 2), \textcolor{keyword}{true});}
+\DoxyCodeLine{1223             \}}
+\DoxyCodeLine{1224             i++;}
+\DoxyCodeLine{1225         \}}
+\DoxyCodeLine{1226         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{1227     \}}
+\DoxyCodeLine{1228     \textcolor{keywordtype}{void} Draw()\{}
+\DoxyCodeLine{1229         tablewidget-\/>clearContents();}
+\DoxyCodeLine{1230         \mbox{\hyperlink{class_tree_iterator}{TreeIterator<T>}} *it = root\_-\/>\mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{CreatePreOrderIterator}}();}
+\DoxyCodeLine{1231         \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{1232         \textcolor{keywordtype}{int} count = 0;}
+\DoxyCodeLine{1233         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{1234             count++;}
+\DoxyCodeLine{1235         \}}
+\DoxyCodeLine{1236         tablewidget-\/>setRowCount(count+1);}
+\DoxyCodeLine{1237         \textcolor{keywordflow}{for} (it-\/>\mbox{\hyperlink{class_tree_iterator_a2eb98a2a73f275536c8be0bd4bcedca3}{First}}(); !it-\/>\mbox{\hyperlink{class_tree_iterator_a6e167755f7eff5dc66b7ae7d2bc9b0a7}{isDone}}(); it-\/>\mbox{\hyperlink{class_tree_iterator_a651d81dd96c2eca4ee32cb8bdf42579a}{Next}}()) \{}
+\DoxyCodeLine{1238             tablewidget-\/>setItem(i, 0, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1239             \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{isLeaf}}() || (!it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}() \&\& it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() == it-\/>Last()))}
+\DoxyCodeLine{1240                 tablewidget-\/>setItem(i, 1, \textcolor{keyword}{new} QTableWidgetItem(\textcolor{stringliteral}{"{}Лист"{}}));}
+\DoxyCodeLine{1241             \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{1242                 \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}())}
+\DoxyCodeLine{1243                     tablewidget-\/>setItem(i, 1, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{getLeft}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1244                 \textcolor{keywordflow}{if}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() \&\& it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}() != it-\/>Last())}
+\DoxyCodeLine{1245                     tablewidget-\/>setItem(i, 2, \textcolor{keyword}{new} QTableWidgetItem(QString::fromStdString(std::string(\mbox{\hyperlink{class_converter}{Converter<T>}}(it-\/>\mbox{\hyperlink{class_tree_iterator_a83ed96441a56a15f5c323d015ef9e4c7}{Current}}()-\/>\mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{getRight}}()-\/>\mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{getKey}}())))));}
+\DoxyCodeLine{1246             \}}
+\DoxyCodeLine{1247             i++;}
+\DoxyCodeLine{1248         \}}
+\DoxyCodeLine{1249         \textcolor{keyword}{delete} it;}
+\DoxyCodeLine{1250 \textcolor{comment}{//        QGraphicsScene *s = new QGraphicsScene(0, -\/10, graphviewtree-\/>width(), graphviewtree-\/>height(), graphviewtree);}}
+\DoxyCodeLine{1251 \textcolor{comment}{//        std::vector<Node<T>*> nodelevel;}}
+\DoxyCodeLine{1252 \textcolor{comment}{//        std::vector<Node<T>*> parentlevel;}}
+\DoxyCodeLine{1253 \textcolor{comment}{//        std::vector<Node<T>*> nextlevel;}}
+\DoxyCodeLine{1254 \textcolor{comment}{//        graphviewtree-\/>setScene(s);}}
+\DoxyCodeLine{1255 \textcolor{comment}{//        int height = root\_-\/>getHeight();}}
+\DoxyCodeLine{1256 \textcolor{comment}{//        int depth = 2;}}
+\DoxyCodeLine{1257 \textcolor{comment}{//        qreal width = 75;}}
+\DoxyCodeLine{1258 \textcolor{comment}{//        qreal gap = 20;}}
+\DoxyCodeLine{1259 \textcolor{comment}{//        qreal curgap;}}
+\DoxyCodeLine{1260 \textcolor{comment}{//        qreal x;}}
+\DoxyCodeLine{1261 \textcolor{comment}{//        qreal y;}}
+\DoxyCodeLine{1262 \textcolor{comment}{//        parentlevel.push\_back(root\_);}}
+\DoxyCodeLine{1263 \textcolor{comment}{//        if(!root\_-\/>getLeft())}}
+\DoxyCodeLine{1264 \textcolor{comment}{//            nodelevel.push\_back(nullptr);}}
+\DoxyCodeLine{1265 \textcolor{comment}{//        else\{}}
+\DoxyCodeLine{1266 \textcolor{comment}{//            nodelevel.push\_back(root\_-\/>getLeft());}}
+\DoxyCodeLine{1267 \textcolor{comment}{//        \}}}
+\DoxyCodeLine{1268 \textcolor{comment}{//        if(!root\_-\/>getRight())}}
+\DoxyCodeLine{1269 \textcolor{comment}{//            nodelevel.push\_back(nullptr);}}
+\DoxyCodeLine{1270 \textcolor{comment}{//        else\{}}
+\DoxyCodeLine{1271 \textcolor{comment}{//            nodelevel.push\_back(root\_-\/>getRight());}}
+\DoxyCodeLine{1272 \textcolor{comment}{//        \}}}
+\DoxyCodeLine{1273 \textcolor{comment}{//        s-\/>addEllipse(graphviewtree-\/>width()/2 -\/ 37.5, 0, 75, 75, QPen(Qt::black), QBrush(Qt::white));}}
+\DoxyCodeLine{1274 \textcolor{comment}{//        s-\/>addText(QString::fromStdString(std::string(Converter<T>(root\_-\/>getKey()))))-\/>setPos(graphviewtree-\/>width()/2 -\/ 12.5 ,25);}}
+\DoxyCodeLine{1275 \textcolor{comment}{//        y = 100;}}
+\DoxyCodeLine{1276 \textcolor{comment}{//        int i = 0;}}
+\DoxyCodeLine{1277 \textcolor{comment}{//        while(depth <= height)\{}}
+\DoxyCodeLine{1278 \textcolor{comment}{//            x = -\/(width+gap)*(pow(2, (depth-\/2))) + gap/2 ;}}
+\DoxyCodeLine{1279 \textcolor{comment}{//            if(depth != height)\{}}
+\DoxyCodeLine{1280 \textcolor{comment}{//                nextlevel = std::vector<Node<T>*>(pow(2, depth));}}
+\DoxyCodeLine{1281 \textcolor{comment}{//                for(Node<T>* n : nodelevel)\{}}
+\DoxyCodeLine{1282 \textcolor{comment}{//                    if(n != nullptr)}}
+\DoxyCodeLine{1283 \textcolor{comment}{//                    \{}}
+\DoxyCodeLine{1284 \textcolor{comment}{//                        if(!n-\/>getLeft())}}
+\DoxyCodeLine{1285 \textcolor{comment}{//                            nextlevel[i] = nullptr;}}
+\DoxyCodeLine{1286 \textcolor{comment}{//                        else\{}}
+\DoxyCodeLine{1287 \textcolor{comment}{//                            nextlevel[i] = n-\/>getLeft();}}
+\DoxyCodeLine{1288 \textcolor{comment}{//                        \}}}
+\DoxyCodeLine{1289 \textcolor{comment}{//                        i++;}}
+\DoxyCodeLine{1290 \textcolor{comment}{//                        if(!n-\/>getRight())}}
+\DoxyCodeLine{1291 \textcolor{comment}{//                            nextlevel[i] = nullptr;}}
+\DoxyCodeLine{1292 \textcolor{comment}{//                        else\{}}
+\DoxyCodeLine{1293 \textcolor{comment}{//                            nextlevel[i] = n-\/>getRight();}}
+\DoxyCodeLine{1294 \textcolor{comment}{//                        \}}}
+\DoxyCodeLine{1295 \textcolor{comment}{//                        i++;}}
+\DoxyCodeLine{1296 \textcolor{comment}{//                        s-\/>addEllipse(graphviewtree-\/>width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));}}
+\DoxyCodeLine{1297 \textcolor{comment}{//                        s-\/>addText(QString::fromStdString(std::string(Converter<T>(n-\/>getKey()))))-\/>setPos(graphviewtree-\/>width()/2 + x + 25 , y + 25);}}
+\DoxyCodeLine{1298 \textcolor{comment}{//                    \}}}
+\DoxyCodeLine{1299 \textcolor{comment}{//                    else\{}}
+\DoxyCodeLine{1300 \textcolor{comment}{//                        nextlevel.push\_back(nullptr);}}
+\DoxyCodeLine{1301 \textcolor{comment}{//                        nextlevel.push\_back(nullptr);}}
+\DoxyCodeLine{1302 \textcolor{comment}{//                    \}}}
+\DoxyCodeLine{1303 \textcolor{comment}{//                    x += width + gap;}}
+\DoxyCodeLine{1304 \textcolor{comment}{//                \}}}
+\DoxyCodeLine{1305 \textcolor{comment}{//                parentlevel = nodelevel;}}
+\DoxyCodeLine{1306 \textcolor{comment}{//                nodelevel = nextlevel;}}
+\DoxyCodeLine{1307 \textcolor{comment}{//            \}}}
+\DoxyCodeLine{1308 \textcolor{comment}{//            else\{}}
+\DoxyCodeLine{1309 \textcolor{comment}{//                for(Node<T>* n : nodelevel)\{}}
+\DoxyCodeLine{1310 \textcolor{comment}{//                    if(n != nullptr)}}
+\DoxyCodeLine{1311 \textcolor{comment}{//                    \{}}
+\DoxyCodeLine{1312 \textcolor{comment}{//                        s-\/>addEllipse(graphviewtree-\/>width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));}}
+\DoxyCodeLine{1313 \textcolor{comment}{//                        s-\/>addText(QString::fromStdString(std::string(Converter<T>(n-\/>getKey()))))-\/>setPos(graphviewtree-\/>width()/2 + x + 25 , y + 25);}}
+\DoxyCodeLine{1314 \textcolor{comment}{//                    \}}}
+\DoxyCodeLine{1315 \textcolor{comment}{//                    x += width + gap;}}
+\DoxyCodeLine{1316 \textcolor{comment}{//                \}}}
+\DoxyCodeLine{1317 \textcolor{comment}{//            \}}}
+\DoxyCodeLine{1318 \textcolor{comment}{//            depth++;}}
+\DoxyCodeLine{1319 \textcolor{comment}{//            y+= 100;}}
+\DoxyCodeLine{1320 \textcolor{comment}{//        \}}}
+\DoxyCodeLine{1321 \textcolor{comment}{//        graphviewtree-\/>show();}}
+\DoxyCodeLine{1322     \}}
+\DoxyCodeLine{1323 \};}
+\DoxyCodeLine{1324 }
+\DoxyCodeLine{1325 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1326 \textcolor{keyword}{class }\mbox{\hyperlink{class_command}{Command}} \{}
+\DoxyCodeLine{1327 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{1328     std::vector<Snapshot*> snaps;}
+\DoxyCodeLine{1329     \mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* fac;}
+\DoxyCodeLine{1330     \textcolor{comment}{//StringedNode* root;}}
+\DoxyCodeLine{1331 \textcolor{keyword}{public}:}
+\DoxyCodeLine{1332     \mbox{\hyperlink{class_command}{Command}}() \{\}}
+\DoxyCodeLine{1333     \mbox{\hyperlink{class_command}{Command}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : fac(facc) \{\};}
+\DoxyCodeLine{1334     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} execute() \{\};}
+\DoxyCodeLine{1335     \textcolor{keywordtype}{void} makeBackup() \{}
+\DoxyCodeLine{1336         \textcolor{keywordflow}{if} (this-\/>snaps.size() <= 50)}
+\DoxyCodeLine{1337             this-\/>snaps.push\_back(fac-\/>getSnapshot());}
+\DoxyCodeLine{1338     \}}
+\DoxyCodeLine{1339     std::vector<Snapshot*> getSnaps() \{}
+\DoxyCodeLine{1340         \textcolor{keywordflow}{return} snaps;}
+\DoxyCodeLine{1341     \}}
+\DoxyCodeLine{1342     \textcolor{keywordtype}{void} setSnaps(std::vector<Snapshot*> s) \{}
+\DoxyCodeLine{1343         this-\/>snaps = s;}
+\DoxyCodeLine{1344     \}}
+\DoxyCodeLine{1345 \};}
+\DoxyCodeLine{1346 }
+\DoxyCodeLine{1347 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1348 \textcolor{keyword}{class }\mbox{\hyperlink{class_save_command}{SaveCommand}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_command}{Command}}<T> \{}
+\DoxyCodeLine{1349 \textcolor{keyword}{public}:}
+\DoxyCodeLine{1350     \mbox{\hyperlink{class_save_command}{SaveCommand}}() : \mbox{\hyperlink{class_command}{Command<T>}}() \{\};}
+\DoxyCodeLine{1351     \mbox{\hyperlink{class_save_command}{SaveCommand}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : \mbox{\hyperlink{class_command}{Command<T>}}(facc) \{\};}
+\DoxyCodeLine{1352     \textcolor{keywordtype}{void} execute()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{1353         std::ofstream output(this-\/>fac-\/>getSavePath());}
+\DoxyCodeLine{1354         \mbox{\hyperlink{class_snapshot}{Snapshot}}* snap = this-\/>snaps.back();}
+\DoxyCodeLine{1355         \mbox{\hyperlink{class_stringed_node}{StringedNode}}* sn = snap-\/>getStrNode();}
+\DoxyCodeLine{1356         output << sn-\/>getTypeStr() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << snap-\/>getTreeTypeStr() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{1357         \mbox{\hyperlink{class_node}{Node<std::string>}}* n = sn-\/>getTree();}
+\DoxyCodeLine{1358         \mbox{\hyperlink{class_traverser}{Traverser<std::string>}}* trav = \textcolor{keyword}{new} \mbox{\hyperlink{class_traverser}{Traverser<std::string>}}(PreOrder);}
+\DoxyCodeLine{1359         std::string out = trav-\/>\mbox{\hyperlink{class_traverser_a1f012aa4878defcad176c07ebaa787c8}{Iterate}}(n);}
+\DoxyCodeLine{1360         output << out;}
+\DoxyCodeLine{1361         output.close();}
+\DoxyCodeLine{1362     \}}
+\DoxyCodeLine{1363 \};}
+\DoxyCodeLine{1364 }
+\DoxyCodeLine{1365 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{1366 \textcolor{keyword}{class }\mbox{\hyperlink{class_undo_command}{UndoCommand}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_command}{Command}}<T> \{}
+\DoxyCodeLine{1367 \textcolor{keyword}{public}:}
+\DoxyCodeLine{1368     \mbox{\hyperlink{class_undo_command}{UndoCommand}}() : \mbox{\hyperlink{class_command}{Command<T>}}() \{\};}
+\DoxyCodeLine{1369     \mbox{\hyperlink{class_undo_command}{UndoCommand}}(\mbox{\hyperlink{class_tree_facade}{TreeFacade<T>}}* facc) : \mbox{\hyperlink{class_command}{Command<T>}}(facc) \{\};}
+\DoxyCodeLine{1370     \textcolor{keywordtype}{void} execute()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{1371         \textcolor{keywordflow}{if} (!(this-\/>snaps.size() -\/ 1))}
+\DoxyCodeLine{1372             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1373         this-\/>snaps.pop\_back();}
+\DoxyCodeLine{1374         \mbox{\hyperlink{class_snapshot}{Snapshot}}* snap = this-\/>snaps.back();}
+\DoxyCodeLine{1375         this-\/>fac-\/>restore(snap);}
+\DoxyCodeLine{1376     \}}
+\DoxyCodeLine{1377 \};}
+\DoxyCodeLine{1378 }
+\DoxyCodeLine{1379 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREES\_H}}
+
+\end{DoxyCode}

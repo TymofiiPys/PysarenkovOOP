@@ -12,7 +12,7 @@ Interface which declares operations and fields common for all of the trees and t
 Inheritance diagram for Node\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.576687cm]{class_node}
+\includegraphics[height=9.000000cm]{class_node}
 \end{center}
 \end{figure}
 \doxysubsection*{Public Member Functions}
@@ -27,9 +27,18 @@ Inheritance diagram for Node\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
 \mbox{\Hypertarget{class_node_ab6466f26dcd1e2d92e323f70aa00f52b}\label{class_node_ab6466f26dcd1e2d92e323f70aa00f52b}} 
 virtual void {\bfseries Add} (T key)
 \item 
+\mbox{\Hypertarget{class_node_ab29001e8168ca359ad2d6a321a130257}\label{class_node_ab29001e8168ca359ad2d6a321a130257}} 
+virtual void {\bfseries Add\+To\+Stringed\+Node} (std\+::string key)
+\item 
+\mbox{\Hypertarget{class_node_a988fec98da2c581b2cd66d542d9e7f16}\label{class_node_a988fec98da2c581b2cd66d542d9e7f16}} 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Add\+Dummy} ()
+\item 
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}} (T key)
 \item 
 virtual \mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Remove}} (T key)
+\item 
+\mbox{\Hypertarget{class_node_a9c642fc60fb288d08e012d3f79b20bff}\label{class_node_a9c642fc60fb288d08e012d3f79b20bff}} 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Remove\+Dummy} ()
 \item 
 virtual void \mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{set\+Left}} (\mbox{\hyperlink{class_node}{Node}} $\ast$n)
 \item 
@@ -42,6 +51,10 @@ virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a
 \mbox{\Hypertarget{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}\label{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}} 
 void {\bfseries set\+Parent} (\mbox{\hyperlink{class_node}{Node}} $\ast$p)
 \begin{DoxyCompactList}\small\item\em Set parent node. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a5a8202d10fb4090d3b649b426aa07a34}{set\+Dummy\+Parent}} ()
+\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}{Remove\+Dummy\+Parent}} ()
+\item 
 \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{get\+Parent}} ()
 \item 
 T \mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{get\+Key}} ()
@@ -50,7 +63,94 @@ virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a
 \item 
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{get\+Min}} ()
 \item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{get\+Max}} ()
+\item 
 virtual bool \mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{is\+Leaf}} ()
+\item 
+virtual void \mbox{\hyperlink{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}{set\+Child}} ()
+\item 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_aa6069d766b602ce6ffa7e640a625a2bc}{Create\+In\+Order\+Iterator}} ()
+\item 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_a3442dce6438e2849e74e8e29df28cdf3}{Create\+Pre\+Order\+Iterator}} ()
+\item 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}{Create\+Post\+Order\+Iterator}} ()
+\item 
+int \mbox{\hyperlink{class_node_a6e5408fb3ded5618fe30a340e8616a02}{get\+Height}} (int depth=1)
+\item 
+std\+::string \mbox{\hyperlink{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}{get\+Longest\+Word}} ()
+\item 
+T \mbox{\hyperlink{class_node_a3b6668b8eabdf1bfd91740847e9f123f}{get\+Sum\+Of\+All\+Nodes}} ()
+\item 
+\mbox{\Hypertarget{class_node_a46dceddf91d9d3c68f941333ae1a7dc1}\label{class_node_a46dceddf91d9d3c68f941333ae1a7dc1}} 
+{\bfseries Node} (T key)
+\item 
+\mbox{\Hypertarget{class_node_a648ccb190d3dcfad6c672b726764ff76}\label{class_node_a648ccb190d3dcfad6c672b726764ff76}} 
+{\bfseries Node} (T key, \mbox{\hyperlink{class_node}{Node}} $\ast$parent)
+\item 
+\mbox{\Hypertarget{class_node_ab6466f26dcd1e2d92e323f70aa00f52b}\label{class_node_ab6466f26dcd1e2d92e323f70aa00f52b}} 
+virtual void {\bfseries Add} (T key)
+\item 
+\mbox{\Hypertarget{class_node_ab29001e8168ca359ad2d6a321a130257}\label{class_node_ab29001e8168ca359ad2d6a321a130257}} 
+virtual void {\bfseries Add\+To\+Stringed\+Node} (std\+::string key)
+\item 
+\mbox{\Hypertarget{class_node_a988fec98da2c581b2cd66d542d9e7f16}\label{class_node_a988fec98da2c581b2cd66d542d9e7f16}} 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Add\+Dummy} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_aa4de370e020bd5b31738cdfd5c0d735e}{Search}} (T key)
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}{Remove}} (T key)
+\item 
+\mbox{\Hypertarget{class_node_a9c642fc60fb288d08e012d3f79b20bff}\label{class_node_a9c642fc60fb288d08e012d3f79b20bff}} 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Remove\+Dummy} ()
+\item 
+virtual void \mbox{\hyperlink{class_node_a73b250fc885fa5bf22ecfd1190698627}{set\+Left}} (\mbox{\hyperlink{class_node}{Node}} $\ast$n)
+\item 
+virtual void \mbox{\hyperlink{class_node_a71a88eabd811e8cd8e7309cdcb03104f}{set\+Right}} (\mbox{\hyperlink{class_node}{Node}} $\ast$n)
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}{get\+Left}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_af0d33542c776cfb91a68e87d8cc866ee}{get\+Right}} ()
+\item 
+\mbox{\Hypertarget{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}\label{class_node_a8e1068b50616b92dfdfb4642a3b63a1f}} 
+void {\bfseries set\+Parent} (\mbox{\hyperlink{class_node}{Node}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Set parent node. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_node_a5a8202d10fb4090d3b649b426aa07a34}\label{class_node_a5a8202d10fb4090d3b649b426aa07a34}} 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries set\+Dummy\+Parent} ()
+\item 
+\mbox{\Hypertarget{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}\label{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}} 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Remove\+Dummy\+Parent} ()
+\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_aca0c178a5de50ba0c602add2155e189e}{get\+Parent}} ()
+\item 
+T \mbox{\hyperlink{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}{get\+Key}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a3329e51812286333e81c3804a623da9e}{get\+Successor}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a3453516b301e8c8f07b7f9d50d692677}{get\+Min}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a4e8037fa4648c0b64015d42cba1f2523}{get\+Max}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{is\+Leaf}} ()
+\item 
+virtual void \mbox{\hyperlink{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}{set\+Child}} ()
+\item 
+\mbox{\Hypertarget{class_node_aa6069d766b602ce6ffa7e640a625a2bc}\label{class_node_aa6069d766b602ce6ffa7e640a625a2bc}} 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ {\bfseries Create\+In\+Order\+Iterator} ()
+\item 
+\mbox{\Hypertarget{class_node_a3442dce6438e2849e74e8e29df28cdf3}\label{class_node_a3442dce6438e2849e74e8e29df28cdf3}} 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ {\bfseries Create\+Pre\+Order\+Iterator} ()
+\item 
+\mbox{\Hypertarget{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}\label{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}} 
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ {\bfseries Create\+Post\+Order\+Iterator} ()
+\item 
+\mbox{\Hypertarget{class_node_a6e5408fb3ded5618fe30a340e8616a02}\label{class_node_a6e5408fb3ded5618fe30a340e8616a02}} 
+int {\bfseries get\+Height} (int depth=1)
+\item 
+\mbox{\Hypertarget{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}\label{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}} 
+std\+::string {\bfseries get\+Longest\+Word} ()
+\item 
+\mbox{\Hypertarget{class_node_a3b6668b8eabdf1bfd91740847e9f123f}\label{class_node_a3b6668b8eabdf1bfd91740847e9f123f}} 
+T {\bfseries get\+Sum\+Of\+All\+Nodes} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -58,7 +158,7 @@ virtual bool \mbox{\hyperlink{class_node_aefdffa61ae1796a57cefb6fc88f6765d}{is\+
 \mbox{\Hypertarget{class_node_a4ee8a248df41ddad03dcff9cac64726d}\label{class_node_a4ee8a248df41ddad03dcff9cac64726d}} 
 T {\bfseries key\+\_\+}
 \begin{DoxyCompactList}\small\item\em Key of the node, can be of any type (int/double/char/std\+::string) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_node_abfc4bb21247f419d47b62bbbf5cc3ff9}\label{class_node_abfc4bb21247f419d47b62bbbf5cc3ff9}} 
+\mbox{\Hypertarget{class_node_a5df398bcb75ce3720cd6f03fec59a687}\label{class_node_a5df398bcb75ce3720cd6f03fec59a687}} 
 \mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries parent\+\_\+}
 \begin{DoxyCompactList}\small\item\em Parent of the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -69,10 +169,70 @@ interface Node$<$ T $>$}
 Interface which declares operations and fields common for all of the trees and their nodes implemented in the program (except for B-\/tree) 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_node_aa6069d766b602ce6ffa7e640a625a2bc}\label{class_node_aa6069d766b602ce6ffa7e640a625a2bc}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!CreateInOrderIterator@{CreateInOrderIterator}}
+\index{CreateInOrderIterator@{CreateInOrderIterator}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreateInOrderIterator()}{CreateInOrderIterator()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Create\+In\+Order\+Iterator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Creates \mbox{\hyperlink{class_in_order_iterator}{In\+Order\+Iterator}}
+
+\begin{DoxyReturn}{Returns}
+new \mbox{\hyperlink{class_in_order_iterator}{In\+Order\+Iterator}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}\label{class_node_afbbf3c75d11e7e1382c4fbef7ff967a0}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!CreatePostOrderIterator@{CreatePostOrderIterator}}
+\index{CreatePostOrderIterator@{CreatePostOrderIterator}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreatePostOrderIterator()}{CreatePostOrderIterator()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Create\+Post\+Order\+Iterator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Creates \mbox{\hyperlink{class_post_order_iterator}{Post\+Order\+Iterator}}
+
+\begin{DoxyReturn}{Returns}
+new \mbox{\hyperlink{class_post_order_iterator}{Post\+Order\+Iterator}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a3442dce6438e2849e74e8e29df28cdf3}\label{class_node_a3442dce6438e2849e74e8e29df28cdf3}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!CreatePreOrderIterator@{CreatePreOrderIterator}}
+\index{CreatePreOrderIterator@{CreatePreOrderIterator}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreatePreOrderIterator()}{CreatePreOrderIterator()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_tree_iterator}{Tree\+Iterator}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Create\+Pre\+Order\+Iterator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Creates \mbox{\hyperlink{class_pre_order_iterator}{Pre\+Order\+Iterator}}
+
+\begin{DoxyReturn}{Returns}
+new \mbox{\hyperlink{class_pre_order_iterator}{Pre\+Order\+Iterator}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a6e5408fb3ded5618fe30a340e8616a02}\label{class_node_a6e5408fb3ded5618fe30a340e8616a02}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+int \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Height (\begin{DoxyParamCaption}\item[{int}]{depth = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get tree height
+
+\begin{DoxyReturn}{Returns}
+Height of the tree (subtree) 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}\label{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getKey@{getKey}}
 \index{getKey@{getKey}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}}
+\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get key of the node
+
+\begin{DoxyReturn}{Returns}
+Key stored in the node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}\label{class_node_a3c04afa4e4c8e555cc87a22757ab5f6a}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getKey@{getKey}}
+\index{getKey@{getKey}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 T \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -84,7 +244,7 @@ Key stored in the node
 \mbox{\Hypertarget{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}\label{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getLeft@{getLeft}}
 \index{getLeft@{getLeft}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getLeft()}{getLeft()}}
+\doxysubsubsection{\texorpdfstring{getLeft()}{getLeft()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -95,12 +255,72 @@ Get left child of the node
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{Node\+Compos$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}\label{class_node_aeafbc3ef88f7c814e1923e20ff4ede9b}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getLeft@{getLeft}}
+\index{getLeft@{getLeft}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getLeft()}{getLeft()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get left child of the node
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} which is the left child of this node 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_a81e28df1c3657f285ae112875a501ad1}{Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}\label{class_node_a13a4eabf53e5aeaafc9b24a56a3f8896}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getLongestWord@{getLongestWord}}
+\index{getLongestWord@{getLongestWord}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getLongestWord()}{getLongestWord()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::string \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Longest\+Word (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get key of greatest length
+
+\begin{DoxyReturn}{Returns}
+key of greatest length 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a4e8037fa4648c0b64015d42cba1f2523}\label{class_node_a4e8037fa4648c0b64015d42cba1f2523}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getMax@{getMax}}
+\index{getMax@{getMax}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMax()}{getMax()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get node with the greatest key
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} with the greatest key in a tree rooted by this node 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_aff7440463e955fcd91b6d5bf4d144494}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_aa3dc573485458f24688891cb3196164e}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_aff7440463e955fcd91b6d5bf4d144494}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_aa3dc573485458f24688891cb3196164e}{Binary\+Node\+Leaf$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a4e8037fa4648c0b64015d42cba1f2523}\label{class_node_a4e8037fa4648c0b64015d42cba1f2523}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getMax@{getMax}}
+\index{getMax@{getMax}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMax()}{getMax()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get node with the greatest key
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} with the greatest key in a tree rooted by this node 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_aff7440463e955fcd91b6d5bf4d144494}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_aa3dc573485458f24688891cb3196164e}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_aff7440463e955fcd91b6d5bf4d144494}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_aa3dc573485458f24688891cb3196164e}{Binary\+Node\+Leaf$<$ T $>$}}.
 
 \mbox{\Hypertarget{class_node_a3453516b301e8c8f07b7f9d50d692677}\label{class_node_a3453516b301e8c8f07b7f9d50d692677}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getMin@{getMin}}
 \index{getMin@{getMin}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getMin()}{getMin()}}
+\doxysubsubsection{\texorpdfstring{getMin()}{getMin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -111,12 +331,40 @@ Get node with the least key
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{Binary\+Node\+Leaf$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{Binary\+Node\+Leaf$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a3453516b301e8c8f07b7f9d50d692677}\label{class_node_a3453516b301e8c8f07b7f9d50d692677}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getMin@{getMin}}
+\index{getMin@{getMin}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMin()}{getMin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get node with the least key
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} with the least key in a tree rooted by this node 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a63bbd18c080c7d210d4b1dda44e9cdd0}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a9676f581e78b35354949cd7e94ca2d94}{Binary\+Node\+Leaf$<$ T $>$}}.
 
 \mbox{\Hypertarget{class_node_aca0c178a5de50ba0c602add2155e189e}\label{class_node_aca0c178a5de50ba0c602add2155e189e}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getParent@{getParent}}
 \index{getParent@{getParent}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}}
+\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get parent of the node
+
+\begin{DoxyReturn}{Returns}
+Parent of the node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_aca0c178a5de50ba0c602add2155e189e}\label{class_node_aca0c178a5de50ba0c602add2155e189e}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getParent@{getParent}}
+\index{getParent@{getParent}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -128,7 +376,7 @@ Parent of the node
 \mbox{\Hypertarget{class_node_af0d33542c776cfb91a68e87d8cc866ee}\label{class_node_af0d33542c776cfb91a68e87d8cc866ee}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getRight@{getRight}}
 \index{getRight@{getRight}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getRight()}{getRight()}}
+\doxysubsubsection{\texorpdfstring{getRight()}{getRight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -139,12 +387,28 @@ Get right child of the node
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{Node\+Compos$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_af0d33542c776cfb91a68e87d8cc866ee}\label{class_node_af0d33542c776cfb91a68e87d8cc866ee}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getRight@{getRight}}
+\index{getRight@{getRight}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getRight()}{getRight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get right child of the node
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} which is the right child of this node 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_afc9fdb796397abdacb9536da9918cb5d}{Node\+Compos$<$ T $>$}}.
 
 \mbox{\Hypertarget{class_node_a3329e51812286333e81c3804a623da9e}\label{class_node_a3329e51812286333e81c3804a623da9e}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!getSuccessor@{getSuccessor}}
 \index{getSuccessor@{getSuccessor}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{getSuccessor()}{getSuccessor()}}
+\doxysubsubsection{\texorpdfstring{getSuccessor()}{getSuccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Successor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -155,12 +419,40 @@ Node-\/successor (node with next greater key)
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{Binary\+Node\+Compos$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{Binary\+Node\+Compos$<$ T $>$}}.
 
+\mbox{\Hypertarget{class_node_a3329e51812286333e81c3804a623da9e}\label{class_node_a3329e51812286333e81c3804a623da9e}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getSuccessor@{getSuccessor}}
+\index{getSuccessor@{getSuccessor}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSuccessor()}{getSuccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Successor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Get successor of the node
+
+\begin{DoxyReturn}{Returns}
+Node-\/successor (node with next greater key) 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_compos_acbed4bb16a160e85913468b7afe5dcdc}{Binary\+Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a3b6668b8eabdf1bfd91740847e9f123f}\label{class_node_a3b6668b8eabdf1bfd91740847e9f123f}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!getSumOfAllNodes@{getSumOfAllNodes}}
+\index{getSumOfAllNodes@{getSumOfAllNodes}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSumOfAllNodes()}{getSumOfAllNodes()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::get\+Sum\+Of\+All\+Nodes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get sum of all keys in the tree
+
+\begin{DoxyReturn}{Returns}
+sum of all keys in the tree 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_node_aefdffa61ae1796a57cefb6fc88f6765d}\label{class_node_aefdffa61ae1796a57cefb6fc88f6765d}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!isLeaf@{isLeaf}}
 \index{isLeaf@{isLeaf}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{isLeaf()}{isLeaf()}}
+\doxysubsubsection{\texorpdfstring{isLeaf()}{isLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual bool \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::is\+Leaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -171,12 +463,28 @@ true if the node is leaf, false if the node is composite
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{Node\+Leaf$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{Node\+Leaf$<$ T $>$}}, and \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{Node\+Leaf$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_aefdffa61ae1796a57cefb6fc88f6765d}\label{class_node_aefdffa61ae1796a57cefb6fc88f6765d}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!isLeaf@{isLeaf}}
+\index{isLeaf@{isLeaf}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{isLeaf()}{isLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual bool \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::is\+Leaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Check whether the node is leaf
+
+\begin{DoxyReturn}{Returns}
+true if the node is leaf, false if the node is composite 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{Node\+Leaf$<$ T $>$}}, and \mbox{\hyperlink{class_node_leaf_a8df31e4db4a7dc11fe49b4524188cdcc}{Node\+Leaf$<$ T $>$}}.
 
 \mbox{\Hypertarget{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}\label{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!Remove@{Remove}}
 \index{Remove@{Remove}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Remove (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -189,12 +497,42 @@ Removal of a node containing the key
 \end{DoxyParams}
 
 
-Implemented in \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Binary\+Node\+Leaf$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Binary\+Node\+Leaf$<$ T $>$}}.
 
+\mbox{\Hypertarget{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}\label{class_node_a15cde0ccd1660efe88aa34e5f6c08de6}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!Remove@{Remove}}
+\index{Remove@{Remove}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Remove (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Removal of a node containing the key
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{\hyperlink{class_node}{Node}}, containing this key, will be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a6707d474172f0e94481d132c49259242}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_ab58706fa12dfa6a4f117ab9aabfc7c24}{Binary\+Node\+Leaf$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}\label{class_node_a3e33443c7d5780e9f2a94d97cbdd32f4}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!RemoveDummyParent@{RemoveDummyParent}}
+\index{RemoveDummyParent@{RemoveDummyParent}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{RemoveDummyParent()}{RemoveDummyParent()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Remove\+Dummy\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Remove dummy parent (used for iteration)
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_node}{Node}} without dummy parent 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_node_aa4de370e020bd5b31738cdfd5c0d735e}\label{class_node_aa4de370e020bd5b31738cdfd5c0d735e}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!Search@{Search}}
 \index{Search@{Search}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{Search()}{Search()}}
+\doxysubsubsection{\texorpdfstring{Search()}{Search()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Search (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -207,12 +545,64 @@ Search for a key in the tree
 \end{DoxyParams}
 
 
-Implemented in \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Binary\+Node\+Leaf$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Binary\+Node\+Leaf$<$ T $>$}}.
 
+\mbox{\Hypertarget{class_node_aa4de370e020bd5b31738cdfd5c0d735e}\label{class_node_aa4de370e020bd5b31738cdfd5c0d735e}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!Search@{Search}}
+\index{Search@{Search}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Search()}{Search()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual \mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::\+Search (\begin{DoxyParamCaption}\item[{T}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Search for a key in the tree
+
+
+\begin{DoxyParams}{Parameters}
+{\em Key} & which will be found in the tree \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Binary\+Node\+Compos$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Binary\+Node\+Leaf$<$ T $>$}}, \mbox{\hyperlink{class_binary_node_compos_a5d41a131e289318884024a79313a8a95}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_leaf_a03647d16c632f2340c626e70205388df}{Binary\+Node\+Leaf$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}\label{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!setChild@{setChild}}
+\index{setChild@{setChild}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setChild()}{setChild()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Child (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set the node a child of its parent 
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{Binary\+Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}\label{class_node_a49e3db27c8c9b97e3e9267b7e2b64500}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!setChild@{setChild}}
+\index{setChild@{setChild}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setChild()}{setChild()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Child (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{Binary\+Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_binary_node_compos_abd8b998dbd8bc3f0e96df2d571b7792a}{Binary\+Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a5a8202d10fb4090d3b649b426aa07a34}\label{class_node_a5a8202d10fb4090d3b649b426aa07a34}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!setDummyParent@{setDummyParent}}
+\index{setDummyParent@{setDummyParent}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setDummyParent()}{setDummyParent()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Dummy\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set dummy parent (used for iteration)
+
+\begin{DoxyReturn}{Returns}
+The dummy parent 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_node_a73b250fc885fa5bf22ecfd1190698627}\label{class_node_a73b250fc885fa5bf22ecfd1190698627}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!setLeft@{setLeft}}
 \index{setLeft@{setLeft}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{setLeft()}{setLeft()}}
+\doxysubsubsection{\texorpdfstring{setLeft()}{setLeft()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -225,12 +615,30 @@ Set left child of the node
 \end{DoxyParams}
 
 
-Implemented in \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{Node\+Compos$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a73b250fc885fa5bf22ecfd1190698627}\label{class_node_a73b250fc885fa5bf22ecfd1190698627}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!setLeft@{setLeft}}
+\index{setLeft@{setLeft}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setLeft()}{setLeft()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set left child of the node
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \mbox{\hyperlink{class_node}{Node}} which is set as a left child of this node \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_aebffb32f483f75b32c38b01c92179d64}{Node\+Compos$<$ T $>$}}.
 
 \mbox{\Hypertarget{class_node_a71a88eabd811e8cd8e7309cdcb03104f}\label{class_node_a71a88eabd811e8cd8e7309cdcb03104f}} 
 \index{Node$<$ T $>$@{Node$<$ T $>$}!setRight@{setRight}}
 \index{setRight@{setRight}!Node$<$ T $>$@{Node$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{setRight()}{setRight()}}
+\doxysubsubsection{\texorpdfstring{setRight()}{setRight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
@@ -243,10 +651,30 @@ Set right child of the node
 \end{DoxyParams}
 
 
-Implemented in \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{Node\+Compos$<$ T $>$}}.
+Implemented in \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{Node\+Compos$<$ T $>$}}.
+
+\mbox{\Hypertarget{class_node_a71a88eabd811e8cd8e7309cdcb03104f}\label{class_node_a71a88eabd811e8cd8e7309cdcb03104f}} 
+\index{Node$<$ T $>$@{Node$<$ T $>$}!setRight@{setRight}}
+\index{setRight@{setRight}!Node$<$ T $>$@{Node$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setRight()}{setRight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{class_node}{Node}}$<$ T $>$\+::set\+Right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}}$<$ T $>$ $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set right child of the node
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \mbox{\hyperlink{class_node}{Node}} which is set as a right child of this node \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{Node\+Compos$<$ T $>$}}, and \mbox{\hyperlink{class_node_compos_a8b036bb5e491da3bc767f27010d333e0}{Node\+Compos$<$ T $>$}}.
 
 
 
-The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+The documentation for this interface was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Tree.\+h\end{DoxyCompactItemize}
+Stringed\+Node.\+h\item 
+Tree.\+h\item 
+TREES.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,61 @@
+\hypertarget{_tree_factory_8h_source}{}\doxysection{Tree\+Factory.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TREEFACTORY\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TREEFACTORY\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Tree.h"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{enum} TreeType\{}
+\DoxyCodeLine{7     BinSearchTree,}
+\DoxyCodeLine{8 \};}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{class_tree_factory}{TreeFactory}}\{}
+\DoxyCodeLine{16 \textcolor{keyword}{private}:}
+\DoxyCodeLine{17     \textcolor{keyword}{static} \mbox{\hyperlink{class_tree_factory}{TreeFactory}}* treefac;}
+\DoxyCodeLine{18 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_tree_factory}{TreeFactory}}() \{\};}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_tree_factory}{\string~TreeFactory}}() \{\};}
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_tree_factory}{TreeFactory}}(\mbox{\hyperlink{class_tree_factory}{TreeFactory}} \&other) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_tree_factory}{TreeFactory}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{29     \textcolor{keyword}{static} \mbox{\hyperlink{class_tree_factory}{TreeFactory}}* \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{getTreeFac}}();}
+\DoxyCodeLine{37     \mbox{\hyperlink{class_node}{Node<int>}}* \mbox{\hyperlink{class_tree_factory_a6d45ee940ddc96056fe83c2075941d06}{createTree}}(TreeType type, \textcolor{keywordtype}{int} rootkey)\{}
+\DoxyCodeLine{38         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{39         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{40             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<int>}}(rootkey);}
+\DoxyCodeLine{41         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{42             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44     \}}
+\DoxyCodeLine{52     \mbox{\hyperlink{class_node}{Node<double>}}* \mbox{\hyperlink{class_tree_factory_a340834d4c8375bf2afd84d77abfa806a}{createTree}}(TreeType type, \textcolor{keywordtype}{double} rootkey)\{}
+\DoxyCodeLine{53         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{54         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{55             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<double>}}(rootkey);}
+\DoxyCodeLine{56         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{57             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{58         \}}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_node}{Node<std::string>}}* \mbox{\hyperlink{class_tree_factory_a58749ed031bddd2b761ce1454318e4a4}{createTree}}(TreeType type, std::string rootkey)\{}
+\DoxyCodeLine{68         \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{69         \textcolor{keywordflow}{case} BinSearchTree:}
+\DoxyCodeLine{70             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_binary_node_compos}{BinaryNodeCompos<std::string>}}(rootkey);}
+\DoxyCodeLine{71         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{72             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{73         \}}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75 \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 \mbox{\hyperlink{class_tree_factory}{TreeFactory}}* TreeFactory::treefac\{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \mbox{\hyperlink{class_tree_factory}{TreeFactory}}* \mbox{\hyperlink{class_tree_factory_a83e77719f6b93c8d46c6546fb9fd2e7b}{TreeFactory::getTreeFac}}()\{}
+\DoxyCodeLine{80     \textcolor{keywordflow}{if}(!treefac)}
+\DoxyCodeLine{81     \{}
+\DoxyCodeLine{82         treefac = \textcolor{keyword}{new} \mbox{\hyperlink{class_tree_factory}{TreeFactory}}();}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84     \textcolor{keywordflow}{return} treefac;}
+\DoxyCodeLine{85 \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TREEFACTORY\_H}}
+
+\end{DoxyCode}
