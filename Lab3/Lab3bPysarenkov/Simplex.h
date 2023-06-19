@@ -12,13 +12,18 @@ enum SolutionStepTypes{
     NOT_A_FINAL_STEP, FOUND_OPT, LIN_FUNC_UNLIMITED
 };
 
+//!
+//! \brief The Solution struct
+//!
 struct Solution{
     int type;
     std::vector<double> sol;
     double lfvalue;
 };
 
-//лінійна функція
+//!
+//! \brief The Linear Function class
+//!
 class LinFunc{
     //L = c[0]x[0] + c[1]x[1] + ... + c[n]x[n] -> opt
     std::vector<double> c;
@@ -60,7 +65,9 @@ public:
     friend class Solver;
 };
 
-//Лінійні обмеження (непрямі)
+//!
+//! \brief The Lnear Constraints class
+//!
 class Constr{
     //a[i][0]x[0] + a[i][1]x[1] + ... + a[i][n]x[n] <= (=, >=) b[i], i = [1, m]
     std::vector<std::vector<double>> a;
@@ -115,7 +122,9 @@ public:
     friend class Solver;
 };
 
-//Крок симплекс-методу
+//!
+//! \brief The Solution Step class
+//!
 class Sol_Step{
     LinFunc* lf; //Лінійна функція
     
@@ -159,14 +168,26 @@ public:
     std::vector<double> get_opt();
 };
 
+//!
+//! \brief The Multithreaded solution step
+//!
 class Sol_Step_Mult{
-    LinFunc* lf; //Лінійна функція
-    
-    Constr* con; //Лінійні обмеження
-    
-    std::vector<int> basis; //Базисні змінні
-    
-    std::vector<double> delta;//симплекс-різниці
+    //!
+    //! \brief Linear Function
+    //!
+    LinFunc* lf;
+    //!
+    //! \brief Constraint
+    //!
+    Constr* con;
+    //!
+    //! \brief basis
+    //!
+    std::vector<int> basis;
+    //!
+    //! \brief delta
+    //!
+    std::vector<double> delta;
     
     std::vector<double> theta;
     
@@ -204,7 +225,9 @@ public:
     std::vector<double> get_opt();
 };
 
-//Клас-розв'язувач задачі лінійного програмування
+//!
+//! \brief The Solver class
+//!
 class Solver{
     //Початкові умови:
     LinFunc* start_lf;

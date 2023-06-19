@@ -267,6 +267,7 @@ TEST_CASE("EXECUTION TIMES"){
     Constr* cc;
     LinFunc* lf;
     Solver* sol;
+    Solver* ssol;
     for(int i = 3, j = 2; i <= 9; i += 3, j += 2){
         std::cout << "=======Size of the constraint matrix (A | B): (" << i << "+1)x" << j << ")=========" << std::endl;
         std::vector<std::vector<double>> a;
@@ -285,13 +286,21 @@ TEST_CASE("EXECUTION TIMES"){
         }
         cc = new Constr(a, std::vector(i, -1), b, i, j);
         lf = new LinFunc(c, j, MIN);
-        sol = new Solver(lf, cc);
-        std::clock_t start = clock(), end;
-        Solution opt = sol->solve();
-        end = clock();
-        delete sol;
-        std::cout << "Single-thread, time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
+//        ssol = new Solver(lf, cc);
+//        std::clock_t start = clock(), end;
+//        Solution opt = ssol->solve();
+//        end = clock();
+//        delete ssol;
+//        std::cout << "Single-thread, time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
         for(int k = 1; k <= 16; k*=2){
+            if(k == 1){
+                sol = new Solver(lf, cc);
+                std::clock_t start = clock(), end;
+                Solution opt = sol->solve();
+                end = clock();
+                std::cout << "Single-thread, time: " << (double)(end - start) * 1000 / CLOCKS_PER_SEC << " ms\n";
+                delete sol; 
+            }
             sol = new Solver(lf, cc);
             std::clock_t start = clock(), end;
             Solution opt = sol->multithreadedLPP_basis(k);
