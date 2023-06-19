@@ -9,10 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     savepath = "";
-    QGraphicsScene *s = new QGraphicsScene(0, -10, ui->graphicsView_tree->width(), ui->graphicsView_tree->height(), ui->graphicsView_tree);
-    ui->graphicsView_tree->setScene(s);
-    s->addEllipse(-37.5, 0, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(42))->setPos(25,25);
+//    QGraphicsScene *s = new QGraphicsScene(0, -10, ui->graphicsView_tree->width(), ui->graphicsView_tree->height(), ui->graphicsView_tree);
+//    ui->graphicsView_tree->setScene(s);
+//    s->addEllipse(-37.5, 0, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(42))->setPos(25,25);
 //    s->addEllipse(10 + 37.5 + 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
 //    s->addText(QString::number(24))->setPos(25,25);
 //    s->addEllipse(-75 - 10 - 37.5 - 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
@@ -25,19 +25,19 @@ MainWindow::MainWindow(QWidget *parent)
 //    s->addText(QString::number(46))->setPos(25,25);
 //    s->addEllipse(-75 - 10 - 75 - 20, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
 //    s->addText(QString::number(46))->setPos(25,25);
-    s->addEllipse(10 + 37.5 + 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(24))->setPos(25,25);
-    s->addEllipse(-75 - 10 - 37.5 - 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(46))->setPos(25,25);
-    s->addEllipse(10 + 75 + 20, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(42))->setPos(25,25);
-    s->addEllipse(10, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(24))->setPos(25,25);
-    s->addEllipse(-75 - 10, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(46))->setPos(25,25);
-    s->addEllipse(-75 - 10 - 75 - 20, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-    s->addText(QString::number(46))->setPos(25,25);
-    ui->graphicsView_tree->show();
+//    s->addEllipse(10 + 37.5 + 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(24))->setPos(25,25);
+//    s->addEllipse(-75 - 10 - 37.5 - 10, 100, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(46))->setPos(25,25);
+//    s->addEllipse(10 + 75 + 20, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(42))->setPos(25,25);
+//    s->addEllipse(10, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(24))->setPos(25,25);
+//    s->addEllipse(-75 - 10, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(46))->setPos(25,25);
+//    s->addEllipse(-75 - 10 - 75 - 20, 200, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//    s->addText(QString::number(46))->setPos(25,25);
+//    ui->graphicsView_tree->show();
 }
 
 MainWindow::~MainWindow()
@@ -61,22 +61,23 @@ void MainWindow::on_pushButton_create_tree_clicked()
     FacadeString = nullptr;
     if(typenode == "Integer")
     {
-        FacadeInt = new TreeFacade<int>(typenode.toStdString(), treetype.toStdString(), this, ui->graphicsView_tree);
+        FacadeInt = new TreeFacade<int>(typenode.toStdString(), treetype.toStdString(), this, ui->tableWidget);
         ui->lineEdit_key->setText("");
         ui->lineEdit_key->setValidator(new QIntValidator(std::numeric_limits<int>::min(), std::numeric_limits<int>::max()));
     }
     if(typenode == "Double")
     {
-        FacadeDouble = new TreeFacade<double>(typenode.toStdString(), treetype.toStdString(), this, ui->graphicsView_tree);
+        FacadeDouble = new TreeFacade<double>(typenode.toStdString(), treetype.toStdString(), this, ui->tableWidget);
         ui->lineEdit_key->setText("");
         ui->lineEdit_key->setValidator(new QDoubleValidator(std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), 5));
     }
     if(typenode == "String")
     {
-        FacadeString = new TreeFacade<std::string>(typenode.toStdString(), treetype.toStdString(), this, ui->graphicsView_tree);
+        FacadeString = new TreeFacade<std::string>(typenode.toStdString(), treetype.toStdString(), this, ui->tableWidget);
         ui->lineEdit_key->setText("");
         ui->lineEdit_key->setValidator(nullptr);
     }
+    ui->tableWidget->clearContents();
     ui->groupBox_tree_manag->setEnabled(true);
     ui->action_save->setEnabled(true);
     ui->action_save_as->setEnabled(true);
@@ -218,5 +219,56 @@ void MainWindow::on_pushButton_Traverse_clicked()
         result = FacadeString->Iterate(type);
     }
     QMessageBox::information(this, "Traversal", "Keys in " +QString::fromStdString(type + ":\n" +result));
+}
+
+
+void MainWindow::on_pushButton_Search_clicked()
+{
+    if(typenode == "Integer")
+    {
+        FacadeInt->SearchKey(ui->lineEdit_key->text().toStdString());
+    }
+    if(typenode == "Double")
+    {
+        FacadeDouble->SearchKey(ui->lineEdit_key->text().toStdString());
+    }
+    if(typenode == "String")
+    {
+        FacadeString->SearchKey(ui->lineEdit_key->text().toStdString());
+    }
+}
+
+
+void MainWindow::on_pushButton_getmin_clicked()
+{
+    if(typenode == "Integer")
+    {
+        FacadeInt->getMin();
+    }
+    if(typenode == "Double")
+    {
+        FacadeDouble->getMin();
+    }
+    if(typenode == "String")
+    {
+        FacadeString->getMin();
+    }
+}
+
+
+void MainWindow::on_pushButton_getmax_clicked()
+{
+    if(typenode == "Integer")
+    {
+        FacadeInt->getMax();
+    }
+    if(typenode == "Double")
+    {
+        FacadeDouble->getMax();
+    }
+    if(typenode == "String")
+    {
+        FacadeString->getMax();
+    }
 }
 

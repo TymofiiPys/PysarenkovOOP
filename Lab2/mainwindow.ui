@@ -246,10 +246,22 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
-         <widget class="QGraphicsView" name="graphicsView_tree">
-          <property name="alignment">
-           <set>Qt::AlignHCenter|Qt::AlignTop</set>
-          </property>
+         <widget class="QTableWidget" name="tableWidget">
+          <column>
+           <property name="text">
+            <string>Ключ</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Ліва дитина</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Права дитина</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>

@@ -1,10 +1,12 @@
 #ifndef TREES_H
 #define TREES_H
 
+#include "qtablewidget.h"
 #include <QWidget>
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 #include <QMessageBox>
+#include <cmath>
 #include <string>
 #include <memory>
 #include <time.h>
@@ -616,6 +618,9 @@ public:
     virtual Node<KeyType>* Current(){
         return iter_;
     }
+    virtual Node<KeyType>* Last(){
+        return Last_;
+    }
 };
 
 template<typename KeyType>
@@ -1078,7 +1083,7 @@ private:
     std::string last_action_desc_;
     std::string save_to;
     QWidget* form_;
-    QGraphicsView* graphviewtree;
+    QTableWidget* tablewidget;
     Command<T>* savecom;
     Command<T>* undocom;
     void SyncSnaps(std::vector<Snapshot*> s) {
@@ -1090,7 +1095,7 @@ public:
         this->savecom = new SaveCommand<T>(this);
         this->undocom = new UndoCommand<T>(this);
     }
-    TreeFacade(std::string ntype, std::string ttype, QWidget* form = nullptr, QGraphicsView* gvt = nullptr, std::string saveto = "tree.txt") : TreeFacade<T>() {
+    TreeFacade(std::string ntype, std::string ttype, QWidget* form = nullptr, QTableWidget* tw = nullptr, std::string saveto = "tree.txt") : TreeFacade<T>() {
         if (ntype == "Integer")
             this->ntype_ = IntNode;
         else if (ntype == "Double")
@@ -1101,7 +1106,7 @@ public:
             this->ttype_ = BinSearchTree;
         this->save_to = saveto;
         this->form_ = form;
-        this->graphviewtree = gvt;
+        this->tablewidget = tw;
     }
     void AddKey(std::string key) {
         if (!root_) {
@@ -1113,7 +1118,7 @@ public:
             savecom->makeBackup();
             SyncSnaps(savecom->getSnaps());
         }
-        if(graphviewtree)
+        if(tablewidget)
             Draw();
     }
     void RemoveKey(std::string key) {
@@ -1124,6 +1129,30 @@ public:
             return;
         }
         root_->Remove(T(Converter<std::string>(key)));
+        if(tablewidget)
+            Draw();
+    }
+    void SearchKey(std::string key){
+        if (!root_)
+            return;
+        Node<T>* search = root_->Search(T(Converter<std::string>(key)));
+        if(!root_->Search(T(Converter<std::string>(key)))){
+            QMessageBox::critical(form_, "Key not found", "KEY NOT FOUND!");
+            return;
+        }
+        Draw(search);
+    }
+    void getMin(){
+        if (!root_)
+            return;
+        Node<T>* search = root_->getMin();
+         Draw(search);
+    }
+    void getMax(){
+         if (!root_)
+            return;
+         Node<T>* search = root_->getMax();
+         Draw(search);
     }
     Snapshot* getSnapshot() {
         return new Snapshot(root_, ntype_, ttype_, last_action_desc_);
@@ -1156,6 +1185,8 @@ public:
     }
     void Undo() {
         undocom->execute();
+        if(tablewidget)
+            Draw();
     }
     std::string Analyze(){
         TreeAnalyzer<T> *analyzer;
@@ -1168,75 +1199,126 @@ public:
         std::string out = analyzer->Analyze();
         return out;
     }
-    void Draw(){
-        QGraphicsScene *s = new QGraphicsScene(0, -10, graphviewtree->width(), graphviewtree->height(), graphviewtree);
-        std::vector<Node<T>*> nodelevel;
-        std::vector<Node<T>*> parentlevel;
-        std::vector<Node<T>*> nextlevel;
-        graphviewtree->setScene(s);
-        int height = root_->getHeight();
-        int depth = 2;
-        qreal width = 75;
-        qreal gap = 20;
-        qreal curgap;
-        qreal x;
-        qreal y;
-        parentlevel.push_back(root_);
-        if(!root_->getLeft())
-            nodelevel.push_back(nullptr);
-        else{
-            nodelevel.push_back(root_->getLeft());
+    void Draw(Node<T>* highlighted){
+        tablewidget->clearContents();
+        TreeIterator<T> *it = root_->CreatePreOrderIterator();
+        int i = 0;
+        int count = 0;
+        for (it->First(); !it->isDone(); it->Next()) {
+            count++;
         }
-        if(!root_->getRight())
-            nodelevel.push_back(nullptr);
-        else{
-            nodelevel.push_back(root_->getRight());
-        }
-        s->addEllipse(graphviewtree->width()/2 - 37.5, 0, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-        s->addText(QString::fromStdString(std::string(Converter<T>(root_->getKey()))))->setPos(graphviewtree->width()/2 - 12.5 ,25);
-        y = 100;
-        while(depth <= height){
-            x = -width - (height-depth)*gap - width/(height-width);
-            if(depth != height){
-                for(Node<T>* n : nodelevel){
-                    if(n != nullptr)
-                    {
-                        if(!n->getLeft())
-                            nextlevel.push_back(nullptr);
-                        else{
-                            nextlevel.push_back(n->getLeft());
-                        }
-                        if(!n->getRight())
-                            nextlevel.push_back(nullptr);
-                        else{
-                            nextlevel.push_back(n->getRight());
-                        }
-                        s->addEllipse(graphviewtree->width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-                        s->addText(QString::fromStdString(std::string(Converter<T>(root_->getKey()))))->setPos(graphviewtree->width()/2 - 12.5 ,25);
-                    }
-                    else{
-                        nextlevel.push_back(nullptr);
-                        nextlevel.push_back(nullptr);
-                    }
-                    x += width+(height-depth+1)*gap+(height-depth)*width;
-                }
-                parentlevel = nodelevel;
-                nodelevel = nextlevel;
-            }
+        tablewidget->setRowCount(count+1);
+        for (it->First(); !it->isDone(); it->Next()) {
+            tablewidget->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getKey())))));
+            if(it->Current()->isLeaf() || (!it->Current()->getLeft() && it->Current()->getRight() == it->Last()))
+                tablewidget->setItem(i, 1, new QTableWidgetItem("Лист"));
             else{
-                for(Node<T>* n : nodelevel){
-                    if(n != nullptr)
-                    {
-                        s->addEllipse(graphviewtree->width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));
-                        s->addText(QString::fromStdString(std::string(Converter<T>(root_->getKey()))))->setPos(graphviewtree->width()/2 - 12.5 ,25);
-                    }
-                    x += width+(height-depth+1)*gap+(height-depth)*width;
-                }
+                if(it->Current()->getLeft())
+                    tablewidget->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getLeft()->getKey())))));
+                if(it->Current()->getRight() && it->Current()->getRight() != it->Last())
+                    tablewidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getRight()->getKey())))));
             }
-            depth++;
-            y+= 100;
+            if(it->Current()->getKey() == highlighted->getKey()){
+                tablewidget->setRangeSelected(QTableWidgetSelectionRange(i, 0, i, 2), true);
+            }
+            i++;
         }
-        graphviewtree->show();
+        delete it;
+    }
+    void Draw(){
+        tablewidget->clearContents();
+        TreeIterator<T> *it = root_->CreatePreOrderIterator();
+        int i = 0;
+        int count = 0;
+        for (it->First(); !it->isDone(); it->Next()) {
+            count++;
+        }
+        tablewidget->setRowCount(count+1);
+        for (it->First(); !it->isDone(); it->Next()) {
+            tablewidget->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getKey())))));
+            if(it->Current()->isLeaf() || (!it->Current()->getLeft() && it->Current()->getRight() == it->Last()))
+                tablewidget->setItem(i, 1, new QTableWidgetItem("Лист"));
+            else{
+                if(it->Current()->getLeft())
+                    tablewidget->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getLeft()->getKey())))));
+                if(it->Current()->getRight() && it->Current()->getRight() != it->Last())
+                    tablewidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(std::string(Converter<T>(it->Current()->getRight()->getKey())))));
+            }
+            i++;
+        }
+        delete it;
+//        QGraphicsScene *s = new QGraphicsScene(0, -10, graphviewtree->width(), graphviewtree->height(), graphviewtree);
+//        std::vector<Node<T>*> nodelevel;
+//        std::vector<Node<T>*> parentlevel;
+//        std::vector<Node<T>*> nextlevel;
+//        graphviewtree->setScene(s);
+//        int height = root_->getHeight();
+//        int depth = 2;
+//        qreal width = 75;
+//        qreal gap = 20;
+//        qreal curgap;
+//        qreal x;
+//        qreal y;
+//        parentlevel.push_back(root_);
+//        if(!root_->getLeft())
+//            nodelevel.push_back(nullptr);
+//        else{
+//            nodelevel.push_back(root_->getLeft());
+//        }
+//        if(!root_->getRight())
+//            nodelevel.push_back(nullptr);
+//        else{
+//            nodelevel.push_back(root_->getRight());
+//        }
+//        s->addEllipse(graphviewtree->width()/2 - 37.5, 0, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//        s->addText(QString::fromStdString(std::string(Converter<T>(root_->getKey()))))->setPos(graphviewtree->width()/2 - 12.5 ,25);
+//        y = 100;
+//        int i = 0;
+//        while(depth <= height){
+//            x = -(width+gap)*(pow(2, (depth-2))) + gap/2 ;
+//            if(depth != height){
+//                nextlevel = std::vector<Node<T>*>(pow(2, depth));
+//                for(Node<T>* n : nodelevel){
+//                    if(n != nullptr)
+//                    {
+//                        if(!n->getLeft())
+//                            nextlevel[i] = nullptr;
+//                        else{
+//                            nextlevel[i] = n->getLeft();
+//                        }
+//                        i++;
+//                        if(!n->getRight())
+//                            nextlevel[i] = nullptr;
+//                        else{
+//                            nextlevel[i] = n->getRight();
+//                        }
+//                        i++;
+//                        s->addEllipse(graphviewtree->width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//                        s->addText(QString::fromStdString(std::string(Converter<T>(n->getKey()))))->setPos(graphviewtree->width()/2 + x + 25 , y + 25);
+//                    }
+//                    else{
+//                        nextlevel.push_back(nullptr);
+//                        nextlevel.push_back(nullptr);
+//                    }
+//                    x += width + gap;
+//                }
+//                parentlevel = nodelevel;
+//                nodelevel = nextlevel;
+//            }
+//            else{
+//                for(Node<T>* n : nodelevel){
+//                    if(n != nullptr)
+//                    {
+//                        s->addEllipse(graphviewtree->width()/2 + x, y, 75, 75, QPen(Qt::black), QBrush(Qt::white));
+//                        s->addText(QString::fromStdString(std::string(Converter<T>(n->getKey()))))->setPos(graphviewtree->width()/2 + x + 25 , y + 25);
+//                    }
+//                    x += width + gap;
+//                }
+//            }
+//            depth++;
+//            y+= 100;
+//        }
+//        graphviewtree->show();
     }
 };
 

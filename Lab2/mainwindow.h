@@ -42,6 +42,12 @@ private slots:
     
     void on_pushButton_Traverse_clicked();
     
+    void on_pushButton_Search_clicked();
+    
+    void on_pushButton_getmin_clicked();
+    
+    void on_pushButton_getmax_clicked();
+    
 private:
     Ui::MainWindow *ui;
     TreeFacade<int>* FacadeInt;
